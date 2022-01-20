@@ -5,6 +5,7 @@ import Exceptions.EmailException;
 import Exceptions.PasswordException;
 import Security.EmailVerification;
 import Security.PasswordManager;
+import user.Doctor.Doctor;
 import user.UserDAO;
 
 import javax.swing.*;
@@ -157,33 +158,11 @@ public class AdminDAOImp implements UserDAO<Admin> {
     }
 
     @Override
-    public Admin getByID(int id) {
-        Admin admin=new Admin();
-        try {
-
-            Connection con = DBConnection.getConnection();
-            String sql = "SELECT userName, email, password, firstName, lastName, address, birthDate from admin where id="+id;
-            PreparedStatement ps = con.prepareStatement(sql);
-
-            ResultSet rs=ps.executeQuery();
-
-            if(rs.next()){
-                admin.setAddress(rs.getString("address"));
-                admin.setBirthDate(rs.getDate("birthDate").toLocalDate());
-                admin.setEmail(rs.getString("email"));
-                admin.setFirstName(rs.getString("firstName"));
-                admin.setLastName(rs.getString("lastName"));
-                admin.setPassword(rs.getString("password"));
-                admin.setId(id);
-
-            }
-            JOptionPane.showMessageDialog(null, "Deleted!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
-        }
-        return admin;
+    public Admin getByID(long id) {
+        return null;
     }
+
+
 
     @Override
     public List<Admin> getAll() {

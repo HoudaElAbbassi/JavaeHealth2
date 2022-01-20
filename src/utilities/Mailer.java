@@ -1,5 +1,6 @@
 package utilities;
 
+
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,12 +10,26 @@ public class Mailer {
 
     public static void sendMail(String recipient, String msg, String subject) throws MessagingException {
         System.out.println("Preparing...");
+
+        /*
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+
+         */
+
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
+
+
         //get Session
         String myAccountMail = "clinic.uas2022@gmail.com";
         String password = "Java2022";
@@ -45,5 +60,9 @@ public class Mailer {
         return null;
     }
 
+    public static void main(String[] args) throws MessagingException {
+        Mailer.sendMail("agdmouna@gmail.com","hallo:)","TEST");
+    }
 
 }
+

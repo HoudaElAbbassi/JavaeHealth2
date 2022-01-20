@@ -1,4 +1,4 @@
-package GUI.homePage.Doctor;
+package GUI.homePage.doctor;
 
 import Exceptions.EmailException;
 import Exceptions.PasswordException;

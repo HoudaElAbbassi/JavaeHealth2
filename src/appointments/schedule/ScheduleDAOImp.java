@@ -48,7 +48,7 @@ public class ScheduleDAOImp implements ScheduleDAO {
         List<Schedule> list = new ArrayList<>();
         try {
             Connection con = DBConnection.getConnection();
-            String sql = "SELECT * FROM `ehealth`.`schedule` WHERE doctorId=? AND status='available'";
+            String sql = "SELECT * FROM schedule WHERE doctorId=? AND status='available'";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setLong(1, doctorId);
             ResultSet rs = ps.executeQuery();
@@ -76,7 +76,7 @@ public class ScheduleDAOImp implements ScheduleDAO {
         List<Schedule> list = new ArrayList<>();
         try {
             Connection con = DBConnection.getConnection();
-            String sql = "SELECT * FROM `ehealth`.`schedule` WHERE doctorId=? AND status='booked'";
+            String sql = "SELECT * FROM schedule WHERE doctorId=? AND status='booked'";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setLong(1, doctorId);
             ResultSet rs = ps.executeQuery();
@@ -164,7 +164,7 @@ public class ScheduleDAOImp implements ScheduleDAO {
         long doctorId = 0;
         try {
             Connection con = DBConnection.getConnection();
-            String sql = "SELECT * FROM `ehealth`.`schedule` WHERE scheduleId=?";
+            String sql = "SELECT * FROM schedule WHERE scheduleId=?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setLong(1, scheduleId);
             ResultSet rs = ps.executeQuery();
@@ -220,7 +220,7 @@ public class ScheduleDAOImp implements ScheduleDAO {
         Schedule schedule = new Schedule();
         try {
             Connection con = DBConnection.getConnection();
-            String sql = "SELECT * FROM `ehealth`.`schedule` WHERE scheduleId=?";
+            String sql = "SELECT * FROM schedule WHERE scheduleId=?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setLong(1, scheduleId);
             ResultSet rs = ps.executeQuery();
