@@ -26,22 +26,20 @@ public class PatientDAOImp implements UserDAO<Patient> {
             ps.setString(1, patient.getUserName());
             ps.setString(2, patient.getEmail());
             ps.setString(3, PasswordManager.encode(patient.getPassword()));
-            ps.setString(4,patient.getFirstName());
-            ps.setString(5,patient.getLastName());
-            ps.setString(6,patient.getAddress());
+            ps.setString(4, patient.getFirstName());
+            ps.setString(5, patient.getLastName());
+            ps.setString(6, patient.getAddress());
             ps.setDate(7, Date.valueOf(patient.getBirthDate()));
             ps.setString(8, patient.getInsuranceType().toString());
             ps.setString(9, patient.getInsuranceName());
-            
+
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Saved!");
-        }catch (PasswordException e){
+        } catch (PasswordException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-        catch (EmailException e){
+        } catch (EmailException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-        catch (SQLIntegrityConstraintViolationException e){
+        } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(null, "User already exists! Please Login");
 
         } catch (Exception e) {
@@ -52,33 +50,30 @@ public class PatientDAOImp implements UserDAO<Patient> {
 
     @Override
     public void edit(Patient patient) {
-        try{
+        try {
             PasswordManager.passwordVerification(patient.getPassword());
             EmailVerification.verifyEmail(patient.getEmail());
-            Connection con= DBConnection.getConnection();
+            Connection con = DBConnection.getConnection();
             String sql = "Update patients set  userName=?, email=?, password=?, firstName=?, lastName=?, address=?, birthDate=?, insuranceType=?, insuranceName=? where id=?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, patient.getUserName());
             ps.setString(2, patient.getEmail());
             ps.setString(3, patient.getPassword());
-            ps.setString(4,patient.getFirstName());
-            ps.setString(5,patient.getLastName());
-            ps.setString(6,patient.getAddress());
+            ps.setString(4, patient.getFirstName());
+            ps.setString(5, patient.getLastName());
+            ps.setString(6, patient.getAddress());
             ps.setDate(7, Date.valueOf(patient.getBirthDate()));
             ps.setString(8, patient.getInsuranceType().toString());
             ps.setString(9, patient.getInsuranceName());
-            ps.setLong(10,patient.getId());
+            ps.setLong(10, patient.getId());
 
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Updated!");
-        }
-        catch (PasswordException e){
+        } catch (PasswordException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-        catch (EmailException e){
+        } catch (EmailException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error");
         }
@@ -99,32 +94,34 @@ public class PatientDAOImp implements UserDAO<Patient> {
             JOptionPane.showMessageDialog(null, "Error");
         }
     }
-    public void deleteByID(long id){ try {
 
-        Connection con = DBConnection.getConnection();
-        String sql = "delete from patients  WHERE id=?";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setLong(1, id);
-        ps.executeUpdate();
-        JOptionPane.showMessageDialog(null, "Deleted!");
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error");
-    }}
+    public void deleteByID(long id) {
+        try {
+
+            Connection con = DBConnection.getConnection();
+            String sql = "delete from patients  WHERE id=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setLong(1, id);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Deleted!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error");
+        }
+    }
 
     @Override
     public boolean existEmail(String userEmail) {
-        try{
+        try {
             Connection con = DBConnection.getConnection();
             String sql = "select email from patients WHERE email='" + userEmail + "'";
             PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs=ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
-            if(rs.next()){
+            if (rs.next()) {
                 return true;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error");
         }
@@ -134,7 +131,7 @@ public class PatientDAOImp implements UserDAO<Patient> {
 
     @Override
     public Patient getByEmail(String userEmail) {
-        Patient patient=new Patient();
+        Patient patient = new Patient();
         try {
 
             Connection con = DBConnection.getConnection();
@@ -219,23 +216,61 @@ public class PatientDAOImp implements UserDAO<Patient> {
 
     @Override
     public String getPassword(String userEmail) {
-        try{
+        try {
             Connection con = DBConnection.getConnection();
             String sql = "select password from patients WHERE email='" + userEmail + "'";
             System.out.println(sql);
             PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs=ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             rs.next();
             System.out.println(rs.getString("password"));
             return rs.getString("password");
-        }catch (SQLException e){
-            JOptionPane.showMessageDialog(null,"User doesn't exist");
-        }
-        catch (Exception e) {
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "User doesn't exist");
+        } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error");
         }
 
         return null;
     }
+
+    @Override
+    public String getFirstNameByID(long id) {
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "select firstName from patients WHERE id=" + id;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getString("firstName");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "User doesn't exist");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error");
+        }
+        return null;
+    }
+
+    @Override
+    public String getLastNameByID(long id) {
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "select lastName from patients WHERE id=" + id;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getString("lastName");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "User doesn't exist");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error");
+        }
+        return null;
+    }
+
+
 }
+

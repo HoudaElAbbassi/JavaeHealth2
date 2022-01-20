@@ -3,7 +3,6 @@ package user.Patient;
 import user.User;
 
 import java.io.File;
-
 import java.time.LocalDate;
 
 public class Patient extends User {
@@ -70,9 +69,6 @@ public class Patient extends User {
 
     }
 
-    //public Appointment makeAppointment(Date date, Time time, Doctor doctor)
-    //public boolean cancelAppointment(Appointment appointment)
-    //public Doctor selectDoctor(String HealthProblem, List<Doctor> doctors)
-    //public File exportHealthInfo();
+
 
 }

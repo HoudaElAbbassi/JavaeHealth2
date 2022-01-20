@@ -238,6 +238,41 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
         return null;
     }
 
+    @Override
+    public String getFirstNameByID(long id) {
+        try{
+            Connection con = DBConnection.getConnection();
+            String sql = "select firstName from doctors WHERE id="+id;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            rs.next();
+            return rs.getString("firstName");
+        }
+
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "User doesn't exist!");
+
+            return null;
+    }}
+
+    @Override
+    public String getLastNameByID(long id) {
+            try{
+                Connection con = DBConnection.getConnection();
+                String sql = "select lastName from doctors WHERE id="+id;
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs=ps.executeQuery();
+                rs.next();
+                return rs.getString("lastName");
+            }
+
+            catch(SQLException e){
+                JOptionPane.showMessageDialog(null, "User doesn't exist!");
+
+            }
+        return null;
+    }
+
     public List<Doctor> getAllBySpecialization(Specialization specialization) {
         List<Doctor> list = new ArrayList<Doctor>();
         try {

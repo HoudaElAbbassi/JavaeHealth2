@@ -3,7 +3,6 @@ package user.Doctor;
 import appointments.Appointment;
 import user.User;
 
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -55,9 +54,5 @@ public class Doctor extends User {
         return "Doctor:   "+firstName+" "+lastName+",   "+
                 "Address:   "+address;
     }
-
-    //public List<Appointment> addAppointment(Appointment appointment)
-    //public void cancelAppointment(Appointment appointment)
-
     }
 

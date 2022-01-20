@@ -15,4 +15,6 @@ public interface UserDAO<User>{
     public User getByID(long id);
     public List<User> getAll();
     public String getPassword(String userEmail);
+    public String getFirstNameByID(long id);
+    public  String getLastNameByID(long id);
 }

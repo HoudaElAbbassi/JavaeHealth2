@@ -148,6 +148,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
                 admin.setPassword(rs.getString("password"));
                 //admin.setEmail(email);
             }
+            JOptionPane.showMessageDialog(null, "Deleted!");
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error");
@@ -156,7 +157,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
     }
 
     @Override
-    public Admin getByID(long id) {
+    public Admin getByID(int id) {
         Admin admin=new Admin();
         try {
 
@@ -176,6 +177,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
                 admin.setId(id);
 
             }
+            JOptionPane.showMessageDialog(null, "Deleted!");
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error");
@@ -228,6 +230,45 @@ public class AdminDAOImp implements UserDAO<Admin> {
             JOptionPane.showMessageDialog(null, "Error");
         }
 
+        return null;
+    }
+
+    @Override
+    public String getFirstNameByID(long id) {
+        try{
+            Connection con = DBConnection.getConnection();
+            String sql = "select firstName from admins WHERE id="+id;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            rs.next();
+            return rs.getString("firstName");
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null,"User doesn't exist");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error");
+        }
+
+        return null;
+    }
+
+    @Override
+    public String getLastNameByID(long id) {
+        try{
+            Connection con = DBConnection.getConnection();
+            String sql = "select lastName from admins WHERE id="+id;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            rs.next();
+            return rs.getString("lastName");
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null,"User doesn't exist");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error");
+        }
         return null;
     }
 }
