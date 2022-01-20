@@ -2,7 +2,6 @@ package GUI;
 
 import Exceptions.PasswordException;
 import GUI.homePage.AdminHomePage;
-import GUI.homePage.DoctorHomePage;
 import GUI.homePage.patient.PatientHomePage;
 import Security.PasswordManager;
 import user.Admin.AdminDAOImp;
@@ -52,7 +51,7 @@ public class Login extends JFrame {
                     if(doctorDAOImp.existEmail(emailText.getText())){
                         if(doctorDAOImp.getPassword(emailText.getText()).equals(encodedPassword)){
                             dispose();
-                            DoctorHomePage doctorHomePage = new DoctorHomePage(doctorDAOImp.getByEmail(emailText.getText()));
+                            GUI.homePage.Doctor.DoctorHomePage doctorHomePage = new GUI.homePage.Doctor.DoctorHomePage(doctorDAOImp.getByEmail(emailText.getText()));
                             setVisible(false);
                             //doctorHomePage.setVisible(true);
                         }
@@ -66,9 +65,9 @@ public class Login extends JFrame {
                else {
                     AdminDAOImp adminDAOImp = new AdminDAOImp();
                     if(adminDAOImp.existEmail(emailText.getText())){
-                        if(adminDAOImp.getPassword(emailText.getText()).equals(encodedPassword)){
+                        if(adminDAOImp.getPassword(emailText.getText()).equals(passwordField.getText())){
                             dispose();
-                            AdminHomePage adminHomePage = new AdminHomePage(adminDAOImp.getByEmail(emailText.getText()));
+                            AdminHomePage adminHomePage = new AdminHomePage();
                             setVisible(false);
                             //adminHomePage.setVisible(true);
                         }
