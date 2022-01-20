@@ -1,29 +1,40 @@
 package appointments.schedule;
 import Connection.DBConnection;
-import appointments.Reminder;
+
+import Exceptions.ScheduleException;
 
 import javax.swing.*;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleDAOImp implements ScheduleDAO {
 
     @Override
-    public void addSchedule(Schedule schedule) throws SQLException, Exception {
+    public void addSchedule(Schedule schedule) throws SQLException, Exception, ScheduleException {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ehealth", "root", "MySQL640182--");
-            Statement stmt = conn.createStatement();
+            Connection con = DBConnection.getConnection();
 
+            Statement stmt = con.createStatement();
 
-            String sql = "INSERT INTO `ehealth`.`schedule` (`date`, `doctorId`,`start`, `end`, `status`) VALUES ('" +
+            //schedule already exists
+            if (existsSchedule(schedule)) throw new ScheduleException("Already exists");
+
+            //date is in the past
+            if (schedule.getDate().isBefore(LocalDate.now())) throw new ScheduleException("Date lies in the Past");
+
+            String sql = "INSERT INTO `schedule`(`date`, `doctorId`,`start`, `end`, `status`) VALUES ('" +
                     Date.valueOf(schedule.getDate()) + "', '" +
                     schedule.getDoctorId() + "', '" +
                     Time.valueOf(schedule.getStart()) + "', '" +
                     Time.valueOf(schedule.getEnd()) + "','" + schedule.getStatus().toString() + "')";
 
             stmt.execute(sql);
+
+        } catch (ScheduleException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -87,6 +98,38 @@ public class ScheduleDAOImp implements ScheduleDAO {
     }
 
     @Override
+    public ArrayList<Schedule> getAll(long doctorId) throws SQLException {
+        ArrayList<Schedule> list = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = DBConnection.getConnection();
+            String sql = "SELECT * FROM schedule WHERE doctorId=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setLong(1, doctorId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Schedule schedule = new Schedule();
+                schedule.setScheduleId(rs.getLong("scheduleId"));
+                //System.out.println(rs.getLong("scheduleId"));
+                schedule.setDoctorId(rs.getLong("doctorId"));
+                schedule.setDate(rs.getDate("date").toLocalDate());
+                schedule.setStart(rs.getTime("start").toLocalTime());
+                schedule.setEnd(rs.getTime("end").toLocalTime());
+                schedule.setStatus(Status.valueOf(rs.getString("status")));
+                list.add(schedule);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            con.close();
+        }
+        return list;
+    }
+
+
+    @Override
     public void updateStatusToAvailable(long scheduleId) {
         try {
             Connection con = DBConnection.getConnection();
@@ -117,22 +160,6 @@ public class ScheduleDAOImp implements ScheduleDAO {
     }
 
     @Override
-    public void setReminder(long scheduleId, Reminder reminder) {
-        try {
-            Connection con = DBConnection.getConnection();
-            String sql = "Update schedule set reminder=? where scheduleId=?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, reminder.toString());
-            ps.setLong(2, scheduleId);
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Reminder set!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
-        }
-    }
-
-    @Override
     public long getDoctorId(long scheduleId) {
         long doctorId = 0;
         try {
@@ -148,6 +175,44 @@ public class ScheduleDAOImp implements ScheduleDAO {
             e.printStackTrace();
         }
         return doctorId;
+    }
+
+    @Override
+    public boolean existsSchedule(Schedule schedule) {
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql2 = "Select  `doctorId`, `date`, `start` from schedule where  `doctorId`=" + schedule.getDoctorId() + " and `date`='" + Date.valueOf(schedule.getDate()) + "'and `start`='" + Time.valueOf(schedule.getStart()) + "'";
+            PreparedStatement ps = con.prepareStatement(sql2);
+            //ps.setLong(1, schedule.getDoctorId());
+            //ps.setDate(2, Date.valueOf(schedule.getDate()));
+            //ps.setTime(3, Time.valueOf(schedule.getStart()));
+            System.out.println(sql2);
+            System.out.println(ps.toString());
+            ResultSet rs = ps.executeQuery(sql2);
+            System.out.println("nach ResultSet");
+            if (rs.next()) return true;
+            else return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+        return false;
+    }
+
+    @Override
+    public void deleteById(long scheduleId) {
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "delete from schedule where scheduleId=" + scheduleId;
+            System.out.println(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Schedulr deleted");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error");
+        }
     }
 
     @Override
@@ -169,4 +234,22 @@ public class ScheduleDAOImp implements ScheduleDAO {
         }
         return schedule;
     }
+
+    @Override
+    public Status getStatusById(long scheduleId) {
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "Select  status from schedule where  `scheduleId`=" + scheduleId;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) return Status.valueOf(rs.getString("Status"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 }
