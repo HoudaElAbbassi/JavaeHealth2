@@ -62,7 +62,7 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
             PasswordManager.passwordVerification(doctor.getPassword());
             EmailVerification.verifyEmail(doctor.getEmail());
             Connection con= DBConnection.getConnection();
-            String sql = "Update doctors set  userName=?, email=?, password=?, firstName=?, lastName=?, address=?, birthDate=? where id=?";
+            String sql = "Update doctors set  userName=?, email=?, password=?, firstName=?, lastName=?, address=?, birthDate=?,specialization=? where id=?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, doctor.getUserName());
             ps.setString(2, doctor.getEmail());
@@ -71,7 +71,9 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
             ps.setString(5,doctor.getLastName());
             ps.setString(6,doctor.getAddress());
             ps.setDate(7, Date.valueOf(doctor.getBirthDate()));
-            ps.setLong(8,doctor.getId());
+            ps.setString(8,doctor.getSpecialization().toString());
+            ps.setLong(9,doctor.getId());
+
 
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Updated!");
