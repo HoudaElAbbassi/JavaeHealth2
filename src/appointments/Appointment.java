@@ -16,7 +16,6 @@ public class Appointment {
     private long scheduleId;
     private HealthProblem healthProblem;
     private File healthInfo;
-    private int distanceOfSearch = 10;
     private Reminder reminder = Reminder.three_days;
 
     public Appointment() {
@@ -28,15 +27,14 @@ public class Appointment {
                        long scheduleId,
                        HealthProblem healthProblem,
                        File healthInfo,
-                       Reminder reminder,
-                       int distanceOfSearch) {
+                       Reminder reminder) {
+        this.id = id;
         this.doctorId = doctorId;
         this.patientId = patientId;
         this.scheduleId = scheduleId;
         this.healthProblem = healthProblem;
         this.healthInfo = healthInfo;
         this.reminder = reminder;
-        this.distanceOfSearch = distanceOfSearch;
     }
 
     public long getId() {
@@ -87,13 +85,7 @@ public class Appointment {
         this.healthInfo = healthInfo;
     }
 
-    public int getDistanceOfSearch() {
-        return distanceOfSearch;
-    }
 
-    public void setDistanceOfSearch(int distanceOfSearch) {
-        this.distanceOfSearch = distanceOfSearch;
-    }
 
     public Reminder getReminder() {
         return reminder;

@@ -67,7 +67,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
             ps.setLong(2, appointment.getPatientId());
             ps.setLong(3,appointment.getScheduleId());
             ps.setString(4,appointment.getHealthProblem().toString());
-            //ps.setString(7, appointment.getHealthInfo().getAbsolutePath());
             ps.setCharacterStream(5, new FileReader(appointment.getHealthInfo()));
             ps.setString(6, appointment.getReminder().toString());
 
