@@ -1,43 +1,31 @@
 package utilities;
+
 import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.*;
+import javax.mail.internet.*;
 public class Mailer {
 
     public static void sendMail(String recipient, String msg, String subject) throws MessagingException {
         System.out.println("Preparing...");
-        Properties properties = System.getProperties();
-
-        // Setup mail server
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "465");
-        properties.put("mail.smtp.ssl.enable", "true");
-        properties.put("mail.smtp.auth", "true");
-
-
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
         //get Session
-        String myAccountMail = "clinic.uas2022@gmail.com";
-        String password = "Java2022";
-        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+        String myAccountMail = "smart.ehealth22@gmail.com";
+        String password = "eHealth2022";
+        Session session = Session.getDefaultInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(myAccountMail, password);
             }
         });
-        
-        // Used to debug SMTP issues
-        session.setDebug(true);
 
         Message message = prepareMessage(session, myAccountMail, recipient, subject, msg);
-        System.out.println("sending...");
-            // Send message
         Transport.send(message);
         System.out.println("Message sent successfully");
     }
@@ -51,15 +39,12 @@ public class Mailer {
             message.setText(msg);
             return message;
         }
-        catch (MessagingException mex) {
-            mex.printStackTrace();
+        catch(Exception e){
+            Logger.getLogger(Mailer.class.getName()).log(Level.SEVERE, null, e);
         }
         return null;
     }
 
-    public static void main(String[] args) throws MessagingException {
-        Mailer.sendMail("agdmouna@gmail.com","hallo:)","TEST");
-    }
 
 }
 
