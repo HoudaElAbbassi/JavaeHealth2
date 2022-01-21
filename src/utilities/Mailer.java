@@ -1,35 +1,43 @@
 package utilities;
-
-
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.mail.*;
-import javax.mail.internet.*;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 public class Mailer {
 
     public static void sendMail(String recipient, String msg, String subject) throws MessagingException {
         System.out.println("Preparing...");
-        Properties props = new Properties();
-        props.put("mail.transport.protocol", "smtps");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+        Properties properties = System.getProperties();
+
+        // Setup mail server
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "465");
+        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.auth", "true");
 
 
         //get Session
         String myAccountMail = "clinic.uas2022@gmail.com";
         String password = "Java2022";
-        Session session = Session.getDefaultInstance(props, new Authenticator() {
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(myAccountMail, password);
             }
         });
+        
+        // Used to debug SMTP issues
+        session.setDebug(true);
 
         Message message = prepareMessage(session, myAccountMail, recipient, subject, msg);
+        System.out.println("sending...");
+            // Send message
         Transport.send(message);
         System.out.println("Message sent successfully");
     }
@@ -43,8 +51,8 @@ public class Mailer {
             message.setText(msg);
             return message;
         }
-        catch(Exception e){
-            Logger.getLogger(Mailer.class.getName()).log(Level.SEVERE, null, e);
+        catch (MessagingException mex) {
+            mex.printStackTrace();
         }
         return null;
     }
