@@ -6,6 +6,7 @@ import Exceptions.ScheduleException;
 import javax.swing.*;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -244,6 +245,38 @@ public class ScheduleDAOImp implements ScheduleDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) return Status.valueOf(rs.getString("Status"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public LocalDate getDateByDoctorId(long doctorid) {
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "Select  date from schedule where  `doctorId`=" + doctorid;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) return rs.getDate("date").toLocalDate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public LocalTime getTimeByDoctorId(long doctorId) {
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "Select  start from schedule where  `doctorId`=" + doctorId;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) return rs.getTime("start").toLocalTime();
 
         } catch (Exception e) {
             e.printStackTrace();

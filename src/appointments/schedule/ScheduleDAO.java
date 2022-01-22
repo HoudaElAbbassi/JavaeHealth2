@@ -3,6 +3,8 @@ package appointments.schedule;
 import appointments.Reminder;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,4 +23,6 @@ public interface ScheduleDAO {
     public boolean existsSchedule(Schedule schedule);
     public void deleteById(long scheduleId);
     public Status getStatusById(long scheduleId);
+    public LocalDate getDateByDoctorId(long doctorId);
+    public LocalTime getTimeByDoctorId(long doctorId);
 }
