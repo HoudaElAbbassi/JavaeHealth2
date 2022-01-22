@@ -17,13 +17,11 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.io.File;
 
 public class DoctorHomePage extends JFrame{
     /**
@@ -53,7 +51,11 @@ public class DoctorHomePage extends JFrame{
     private JLabel UsernameTextField;
     private JPanel addmultipledates;
     private JPanel addOneDate;
+    private JButton exportHealthinfoButton;
+    private JButton importHealthinfoButton;
     private JPanel TimePanelEnd;
+    private JFileChooser fileChooser = new JFileChooser();
+    File file = null;
 
 
     TimePickerSettings timePickerSettings=new TimePickerSettings();
@@ -105,6 +107,7 @@ public class DoctorHomePage extends JFrame{
             ScheduleTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             AppointmentTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+
         //Button Action
         viewAppointmentsButton.addActionListener(new ActionListener() {
             /**
@@ -115,6 +118,7 @@ public class DoctorHomePage extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 AppointmentDAOImp appointmentDAOImp=new AppointmentDAOImp();
                 PatientDAOImp patientDAOImp=new PatientDAOImp();
+                ScheduleDAOImp scheduleDAOImp=new ScheduleDAOImp();
                 DefaultTableModel tbModel = (DefaultTableModel) AppointmentTable.getModel();
 
                 Object[] columnsName=new Object[7];
@@ -127,6 +131,7 @@ public class DoctorHomePage extends JFrame{
                 columnsName[5]="Healthproblem";
                 columnsName[6]="Healthinfo";
 
+
                 tbModel.setColumnIdentifiers(columnsName);
 
                 Object[] rowData=new Object[7];
@@ -135,48 +140,15 @@ public class DoctorHomePage extends JFrame{
                     rowData[0]=appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getId();
                     rowData[1]=patientDAOImp.getFirstNameByID(appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getPatientId());
                     rowData[2]=patientDAOImp.getLastNameByID(appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getPatientId());
-                    //Appointment nicht aktuell!!
-                    //rowData[3]=0;
+                    rowData[3]=scheduleDAOImp.getDateByDoctorId(appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getDoctorId());
+                    rowData[4]=scheduleDAOImp.getTimeByDoctorId(appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getDoctorId());
+                    rowData[5]=appointmentDAOImp.getHealthProblemById(appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getId()).toString();
+                    rowData[6]=appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getHealthInfo();
+
+                    tbModel.addRow(rowData);
+
                 }
-                    /*tbModel.setRowCount(0);
-                    Connection con = DBConnection.getConnection();
-
-                    String query = "Select id,patientId,healthproblem,healthinfo,distanceofsearch,scheduleId from appointments";
-
-                    Statement stmt = con.prepareStatement(query);
-                    ResultSet res = stmt.executeQuery(query);
-
-
-                    while (res.next()) {
-                        long appointmentid=res.getLong("id");
-                        long patientid = res.getInt("patientId");
-                        String healthproblem = res.getString("healthproblem");
-
-
-                        //InputStream healthinfo = res.getBinaryStream("healthinfo");
-                        File HealthInfoFile = new File("healthinfo");
-                        FileOutputStream healthinfoFile = new FileOutputStream(HealthInfoFile);
-                        byte[] buffer = new byte[1024];
-                        while (healthinfo.read(buffer) > 0) {
-                            healthinfoFile.write(buffer);
-                        }
-
-                        int distanceOfSearch = res.getInt("distanceofsearch");
-                        long scheduleId = res.getInt("scheduleId");
-
-                        String tbData[] = {"appointmentID","patientID", "healthproblem", "healthInfo", "distance of search", "schedukeID"};
-                        String appInfo[] = {appointmentid+"",patientid + "", healthproblem, HealthInfoFile.toString(), distanceOfSearch + "", scheduleId + ""};
-
-
-                        tbModel.setColumnIdentifiers(tbData);
-                        tbModel.addRow(appInfo);
-                        AppointmentTable.setModel(tbModel);
-
-
-
-
-                    }
-                    */
+                AppointmentTable.setModel(tbModel);
 
             }
         });
@@ -367,6 +339,20 @@ public class DoctorHomePage extends JFrame{
                 MainPage mainPage=new MainPage();
                 mainPage.setVisible(true);
 
+
+            }
+        });
+        importHealthinfoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //setting for upload file
+                int response = fileChooser.showOpenDialog(null);
+                if (response == JFileChooser.APPROVE_OPTION) {
+                    file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+                }
+                AppointmentDAOImp appointmentDAOImp=new AppointmentDAOImp();
+                int i = Integer.parseInt( AppointmentTable.getValueAt(AppointmentTable.getSelectedRow(), 0).toString());
+                appointmentDAOImp.updateHealthinfoById(i,file);
 
             }
         });
