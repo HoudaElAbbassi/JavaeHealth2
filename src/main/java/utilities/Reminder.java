@@ -1,86 +1,64 @@
 package utilities;
 
-import javax.mail.MessagingException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Reminder extends TimerTask implements Runnable{
+public class Reminder extends TimerTask implements Runnable {
 
+    private boolean exit = false;
+
+    private String senderEmailAddress;
+    private String senderPassword;
     private String receiverEmailAddress;
     private String subject;
     private String message;
-    private LocalDateTime localDateTime= LocalDateTime.of(2022,1,22,20,44,1);
 
+    Thread t;
 
-    public Reminder( String receiverEmailAddress, String subject, String message) throws ParseException {
+    public Reminder(String receiverEmailAddress, String subject, String message) {
+
         this.receiverEmailAddress = receiverEmailAddress;
         this.subject = subject;
         this.message = message;
 
-        Timer timer=new Timer();
-        timer.schedule(this,this.convert(this.getLocalDateTime()));
-
-
+        t = new Thread(this);
+        t.start();
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
-    }
-
-    public LocalDateTime getLocalDateTime(){
-        return this.localDateTime;
-    }
-
-    public Date convert(LocalDateTime localDateTime) throws ParseException {
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String year = String.valueOf(localDateTime.getYear());
-        String month = String.valueOf(localDateTime.getMonthValue());
-        String day = String.valueOf(localDateTime.getDayOfMonth());
-        String hour=String.valueOf(localDateTime.getHour());
-        String minute=String.valueOf(localDateTime.getMinute());
-        String second=String.valueOf(localDateTime.getSecond());
-        Date date = dateFormatter.parse(year + "-" + month + "-" + day +" "+ hour+":"+minute+":"+second);
-        return date;
-    }
-
-
-
-
-
-
-
-
-
-
-    public static void main(String[] args) throws ParseException, InterruptedException {
-     Reminder reminder=new Reminder("houdael@outlook.de","hallo","HALLO");
-    Thread thread=new Thread(reminder);
-
-     //reminder.setLocalDateTime();
-
-    }
-
-
-    @Override
+    @SuppressWarnings("deprecation")
     public void run() {
-        Thread thread=new Thread(this);
-        thread.start();
+        t.stop();
+        Mailer.sendMail(receiverEmailAddress, subject, message);
 
-        try {
-            Mailer.sendMail(this.receiverEmailAddress,this.message,this.subject);
-            cancel();
-            thread.stop();
-
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
+        System.out.println("Mail sent");
 
     }
+
+    public void stop() {
+        exit = true;
+    }
+
+    public static void main(String[] args) throws ParseException {
+        Timer timer=new Timer();
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String year = String.valueOf(LocalDate.now().getYear());
+        String month = String.valueOf(LocalDate.now().getMonthValue());
+        String day = String.valueOf(LocalDate.now().getDayOfMonth());
+        String hour=String.valueOf(LocalTime.of(22,41,1));
+        String hour2=String.valueOf(LocalTime.of(22,42,1));
+        Date date = dateFormatter.parse(year + "-" + month + "-" + day +" "+ hour);
+        Date date2 = dateFormatter.parse(year + "-" + month + "-" + day +" "+ hour2);
+        /// LocalDateTime ldt= LocalDateTime.of(LocalDate.of(2022, 1, 10), LocalTime.of(20, 36, 1));
+        timer.schedule(new Reminder("belghazi1998@gmail.com", "Appointment reminder", "test test test"),date);
+        timer.schedule(new Reminder("belghazi1998@gmail.com", "Appointment reminder2", "2test test test"),date2);
+    }
+
+
+
 }
