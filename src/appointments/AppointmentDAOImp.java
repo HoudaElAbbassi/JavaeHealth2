@@ -2,10 +2,14 @@ package appointments;
 
 import Connection.DBConnection;
 import appointments.schedule.ScheduleDAOImp;
+import com.google.common.io.CharStreams;
+import com.google.common.io.Files;
 import user.Patient.HealthProblem;
 import javax.swing.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,6 +114,9 @@ public class AppointmentDAOImp implements AppointmentDAO{
                     appointment.setPatientId(rs.getLong("patientId"));
                     appointment.setScheduleId(rs.getLong("scheduleId"));
                     appointment.setHealthProblem(HealthProblem.valueOf(rs.getString("healthProblem")));
+                    File file=new File("/output.txt");
+                    Files.write(CharStreams.toString(rs.getCharacterStream("healthinfo")).getBytes(StandardCharsets.UTF_8),file);
+                    appointment.setHealthInfo(file);
                     appointment.setReminder(Reminder.valueOf(rs.getString("reminder")));
                 }
             } catch (Exception e) {
@@ -132,7 +139,11 @@ public class AppointmentDAOImp implements AppointmentDAO{
                 appointment.setDoctorId(rs.getLong("doctorId"));
                 appointment.setPatientId(rs.getLong("patientId"));
                 appointment.setScheduleId(rs.getLong("scheduleId"));
-                appointment.setHealthProblem(HealthProblem.valueOf(rs.getString("HealthProblem")));
+                appointment.setHealthInfo(new File(String.valueOf(rs.getCharacterStream("healthinfo"))));
+                //appointment.setHealthProblem(HealthProblem.valueOf(rs.getString("HealthProblem")));
+                File file=new File("C:\\Users\\houda\\Desktop\\JAVAProject\\output.txt");
+                Files.write(CharStreams.toString(rs.getCharacterStream("healthinfo")).getBytes(StandardCharsets.UTF_8),file);
+                appointment.setHealthInfo(file);
                 appointment.setReminder(Reminder.valueOf(rs.getString("reminder")));
             }
         } catch (Exception e) {
@@ -267,7 +278,35 @@ public class AppointmentDAOImp implements AppointmentDAO{
     }
 
     @Override
-    public String getHealthProblemById(long id) {
+    public HealthProblem getHealthProblemById(long Id) {
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "SELECT healthproblem FROM appointments WHERE Id="+Id;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next())
+                return HealthProblem.valueOf(rs.getString("healthproblem"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error");
+        }
         return null;
+    }
+
+    @Override
+    public void updateHealthinfoById(long id,File healthproblemfile) {
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "Update appointments set  healthinfo=? where id=" + id;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setCharacterStream(1, new FileReader(healthproblemfile));
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Updated!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error");
+        }
     }
 }
