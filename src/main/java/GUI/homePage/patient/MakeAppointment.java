@@ -145,6 +145,10 @@ public class MakeAppointment extends JFrame implements ActionListener {
                                         "\n\nBest regards\n\neHealth Consulting",
                                 "Appointment Reservation"
                         );
+                        //reminder=new Reminder(patient Email,msg,subject)
+                        //reminder.setlocaldatetime(appoinmentDao.getDatetime(scheduleId))
+                        //reminder.run();
+
                     }
                 } catch (NullPointerException npe2){
                     JOptionPane.showMessageDialog(null, "Please select an appointment!");
