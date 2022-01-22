@@ -4,6 +4,7 @@ import Connection.DBConnection;
 import appointments.schedule.ScheduleDAOImp;
 import com.google.common.io.CharStreams;
 import com.google.common.io.Files;
+import org.apache.poi.hwpf.usermodel.DateAndTime;
 import user.Patient.HealthProblem;
 import javax.swing.*;
 import java.io.File;
@@ -11,7 +12,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AppointmentDAOImp implements AppointmentDAO{
@@ -322,6 +329,28 @@ public class AppointmentDAOImp implements AppointmentDAO{
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public LocalDateTime getDateTimeByScheduleId(long scheduleId) {
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "SELECT date,start FROM appointments WHERE schdeuleId="+scheduleId;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()){
+                LocalDate date=rs.getDate("date").toLocalDate();
+                LocalTime time=rs.getTime("start").toLocalTime();
+
+                return LocalDateTime.of(date,time);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error");
         }
         return null;
     }

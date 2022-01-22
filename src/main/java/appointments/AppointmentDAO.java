@@ -3,6 +3,9 @@ package appointments;
 import user.Patient.HealthProblem;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public interface AppointmentDAO {
@@ -22,4 +25,6 @@ public interface AppointmentDAO {
     void updateHealthinfoById(long id, File healthproblemfile);
 
     public byte[] getHealthInfo(long patientId);
+
+    public LocalDateTime getDateTimeByScheduleId(long scheduleId);
 }
