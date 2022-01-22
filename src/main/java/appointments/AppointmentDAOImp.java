@@ -309,4 +309,20 @@ public class AppointmentDAOImp implements AppointmentDAO{
             JOptionPane.showMessageDialog(null, "Error");
         }
     }
+
+    @Override
+    public byte[] getHealthInfo(long patientId) {
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "SELECT * from appointments where patientId=" + patientId;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getBytes("healthInfo");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

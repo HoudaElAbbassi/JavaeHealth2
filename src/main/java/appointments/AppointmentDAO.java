@@ -21,4 +21,5 @@ public interface AppointmentDAO {
     HealthProblem getHealthProblemById(long id);
     void updateHealthinfoById(long id, File healthproblemfile);
 
+    public byte[] getHealthInfo(long patientId);
 }

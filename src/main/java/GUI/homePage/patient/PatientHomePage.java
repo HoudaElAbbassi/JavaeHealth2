@@ -1,7 +1,6 @@
 package GUI.homePage.patient;
 
 import GUI.MainPage;
-import appointments.AppointmentDAOImp;
 import user.Patient.Patient;
 
 import javax.swing.*;
@@ -15,6 +14,7 @@ public class PatientHomePage extends JFrame{
     private JButton cancelAppointmentButton;
     private JButton shiftAppointmentButton;
     private JButton logOutButton;
+    private JButton exportMyHealthInfoButton;
 
 
     public PatientHomePage(Patient patient) {
@@ -54,6 +54,15 @@ public class PatientHomePage extends JFrame{
                 MainPage mainPage = new MainPage();
                 setVisible(false);
                 mainPage.setVisible(true);
+            }
+        });
+
+        exportMyHealthInfoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ExportHealthInfo exportInfo = new ExportHealthInfo(patient);
+                setVisible(false);
+                exportInfo.setVisible(true);
             }
         });
     }
