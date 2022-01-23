@@ -18,6 +18,7 @@ public class PatientHomePage extends JFrame{
 
 
     public PatientHomePage(Patient patient) {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.patient = patient;
         setContentPane(mainPanel);
         setSize(500,500);

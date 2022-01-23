@@ -40,6 +40,7 @@ public class CancelAppointment extends JFrame {
      * @param patient corresponds to the actual patient logged in.
      */
     public CancelAppointment(Patient patient){
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.patient = patient;
         setContentPane(mainPanel);
         setSize(500,500);

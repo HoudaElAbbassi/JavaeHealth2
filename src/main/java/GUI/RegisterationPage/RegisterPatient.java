@@ -33,6 +33,7 @@ public class RegisterPatient extends  JFrame{
     private JDateChooser dateChooser=new JDateChooser();
 
     public RegisterPatient() {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setContentPane(mainPanel);
         setSize(500,500);
 

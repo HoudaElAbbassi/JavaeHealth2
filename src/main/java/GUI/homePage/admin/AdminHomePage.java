@@ -17,7 +17,7 @@ public class AdminHomePage extends JFrame{
         this.setVisible(true);
         this.setSize(500,600);
         this.setContentPane(this.PanelMain);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ///this.pack();
         DoctorButton.addActionListener(new ActionListener() { /////The doctorButton to access to the page which the admin can delete or edit the data of a doctor.
             @Override

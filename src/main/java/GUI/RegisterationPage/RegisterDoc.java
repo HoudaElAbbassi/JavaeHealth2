@@ -32,7 +32,7 @@ public class RegisterDoc extends JFrame{
 
 
     public RegisterDoc(){
-
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setContentPane(mainPanel);
         setSize(500,500);
         /*
@@ -80,17 +80,6 @@ public class RegisterDoc extends JFrame{
             }
         });
    }
-
-
-
-
-
-    public static void main(String[] args) {
-
-        RegisterDoc registerDoc=new RegisterDoc();
-        registerDoc.setVisible(true);
-
-    }
 
 
 }

@@ -31,6 +31,7 @@ public class ShiftAppointment extends JFrame {
     private JButton goBackToHomepageButton;
 
     public ShiftAppointment(Patient patient){
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.patient = patient;
         setContentPane(mainPanel);
         setSize(500,500);

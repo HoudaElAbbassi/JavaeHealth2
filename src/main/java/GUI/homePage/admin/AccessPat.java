@@ -51,7 +51,7 @@ public class AccessPat {
         frame.setSize(800,600);
         frame.setContentPane(MainPanel);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         MainPanel.setVisible(true);
 
 

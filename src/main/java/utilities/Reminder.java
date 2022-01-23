@@ -41,9 +41,8 @@ public class Reminder extends TimerTask implements Runnable {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-
         System.out.println("Mail sent");
-
+        System.exit(0);
     }
 
     public void stop() {
@@ -61,25 +60,5 @@ public class Reminder extends TimerTask implements Runnable {
         Date date = dateFormat.parse(year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second);
         return date;
     }
-
-    /*
-    public static void main(String[] args) throws ParseException {
-        Timer timer=new Timer();
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String year = String.valueOf(LocalDate.now().getYear());
-        String month = String.valueOf(LocalDate.now().getMonthValue());
-        String day = String.valueOf(LocalDate.now().getDayOfMonth());
-        String hour=String.valueOf(LocalTime.of(23,37,1));
-        String hour2=String.valueOf(LocalTime.of(23,38,1));
-        Date date = dateFormatter.parse(year + "-" + month + "-" + day +" "+ hour);
-        Date date2 = dateFormatter.parse(year + "-" + month + "-" + day +" "+ hour2);
-        /// LocalDateTime ldt= LocalDateTime.of(LocalDate.of(2022, 1, 10), LocalTime.of(20, 36, 1));
-        timer.schedule(new Reminder("agdmouna@gmail.com", "Appointment reminder", "test test test"),date);
-        timer.schedule(new Reminder("agdmouna@gmail.com", "Appointment reminder2", "2test test test"),date2);
-    }
-
-     */
-
-
 
 }

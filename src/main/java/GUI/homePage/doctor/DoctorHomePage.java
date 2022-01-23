@@ -80,7 +80,7 @@ public class DoctorHomePage extends JFrame{
          * The HomePage of the Doctor receives as the attribute the logged in doctor.
          * All the Actions of GUI(ButtonClicks) are implemented in the Constructor.
          */
-
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setContentPane(mainPanel);
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

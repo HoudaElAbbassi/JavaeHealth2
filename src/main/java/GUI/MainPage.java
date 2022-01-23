@@ -15,6 +15,7 @@ public class MainPage extends JFrame{
     private JPanel mainPanel;
 
     public MainPage() {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setContentPane(mainPanel);
         setSize(500,500);
         newDoctorButton.addActionListener(new ActionListener() {

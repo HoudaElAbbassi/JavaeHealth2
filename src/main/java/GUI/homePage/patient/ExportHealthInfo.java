@@ -22,6 +22,7 @@ public class ExportHealthInfo extends JFrame {
     private JButton exportAsATEXTButton;
 
     public ExportHealthInfo(Patient patient) {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.patient = patient;
         setContentPane(mainPanel);
         setSize(500,500);

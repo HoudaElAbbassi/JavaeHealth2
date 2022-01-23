@@ -39,10 +39,10 @@ public class AccessDoc extends JFrame {
     private DefaultListModel listDoctorModel;
 
 
-    public AccessDoc(){ ///// The beginning of the constructor
+    public AccessDoc(){///// The beginning of the constructor
         super("AdminHomePage"); ////// some configuration of the MainPanel
         this.setContentPane(this.MainPanel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
         setSize(800,600);
         setVisible(true);

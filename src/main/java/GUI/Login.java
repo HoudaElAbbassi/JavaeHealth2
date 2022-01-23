@@ -21,6 +21,7 @@ public class Login extends JFrame {
     private JButton goBackToMainpageButton;
 
     public Login() throws PasswordException {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 600);
         setContentPane(mainPanel);
 
