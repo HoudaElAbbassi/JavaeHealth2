@@ -2,8 +2,8 @@ package user.Doctor;
 import Connection.DBConnection;
 import Exceptions.EmailException;
 import Exceptions.PasswordException;
-import Security.EmailVerification;
-import Security.PasswordManager;
+import user.Security.EmailVerification;
+import user.Security.PasswordManager;
 import user.UserDAO;
 
 import javax.swing.*;
@@ -272,6 +272,11 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
                 JOptionPane.showMessageDialog(null, "User doesn't exist!");
 
             }
+        return null;
+    }
+
+    @Override
+    public String getEmailById(long id) {
         return null;
     }
 

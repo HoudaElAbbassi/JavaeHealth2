@@ -3,9 +3,8 @@ package user.Admin;
 import Connection.DBConnection;
 import Exceptions.EmailException;
 import Exceptions.PasswordException;
-import Security.EmailVerification;
-import Security.PasswordManager;
-import user.Doctor.Doctor;
+import user.Security.EmailVerification;
+import user.Security.PasswordManager;
 import user.UserDAO;
 
 import javax.swing.*;
@@ -248,6 +247,11 @@ public class AdminDAOImp implements UserDAO<Admin> {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error");
         }
+        return null;
+    }
+
+    @Override
+    public String getEmailById(long id) {
         return null;
     }
 }

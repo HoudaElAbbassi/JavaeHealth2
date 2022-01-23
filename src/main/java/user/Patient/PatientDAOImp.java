@@ -3,8 +3,8 @@ package user.Patient;
 import Connection.DBConnection;
 import Exceptions.EmailException;
 import Exceptions.PasswordException;
-import Security.EmailVerification;
-import Security.PasswordManager;
+import user.Security.EmailVerification;
+import user.Security.PasswordManager;
 import user.UserDAO;
 
 import javax.swing.*;
@@ -262,6 +262,24 @@ public class PatientDAOImp implements UserDAO<Patient> {
             ResultSet rs = ps.executeQuery();
             rs.next();
             return rs.getString("lastName");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "User doesn't exist");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error");
+        }
+        return null;
+    }
+
+    @Override
+    public String getEmailById(long id) {
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "select email from patients WHERE id=" + id;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getString("email");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "User doesn't exist");
         } catch (Exception e) {

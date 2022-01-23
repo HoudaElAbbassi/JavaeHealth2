@@ -17,4 +17,5 @@ public interface UserDAO<User>{
     public String getPassword(String userEmail);
     public String getFirstNameByID(long id);
     public  String getLastNameByID(long id);
+    public String getEmailById(long id);
 }

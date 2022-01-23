@@ -24,7 +24,9 @@ public class Patient extends User {
         return healthInfo;
     }
 
+
     public void setHealthInfo(File healthInfo) {
+
         this.healthInfo = healthInfo;
     }
 

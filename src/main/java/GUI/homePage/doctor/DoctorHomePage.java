@@ -9,10 +9,14 @@ import appointments.schedule.Schedule;
 import appointments.schedule.ScheduleDAOImp;
 import appointments.schedule.Status;
 import com.github.lgooddatepicker.components.*;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfWriter;
 import user.Doctor.Doctor;
 import user.Doctor.DoctorDAOImp;
 import user.Patient.PatientDAOImp;
+import utilities.Mailer;
 
+import javax.mail.MessagingException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
@@ -23,12 +27,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.io.File;
 
+/**
+ * This class is the Homepage of the doctor. The doctor has the possibility
+ * to add or delete slots to the Schedule and can add multiple dates at the time.
+ * The doctor also has an overview of his booked appointments and can cancel if necessary.
+ */
 public class DoctorHomePage extends JFrame{
-    /**
-     * This class is the Homepage of the doctor. The doctor has the possibility
-     * to add or delete slots to the Schedule and can add multiple dates at the time.
-     * The doctor also has an overview of his booked appointments and can cancel if necessary.
-     */
+
     private JPanel mainPanel;
     private JTabbedPane Appointments;
     private JPanel AppointmentsPanel;
@@ -53,6 +58,7 @@ public class DoctorHomePage extends JFrame{
     private JPanel addOneDate;
     private JButton exportHealthinfoButton;
     private JButton importHealthinfoButton;
+    private JScrollBar scrollBar2;
     private JPanel TimePanelEnd;
     private JFileChooser fileChooser = new JFileChooser();
     File file = null;
@@ -83,7 +89,8 @@ public class DoctorHomePage extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setContentPane(mainPanel);
         setSize(500, 500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
 
         UsernameTextField.setText(doctor.getFirstName()+" "+doctor.getLastName());
 
@@ -109,6 +116,7 @@ public class DoctorHomePage extends JFrame{
 
 
         //Button Action
+
         viewAppointmentsButton.addActionListener(new ActionListener() {
             /**
              *This Methode is for the View Appointment Button.
@@ -120,6 +128,9 @@ public class DoctorHomePage extends JFrame{
                 PatientDAOImp patientDAOImp=new PatientDAOImp();
                 ScheduleDAOImp scheduleDAOImp=new ScheduleDAOImp();
                 DefaultTableModel tbModel = (DefaultTableModel) AppointmentTable.getModel();
+
+                //resets the table
+                tbModel.setRowCount(0);
 
                 Object[] columnsName=new Object[7];
 
@@ -311,17 +322,46 @@ public class DoctorHomePage extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 AppointmentDAOImp appointmentDAOImp=new AppointmentDAOImp();
+                PatientDAOImp patientDAOImp=new PatientDAOImp();
 
                 //get selected row and confirm to delete
-                int i = Integer.parseInt((String) AppointmentTable.getValueAt(AppointmentTable.getSelectedRow(), 0));
+                int i = Integer.parseInt((String) AppointmentTable.getValueAt(AppointmentTable.getSelectedRow(), 0).toString());
+                    System.out.println(i);
 
                 int input = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel the appointment?", "choose", JOptionPane.YES_NO_OPTION);
 
-                //if delete is confirmed
                 if (input == 0) {
 
                     appointmentDAOImp.cancelById(i);
+
+
+                    //send Mail to doctor and to patient
+
+                    try {
+                        Mailer.sendMail(doctor.getEmail(),
+                                "Hello " + doctor.getFirstName() + "!\n\nYour Appointment has been successfully canceled!\n\n" +
+                                        "Best regards\n\neHealth Consulting",
+                                "Appointment Cancellation"
+                        );
+                    } catch (MessagingException ex) {
+                        ex.printStackTrace();
+                    }
+
+
+                    try {
+                        Mailer.sendMail(patientDAOImp.getEmailById(appointmentDAOImp.getPatientIdById(i)),
+                                "Hello " + patientDAOImp.getLastNameByID(appointmentDAOImp.getPatientIdById(i)) + "!\n\nYour Appointment has been successfully canceled! The Patient has been informed\n\n" +
+                                        "Best regards\n\neHealth Consulting",
+                                "Appointment Cancellation"
+                        );
+                    } catch (MessagingException ex) {
+                        ex.printStackTrace();
+                    }
                 }
+
+
+
+
 
                 //refreshing the table
                 viewAppointmentsButton.doClick();
@@ -356,6 +396,44 @@ public class DoctorHomePage extends JFrame{
 
             }
         });
+        exportHealthinfoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                File textFile = null;
+                int i = Integer.parseInt((String) AppointmentTable.getValueAt(AppointmentTable.getSelectedRow(), 0).toString());
+                System.out.println(i);
+                if (fileChooser.showSaveDialog(exportHealthinfoButton) == JFileChooser.APPROVE_OPTION) {
+                    textFile = fileChooser.getSelectedFile();
+                }
+                try{
+                    FileOutputStream out = new FileOutputStream(textFile);
+                    AppointmentDAOImp appointmentDAOImp = new AppointmentDAOImp();
+                    out.write(appointmentDAOImp.getHealthInfoById(i));
+                    out.close();
+                    Document pdfDoc = new Document(PageSize.A4);
+                    PdfWriter.getInstance(pdfDoc, new FileOutputStream(textFile+".pdf"))
+                            .setPdfVersion(PdfWriter.PDF_VERSION_1_7);
+                    pdfDoc.open();
+                    Font myFont = new Font();
+                    myFont.setStyle(Font.NORMAL);
+                    myFont.setSize(11);
+                    pdfDoc.add(new Paragraph("\n"));
+                    BufferedReader br = new BufferedReader(new FileReader(textFile));
+                    String strLine;
+                    while ((strLine = br.readLine()) != null) {
+                        Paragraph para = new Paragraph(strLine + "\n", myFont);
+                        para.setAlignment(Element.ALIGN_JUSTIFIED);
+                        pdfDoc.add(para);
+                    }
+                    pdfDoc.close();
+                    br.close();
+                } catch (DocumentException | IOException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+        });
     }
 
 
@@ -383,7 +461,7 @@ public class DoctorHomePage extends JFrame{
         //Doctor doctor=new Doctor("patient2","email2@doc.de","Password1234#","firstname",
           //    "lastname","address", LocalDate.of(2000,12,12), Specialization.Allergist);
         DoctorDAOImp doctorDAOImp=new DoctorDAOImp();
-        Doctor doctor= doctorDAOImp.getByID(2);
+        Doctor doctor= doctorDAOImp.getByID(1);
         //doctorDAOImp.save(doctor);
         DoctorHomePage doctorHomePage=new DoctorHomePage(doctor);
         doctorHomePage.setVisible(true);
