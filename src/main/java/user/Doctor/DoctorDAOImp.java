@@ -2,8 +2,8 @@ package user.Doctor;
 import Connection.DBConnection;
 import Exceptions.EmailException;
 import Exceptions.PasswordException;
-import user.Security.EmailVerification;
-import user.Security.PasswordManager;
+import Security.EmailVerification;
+import Security.PasswordManager;
 import user.UserDAO;
 
 import javax.swing.*;
