@@ -42,7 +42,6 @@ public class Reminder extends TimerTask implements Runnable {
             e.printStackTrace();
         }
         System.out.println("Mail sent");
-        System.exit(0);
     }
 
     public void stop() {
