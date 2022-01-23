@@ -23,8 +23,5 @@ public interface AppointmentDAO {
     long getScheduleId(long appointmentId);
     HealthProblem getHealthProblemById(long id);
     void updateHealthinfoById(long id, File healthproblemfile);
-
     public byte[] getHealthInfo(long patientId);
-
-    public LocalDateTime getDateTimeByScheduleId(long scheduleId);
 }

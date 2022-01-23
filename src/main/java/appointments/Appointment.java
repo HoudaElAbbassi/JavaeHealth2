@@ -16,7 +16,6 @@ public class Appointment {
     private long scheduleId;
     private HealthProblem healthProblem;
     private File healthInfo;
-    private Reminder reminder = Reminder.three_days;
 
     public Appointment() {
     }
@@ -26,15 +25,13 @@ public class Appointment {
                        long patientId,
                        long scheduleId,
                        HealthProblem healthProblem,
-                       File healthInfo,
-                       Reminder reminder) {
+                       File healthInfo) {
         this.id = id;
         this.doctorId = doctorId;
         this.patientId = patientId;
         this.scheduleId = scheduleId;
         this.healthProblem = healthProblem;
         this.healthInfo = healthInfo;
-        this.reminder = reminder;
     }
 
     public long getId() {
@@ -83,16 +80,6 @@ public class Appointment {
 
     public void setHealthInfo(File healthInfo) {
         this.healthInfo = healthInfo;
-    }
-
-
-
-    public Reminder getReminder() {
-        return reminder;
-    }
-
-    public void setReminder(Reminder reminder) {
-        this.reminder = reminder;
     }
 
     @Override

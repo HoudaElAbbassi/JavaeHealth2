@@ -6,6 +6,7 @@ import Exceptions.ScheduleException;
 import javax.swing.*;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -284,5 +285,26 @@ public class ScheduleDAOImp implements ScheduleDAO {
         return null;
     }
 
+    @Override
+    public LocalDateTime getDateTimeByScheduleId(long scheduleId) {
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "SELECT date, start FROM schedule WHERE scheduleId="+scheduleId;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()){
+                LocalDate date=rs.getDate("date").toLocalDate();
+                LocalTime time=rs.getTime("start").toLocalTime();
+
+                return LocalDateTime.of(date,time);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error");
+        }
+        return null;
+    }
 
 }

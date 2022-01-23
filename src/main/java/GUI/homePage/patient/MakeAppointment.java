@@ -1,8 +1,11 @@
 package GUI.homePage.patient;
 
-import appointments.*;
+import appointments.Appointment;
+import appointments.AppointmentDAOImp;
 import appointments.schedule.Schedule;
+import appointments.schedule.ScheduleDAO;
 import appointments.schedule.ScheduleDAOImp;
+import org.apache.commons.lang3.time.DateUtils;
 import user.Doctor.Doctor;
 import user.Doctor.DoctorDAOImp;
 import user.Doctor.Specialization;
@@ -10,6 +13,7 @@ import user.Patient.HealthProblem;
 import user.Patient.Patient;
 import utilities.EnumMapping;
 import utilities.Mailer;
+import utilities.Reminder;
 import utilities.distanceOfSearch.DistanceOfSearch;
 import utilities.distanceOfSearch.MapUtils;
 
@@ -20,9 +24,12 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Date;
+import java.text.ParseException;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
 
 public class MakeAppointment extends JFrame implements ActionListener {
     Patient patient;
@@ -58,7 +65,7 @@ public class MakeAppointment extends JFrame implements ActionListener {
         setSize(500,500);
         healthInfoButton.addActionListener(this);
         healthProblemBox.setModel(new DefaultComboBoxModel<>(HealthProblem.values()));
-        reminderBox.setModel(new DefaultComboBoxModel<>(Reminder.values()));
+        //reminderBox.setModel(new DefaultComboBoxModel<>(Reminder.values()));
         showDoctorsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -120,15 +127,11 @@ public class MakeAppointment extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 boolean s = false;
                 try{
-                    reminderBox.setModel(new DefaultComboBoxModel<>(Reminder.values()));
                     Appointment appointment = new Appointment(selectedDoctor.getId(),
                         patient.getId(),
                         selectedSchedule.getScheduleId(),
                         HealthProblem.valueOf(healthProblemBox.getItemAt(healthProblemBox.getSelectedIndex()).toString()),
-                        file,
-                        Reminder.valueOf(reminderBox.getSelectedItem().toString()));
-                    System.out.println(HealthProblem.valueOf(healthProblemBox.getItemAt(healthProblemBox.getSelectedIndex()).toString()));
-                    System.out.println(Reminder.valueOf(reminderBox.getSelectedItem().toString()));
+                        file);
                     try{
                         AppointmentDAOImp appointmentDAOImp = new AppointmentDAOImp();
                         System.out.println(patient.getId());
@@ -145,15 +148,36 @@ public class MakeAppointment extends JFrame implements ActionListener {
                                         "\n\nBest regards\n\neHealth Consulting",
                                 "Appointment Reservation"
                         );
-                        //reminder=new Reminder(patient Email,msg,subject)
-                        //reminder.setlocaldatetime(appoinmentDao.getDatetime(scheduleId))
-                        //reminder.run();
-
+                        Timer timer=new Timer();
+                        Reminder reminder = new Reminder(patient.getEmail(),
+                                "Hello " + patient.getFirstName()+"!\n\nDon't forget! You have an appointment with the following information:\n"+
+                                "-Doctor Name: "+selectedDoctor.getLastName()+" "+selectedDoctor.getFirstName()+".\n"+
+                                "-Address: "+selectedDoctor.getAddress()+".\n"+
+                                "-Date and Time: "+selectedSchedule.getDate()+" at "+selectedSchedule.getStart()+
+                                "\n\nBest regards\n\neHealth Consulting", "Appointment Reminder");
+                        ScheduleDAOImp scheduleDAOImp = new ScheduleDAOImp();
+                        Date date = Reminder.convert(scheduleDAOImp.getDateTimeByScheduleId(selectedSchedule.getScheduleId()));
+                        if(reminderBox.getSelectedIndex() == 0){
+                            date = DateUtils.addWeeks(date, 1);
+                        }
+                        else if(reminderBox.getSelectedIndex() == 1){
+                            date = DateUtils.addDays(date, 3);
+                        }
+                        else if(reminderBox.getSelectedIndex() == 2){
+                            date = DateUtils.addHours(date, 1);
+                        }
+                        else if(reminderBox.getSelectedIndex() == 3){
+                            date = DateUtils.addMinutes(date, 10);
+                        }
+                        System.out.println("Reminder will be sent on: "+ date);
+                        timer.schedule(reminder, date);
                     }
                 } catch (NullPointerException npe2){
                     JOptionPane.showMessageDialog(null, "Please select an appointment!");
                 }
                 catch (MessagingException ex) {
+                    ex.printStackTrace();
+                } catch (ParseException ex) {
                     ex.printStackTrace();
                 }
             }

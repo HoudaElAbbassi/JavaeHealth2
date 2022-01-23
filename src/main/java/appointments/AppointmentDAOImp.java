@@ -27,15 +27,13 @@ public class AppointmentDAOImp implements AppointmentDAO{
     public boolean addAppointment(Appointment appointment) {
             try{
                 Connection con= DBConnection.getConnection();
-                String sql = "INSERT INTO `appointments`( `doctorId`, `patientId`,`scheduleId`,`healthproblem`, `healthinfo`, `reminder`) VALUES (?,?,?,?,?,?)";
+                String sql = "INSERT INTO `appointments`( `doctorId`, `patientId`,`scheduleId`,`healthproblem`, `healthinfo`) VALUES (?,?,?,?,?)";
                 PreparedStatement ps = con.prepareStatement(sql);
                 ps.setLong(1, appointment.getDoctorId());
                 ps.setLong(2, appointment.getPatientId());
                 ps.setLong(3,appointment.getScheduleId());
                 ps.setString(4,appointment.getHealthProblem().toString());
                 ps.setCharacterStream(5, new FileReader(appointment.getHealthInfo()));
-                ps.setString(6, appointment.getReminder().toString());
-
                 ps.executeUpdate();
                 ScheduleDAOImp scheduleDAOImp = new ScheduleDAOImp();
                 scheduleDAOImp.updateStatusToBooked(appointment.getScheduleId());
@@ -72,14 +70,13 @@ public class AppointmentDAOImp implements AppointmentDAO{
             scheduleDAOImp.updateStatusToAvailable(appointment.getScheduleId());
             Connection con= DBConnection.getConnection();
             String sql = "delete from appointments where doctorId=? , patientId=?, scheduleId=?" +
-                    "healthproblem=?, healthinfo=?, reminder=? ";
+                    "healthproblem=?, healthinfo=? ";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setLong(1, appointment.getDoctorId());
             ps.setLong(2, appointment.getPatientId());
             ps.setLong(3,appointment.getScheduleId());
             ps.setString(4,appointment.getHealthProblem().toString());
             ps.setCharacterStream(5, new FileReader(appointment.getHealthInfo()));
-            ps.setString(6, appointment.getReminder().toString());
 
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Appointment deleted");
@@ -124,7 +121,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
                     File file=new File("/output.txt");
                     Files.write(CharStreams.toString(rs.getCharacterStream("healthinfo")).getBytes(StandardCharsets.UTF_8),file);
                     appointment.setHealthInfo(file);
-                    appointment.setReminder(Reminder.valueOf(rs.getString("reminder")));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -151,7 +147,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
                 File file=new File("C:\\Users\\houda\\Desktop\\JAVAProject\\output.txt");
                 Files.write(CharStreams.toString(rs.getCharacterStream("healthinfo")).getBytes(StandardCharsets.UTF_8),file);
                 appointment.setHealthInfo(file);
-                appointment.setReminder(Reminder.valueOf(rs.getString("reminder")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -174,7 +169,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
                 appointment.setPatientId(rs.getLong("patientId"));
                 appointment.setScheduleId(rs.getLong("scheduleId"));
                 appointment.setHealthProblem(HealthProblem.valueOf(rs.getString("HealthProblem")));
-                appointment.setReminder(Reminder.valueOf(rs.getString("reminder")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -199,7 +193,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
                 appointment.setPatientId(rs.getLong("patientId"));
                 appointment.setScheduleId(rs.getLong("scheduleId"));
                 appointment.setHealthProblem(HealthProblem.valueOf(rs.getString("HealthProblem")));
-                appointment.setReminder(Reminder.valueOf("reminder"));
                 list.add(appointment);
             }
 
@@ -226,7 +219,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
                 appointment.setPatientId(rs.getLong("patientId"));
                 appointment.setScheduleId(rs.getLong("scheduleId"));
                 appointment.setHealthProblem(HealthProblem.valueOf(rs.getString("HealthProblem")));
-                appointment.setReminder(Reminder.valueOf(rs.getString("reminder")));
                 list.add(appointment);
             }
 
@@ -253,7 +245,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
                 appointment.setPatientId(rs.getLong("patientId"));
                 appointment.setScheduleId(rs.getLong("scheduleId"));
                 appointment.setHealthProblem(HealthProblem.valueOf(rs.getString("healthProblem")));
-                appointment.setReminder(Reminder.valueOf(rs.getString("reminder")));
                 list.add(appointment);
             }
 
@@ -329,28 +320,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public LocalDateTime getDateTimeByScheduleId(long scheduleId) {
-        try {
-            Connection con = DBConnection.getConnection();
-            String sql = "SELECT date,start FROM appointments WHERE schdeuleId="+scheduleId;
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()){
-                LocalDate date=rs.getDate("date").toLocalDate();
-                LocalTime time=rs.getTime("start").toLocalTime();
-
-                return LocalDateTime.of(date,time);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
         return null;
     }

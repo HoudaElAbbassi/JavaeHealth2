@@ -101,7 +101,12 @@
           <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <model/>
+          <model>
+            <item value="1 week"/>
+            <item value="3 days"/>
+            <item value="1 hour"/>
+            <item value="10 minutes"/>
+          </model>
         </properties>
       </component>
       <component id="41087" class="javax.swing.JTextField" binding="distanceOfSearch">
