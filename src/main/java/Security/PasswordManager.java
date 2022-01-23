@@ -31,7 +31,7 @@ public class PasswordManager {
                 "\n" +
                 "    Contains at least one lower alpha char and one upper alpha char\n" +
                 "\n" +
-                "    Contains at least one char within a set of special chars (@#%$^ etc.)\n" +
+                "    Contains at least one char within a set of special chars (@#$%^&+=)\n" +
                 "\n" +
                 "    Does not contain space, tab, etc.\n");}
         return true;

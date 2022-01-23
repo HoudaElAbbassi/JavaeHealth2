@@ -19,6 +19,7 @@ public class Login extends JFrame {
     private JPanel mainPanel;
     private JButton logInButton;
     private JButton goBackToMainpageButton;
+    private JButton resetPasswordButton;
 
     public Login() throws PasswordException {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -86,6 +87,14 @@ public class Login extends JFrame {
                 MainPage mainPage = new MainPage();
                 setVisible(false);
                 mainPage.setVisible(true);
+            }
+        });
+        resetPasswordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                ResetPasswordPage resetPasswordPage=new ResetPasswordPage();
+                resetPasswordPage.setVisible(true);
             }
         });
     }

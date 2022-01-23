@@ -58,7 +58,7 @@ public class PatientDAOImp implements UserDAO<Patient> {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, patient.getUserName());
             ps.setString(2, patient.getEmail());
-            ps.setString(3, patient.getPassword());
+            ps.setString(3, PasswordManager.encode(patient.getPassword()));
             ps.setString(4, patient.getFirstName());
             ps.setString(5, patient.getLastName());
             ps.setString(6, patient.getAddress());
@@ -141,6 +141,7 @@ public class PatientDAOImp implements UserDAO<Patient> {
             ResultSet rs=ps.executeQuery();
             if(rs.next()){
                 patient.setId(rs.getLong("id"));
+                patient.setUserName(rs.getString("userName"));
                 patient.setAddress(rs.getString("address"));
                 patient.setBirthDate(rs.getDate("birthDate").toLocalDate());
                 patient.setEmail(rs.getString("email"));
@@ -288,7 +289,5 @@ public class PatientDAOImp implements UserDAO<Patient> {
         }
         return null;
     }
-
-
 }
 
