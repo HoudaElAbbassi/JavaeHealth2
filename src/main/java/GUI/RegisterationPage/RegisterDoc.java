@@ -35,14 +35,7 @@ public class RegisterDoc extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setContentPane(mainPanel);
         setSize(500,500);
-        /*
-        JFrame frame=new JFrame();
-        frame.setSize(300,300);
-        frame.setContentPane(mainPanel);
-        frame.setVisible(true);
-        mainPanel.setVisible(true);
 
-         */
         comboBox1.setModel(new DefaultComboBoxModel<>(Specialization.values()));
 
         BirthdatePanel.add(dateChooser);

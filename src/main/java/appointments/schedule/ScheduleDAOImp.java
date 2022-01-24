@@ -31,7 +31,6 @@ public class ScheduleDAOImp implements ScheduleDAO {
                     schedule.getDoctorId() + "', '" +
                     Time.valueOf(schedule.getStart()) + "', '" +
                     Time.valueOf(schedule.getEnd()) + "','" + schedule.getStatus().toString() + "')";
-
             stmt.execute(sql);
 
         } catch (ScheduleException e) {
@@ -112,7 +111,6 @@ public class ScheduleDAOImp implements ScheduleDAO {
             while (rs.next()) {
                 Schedule schedule = new Schedule();
                 schedule.setScheduleId(rs.getLong("scheduleId"));
-                //System.out.println(rs.getLong("scheduleId"));
                 schedule.setDoctorId(rs.getLong("doctorId"));
                 schedule.setDate(rs.getDate("date").toLocalDate());
                 schedule.setStart(rs.getTime("start").toLocalTime());
@@ -188,10 +186,7 @@ public class ScheduleDAOImp implements ScheduleDAO {
             //ps.setLong(1, schedule.getDoctorId());
             //ps.setDate(2, Date.valueOf(schedule.getDate()));
             //ps.setTime(3, Time.valueOf(schedule.getStart()));
-            System.out.println(sql2);
-            System.out.println(ps.toString());
             ResultSet rs = ps.executeQuery(sql2);
-            System.out.println("nach ResultSet");
             if (rs.next()) return true;
             else return false;
         } catch (Exception e) {
@@ -207,7 +202,6 @@ public class ScheduleDAOImp implements ScheduleDAO {
         try {
             Connection con = DBConnection.getConnection();
             String sql = "delete from schedule where scheduleId=" + scheduleId;
-            System.out.println(sql);
             PreparedStatement ps = con.prepareStatement(sql);
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Schedulr deleted");

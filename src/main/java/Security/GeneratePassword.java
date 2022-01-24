@@ -35,35 +35,25 @@ public class GeneratePassword {
 
             // at least 2 chars (lowercase)
             String strLowerCase = generateRandomString(CHAR_LOWERCASE, 2);
-            System.out.format("%-20s: %s%n", "Chars (Lowercase)", strLowerCase);
             result.append(strLowerCase);
 
             // at least 2 chars (uppercase)
             String strUppercaseCase = generateRandomString(CHAR_UPPERCASE, 2);
-            System.out.format("%-20s: %s%n", "Chars (Uppercase)", strUppercaseCase);
             result.append(strUppercaseCase);
 
             // at least 2 digits
             String strDigit = generateRandomString(DIGIT, 2);
-            System.out.format("%-20s: %s%n", "Digits", strDigit);
             result.append(strDigit);
 
             // at least 2 special characters (punctuation + symbols)
             String strSpecialChar = generateRandomString(OTHER_SPECIAL, 2);
-            System.out.format("%-20s: %s%n", "Special chars", strSpecialChar);
             result.append(strSpecialChar);
 
             // remaining, just random
             String strOther = generateRandomString(PASSWORD_ALLOW, PASSWORD_LENGTH - 8);
-            System.out.format("%-20s: %s%n", "Others", strOther);
             result.append(strOther);
 
             String password = result.toString();
-            // combine all
-            System.out.format("%-20s: %s%n", "Password", password);
-            // shuffle again
-            System.out.format("%-20s: %s%n", "Final Password", shuffleString(password));
-            System.out.format("%-20s: %s%n%n", "Password Length", password.length());
 
             return password;
         }

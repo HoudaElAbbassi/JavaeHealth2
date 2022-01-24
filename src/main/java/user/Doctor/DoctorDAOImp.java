@@ -66,7 +66,7 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, doctor.getUserName());
             ps.setString(2, doctor.getEmail());
-            ps.setString(3, doctor.getPassword());
+            ps.setString(3, PasswordManager.encode(doctor.getPassword()));
             ps.setString(4,doctor.getFirstName());
             ps.setString(5,doctor.getLastName());
             ps.setString(6,doctor.getAddress());
@@ -139,12 +139,14 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
         try {
 
             Connection con = DBConnection.getConnection();
-            String sql = "SELECT userName, email, password, firstName, lastName, address, birthDate, specialization from doctors where email='"+userEmail+"'";
+            String sql = "SELECT * from doctors where email='"+userEmail+"'";
             PreparedStatement ps = con.prepareStatement(sql);
 
             ResultSet rs=ps.executeQuery();
 
             if(rs.next()) {
+
+                doctor.setId(rs.getLong("id"));
                 doctor.setAddress(rs.getString("address"));
                 doctor.setBirthDate(rs.getDate("birthDate").toLocalDate());
                 doctor.setEmail(rs.getString("email"));
@@ -152,7 +154,7 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
                 doctor.setLastName(rs.getString("lastName"));
                 doctor.setPassword(rs.getString("password"));
                 doctor.setSpecialization(Specialization.valueOf(rs.getString("specialization")));
-                //doctor.setEmail(email);
+
             }
         } catch (Exception e) {
             e.printStackTrace();

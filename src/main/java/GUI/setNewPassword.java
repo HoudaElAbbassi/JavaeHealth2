@@ -60,8 +60,11 @@ public class setNewPassword extends JFrame {
                         DoctorDAOImp doctorDAOImp = new DoctorDAOImp();
                         Doctor doctor = doctorDAOImp.getByEmail(emailtxt.getText());
 
-                        if (!doctor.getPassword().equals(PasswordManager.encode(tempPassword.getText())))
-                           throw new PasswordException("Please check the password we sent you!");
+
+                        if (!doctor.getPassword().equals(PasswordManager.encode(tempPassword.getText()))) {
+                            throw new PasswordException("The passwords do not match");
+                        }
+
 
                         doctor.setPassword(newPassword.getText());
                         doctorDAOImp.edit(doctor);
@@ -70,6 +73,7 @@ public class setNewPassword extends JFrame {
                         dispose();
                         MainPage mainPage = new MainPage();
                         mainPage.setVisible(true);
+
 
                     } else if (userBox.getSelectedItem().toString().equals("Admin")) {
                         AdminDAOImp adminDAOImp = new AdminDAOImp();

@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public enum Specialization {
 
-    Allergist("Allergist/Immunologist"),
+    Allergist("Allergist"),
 
     Cardiologist("Cardiologist"),
 

@@ -42,12 +42,13 @@ public class ResetPasswordPage extends JFrame{
                     //compare Date
                     Patient patient=patientDAOImp.getByEmail(email.getText());
                     if(patient.getFirstName().equals(firstname.getText()) && patient.getLastName().equals(lastname.getText())){
-                        String p=PasswordManager.encode(GeneratePassword.generateStrongPassword());
-                        patient.setPassword(PasswordManager.decode(p));
+                        String p=GeneratePassword.generateStrongPassword();
+                        patient.setPassword(p);
                         patientDAOImp.edit(patient);
 
+
                         try {
-                            Mailer.sendMail(patient.getEmail(),"new Password:"+PasswordManager.decode(p),"Your new Password");
+                            Mailer.sendMail(patient.getEmail(),"new Password: "+p,"Your new Password");
                         } catch (MessagingException ex) {
                             ex.printStackTrace();
                         }
@@ -62,11 +63,11 @@ public class ResetPasswordPage extends JFrame{
                 else if(userBox.getSelectedItem().toString().equals("Doctor")){
                     Doctor doctor=doctorDAOImp.getByEmail(email.getText());
                     if(doctor.getFirstName().equals(firstname.getText()) && doctor.getLastName().equals(lastname.getText())){
-                        String p=PasswordManager.encode(GeneratePassword.generateStrongPassword());
-                        doctor.setPassword(PasswordManager.decode(p));
+                        String p=GeneratePassword.generateStrongPassword();
+                        doctor.setPassword(p);
                         doctorDAOImp.edit(doctor);
                         try {
-                            Mailer.sendMail(doctor.getEmail(),"new Password:"+PasswordManager.decode(p),"Your new Password");
+                            Mailer.sendMail(doctor.getEmail(),"new Password:"+p,"Your new Password");
                         } catch (MessagingException ex) {
                             ex.printStackTrace();
                         }
@@ -74,6 +75,7 @@ public class ResetPasswordPage extends JFrame{
                         setNewPassword setNewPassword=new setNewPassword();
                         setNewPassword.setVisible(true);
                     }
+
                     else{
                         JOptionPane.showMessageDialog(null,"E-Mail/First-/Lastname wrong");
                     }
@@ -81,8 +83,8 @@ public class ResetPasswordPage extends JFrame{
                 else{
                     Admin admin=adminDAOImp.getByEmail(email.getText());
                     if(admin.getFirstName().equals(firstname.getText()) && admin.getLastName().equals(lastname.getText())){
-                        String p=PasswordManager.encode(GeneratePassword.generateStrongPassword());
-                        admin.setPassword(PasswordManager.decode(p));
+                        String p=GeneratePassword.generateStrongPassword();
+                        admin.setPassword(p);
                         try {
                             adminDAOImp.edit(admin);
                         } catch (PasswordException ex) {

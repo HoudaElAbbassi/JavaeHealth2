@@ -54,8 +54,8 @@ public class Login extends JFrame {
                         if(doctorDAOImp.getPassword(emailText.getText()).equals(encodedPassword)){
                             dispose();
                             GUI.homePage.doctor.DoctorHomePage doctorHomePage = new GUI.homePage.doctor.DoctorHomePage(doctorDAOImp.getByEmail(emailText.getText()));
-                            setVisible(false);
-                            //doctorHomePage.setVisible(true);
+                            System.out.println(doctorDAOImp.getByEmail(emailText.getText()).getId());
+                            doctorHomePage.setVisible(true);
                         }
                         else   JOptionPane.showMessageDialog(null,"Incorrect password!");
 

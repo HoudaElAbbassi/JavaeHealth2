@@ -1,7 +1,6 @@
 package GUI.homePage.doctor;
 
-import Exceptions.EmailException;
-import Exceptions.PasswordException;
+
 import Exceptions.ScheduleException;
 import GUI.MainPage;
 import appointments.AppointmentDAOImp;
@@ -12,7 +11,6 @@ import com.github.lgooddatepicker.components.*;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import user.Doctor.Doctor;
-import user.Doctor.DoctorDAOImp;
 import user.Patient.PatientDAOImp;
 import utilities.Mailer;
 
@@ -29,14 +27,12 @@ import java.io.File;
 
 /**
  * This class is the Homepage of the doctor. The doctor has the possibility
- * to add or delete slots to the Schedule and can add multiple dates at the time.
+ * to add or delete slots to the Schedule and can add multiple dates.
  * The doctor also has an overview of his booked appointments and can cancel if necessary.
  */
 public class DoctorHomePage extends JFrame{
 
     private JPanel mainPanel;
-    private JTabbedPane Appointments;
-    private JPanel AppointmentsPanel;
     private JTable AppointmentTable;
     private JButton addToScheduleButton;
     private JButton viewAppointmentsButton;
@@ -51,15 +47,11 @@ public class DoctorHomePage extends JFrame{
     private JButton deleteFromScheduleButton;
     private JButton addMultipleDatesToButton;
     private JButton cancelAppointmentButton;
-    private JTabbedPane tabbedPane1;
     private JButton logoutButton;
     private JLabel UsernameTextField;
-    private JPanel addmultipledates;
-    private JPanel addOneDate;
     private JButton exportHealthinfoButton;
     private JButton importHealthinfoButton;
-    private JScrollBar scrollBar2;
-    private JPanel TimePanelEnd;
+    //private JPanel TimePanelEnd;
     private JFileChooser fileChooser = new JFileChooser();
     File file = null;
 
@@ -80,12 +72,12 @@ public class DoctorHomePage extends JFrame{
     private TimePicker timePicker4=new TimePicker(timePickerSettings);
 
 
+    /**
+     * All the Actions of GUI(ButtonClicks) are implemented in the Constructor.
+     * @param doctor The doctor that is currently logged in
+     */
 
     public DoctorHomePage(Doctor doctor) {
-        /**
-         * The HomePage of the Doctor receives as the attribute the logged in doctor.
-         * All the Actions of GUI(ButtonClicks) are implemented in the Constructor.
-         */
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setContentPane(mainPanel);
         setSize(500, 500);
@@ -117,11 +109,11 @@ public class DoctorHomePage extends JFrame{
 
         //Button Action
 
+        /**
+         * The viewAppointments Button is activated with a click on it.
+         * a table is created that fetches all the needed data from the database
+         */
         viewAppointmentsButton.addActionListener(new ActionListener() {
-            /**
-             *This Methode is for the View Appointment Button.
-             * @param e
-             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 AppointmentDAOImp appointmentDAOImp=new AppointmentDAOImp();
@@ -164,14 +156,13 @@ public class DoctorHomePage extends JFrame{
             }
         });
 
-        //add to schedule
+        /**
+         *  When the "add to schedule"-button is pressed, the Methode initializes a schedule-Object.This Object is being
+         * saved in the Database. This class uses the class ScheduleDAO to manipulate the database.
+         *  If a Exception is being thrown by a Methode of ScheduleDAO, the Exception is being handled.
+         */
         addToScheduleButton.addActionListener(new ActionListener() {
-            /**
-             * When the "add to schedule"-button is pressed the Methode initializes a schedule-Object.This Object is being
-             * saved in the Database. This class uses the class ScheduleDAO to manipulate the database.
-             * If a Exception is being thrown by a Methode of ScheduleDAO, the Exception is being handled.
-             * @param e
-             */
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 LocalTime start = timePicker.getTime();
@@ -192,6 +183,11 @@ public class DoctorHomePage extends JFrame{
 
             }
         });
+
+        /**
+         * the "view Schedule"-Button is activated with a click on it.
+         * the schedule Table is created that fetches all needed data from the database
+         */
         viewScheduleButton.addActionListener(new ActionListener() {
             /**
              * This Methode gets the Schedule from the Database and displays it in a Table. Each row represents the
@@ -237,13 +233,12 @@ public class DoctorHomePage extends JFrame{
 
             }
         });
+        /**
+         * the doctor has the possibility to delete a slot from the schedule by selecting the row.
+         * If the selected slot is already booked the deletion is not possible, if otherwise the slot gets deleted.
+         * The deletion has to get confirmed before the slot is deleted from the table schedule in the database.
+         */
         deleteFromScheduleButton.addActionListener(new ActionListener() {
-            /**
-             * the doctor has the possibility to delete a slot from the schedule by selecting the row.
-             * If the selected slot is already booked the deletion is not possible, if otherwise the slot gets deleted.
-             * The deletion has to get confirmed before the slot is deleted from the table schedule in the database.
-             * @param e
-             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -253,7 +248,7 @@ public class DoctorHomePage extends JFrame{
                     int i = Integer.parseInt( ScheduleTable.getValueAt(ScheduleTable.getSelectedRow(), 0).toString());
 
                     int input = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?", "choose", JOptionPane.YES_NO_OPTION);
-                    System.out.println(i);
+
 
                     //if schedule that has to deleted is already booked, than cancel appointment first
                     if (scheduleDAOImp.getStatusById(i) == Status.booked)
@@ -273,13 +268,12 @@ public class DoctorHomePage extends JFrame{
                 }
             }
         });
+
+        /**
+         * This Methode adds multiple dates to the schedule. The doctor chooses a starting date,time and end date,time(
+         * (if chosen wrong the Exception handles the Error) and creates slots.
+         */
         addMultipleDatesToButton.addActionListener(new ActionListener() {
-            /**
-             * This Methode adds multiple dates to the schedule. The doctor chooses a starting date,time and end date,time(
-             * (if chosen wrong the Exception handels the Error) and creates slots.
-             *
-             * @param e
-             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -313,12 +307,12 @@ public class DoctorHomePage extends JFrame{
                 }
             }
         });
+
+        /**
+         * The doctor selects an appointment that has to be canceled. After the confirmation of cancelation
+         * the class AppointmentDAO is deleting the appointment in the database.
+         */
         cancelAppointmentButton.addActionListener(new ActionListener() {
-            /**
-             * The doctor selects an appointment that has to be canceled. After the confirmation of cancelation
-             * the class AppointmentDAO is deleting the appointment in the database.
-             * @param e
-             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 AppointmentDAOImp appointmentDAOImp=new AppointmentDAOImp();
@@ -326,7 +320,7 @@ public class DoctorHomePage extends JFrame{
 
                 //get selected row and confirm to delete
                 int i = Integer.parseInt((String) AppointmentTable.getValueAt(AppointmentTable.getSelectedRow(), 0).toString());
-                    System.out.println(i);
+
 
                 int input = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel the appointment?", "choose", JOptionPane.YES_NO_OPTION);
 
@@ -368,11 +362,11 @@ public class DoctorHomePage extends JFrame{
 
             }
         });
+
+        /**
+        * This methode of the logout button logs the doctor out and refers to the MainPage
+         */
         logoutButton.addActionListener(new ActionListener() {
-            /**
-             * This methode of the logout button logs the doctor out and refers to the MainPage
-             * @param e
-             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -382,6 +376,11 @@ public class DoctorHomePage extends JFrame{
 
             }
         });
+
+        /**
+         * The Doctor chooses an appointment and can import the healthinfo. This healthinfo is importet to the database
+         * and the patient can view it on the patients' homepage.
+         */
         importHealthinfoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -396,13 +395,18 @@ public class DoctorHomePage extends JFrame{
 
             }
         });
+
+        /**
+         * The doctor can view the healthinfo of the patient that booked an appointment. The file is exported as a
+         * .txt and .pdf file.
+         */
         exportHealthinfoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
                 File textFile = null;
                 int i = Integer.parseInt((String) AppointmentTable.getValueAt(AppointmentTable.getSelectedRow(), 0).toString());
-                System.out.println(i);
+
                 if (fileChooser.showSaveDialog(exportHealthinfoButton) == JFileChooser.APPROVE_OPTION) {
                     textFile = fileChooser.getSelectedFile();
                 }
@@ -435,38 +439,5 @@ public class DoctorHomePage extends JFrame{
             }
         });
     }
-
-
-    private static String convert(InputStream is) {
-        BufferedInputStream bis = new BufferedInputStream(is);
-        ByteArrayOutputStream buf = new ByteArrayOutputStream();
-        int result;
-        String str = null;
-        try {
-            result = bis.read();
-
-            while (result != -1) {
-                buf.write((byte) result);
-                result = bis.read();
-            }
-            str = buf.toString("UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return str;
-    }
-
-
-    public static void main(String[] args) throws PasswordException, EmailException, SQLException {
-        //Doctor doctor=new Doctor("patient2","email2@doc.de","Password1234#","firstname",
-          //    "lastname","address", LocalDate.of(2000,12,12), Specialization.Allergist);
-        DoctorDAOImp doctorDAOImp=new DoctorDAOImp();
-        Doctor doctor= doctorDAOImp.getByID(1);
-        //doctorDAOImp.save(doctor);
-        DoctorHomePage doctorHomePage=new DoctorHomePage(doctor);
-        doctorHomePage.setVisible(true);
-    }
-
-
 }
 
