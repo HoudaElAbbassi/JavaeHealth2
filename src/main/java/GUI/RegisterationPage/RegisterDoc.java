@@ -49,7 +49,7 @@ public class RegisterDoc extends JFrame{
                 //form has to be completely filled
                 try {
                     if (UsernameText.getText().isEmpty() | FirstNameText.getText().isEmpty() |
-                            LastnameText.getText().isEmpty() | addressText.getText().isEmpty())
+                            LastnameText.getText().isEmpty() | addressText.getText().isEmpty() | dateChooser.getDate()==null)
                             throw new Exception("please fill out completely! ");
 
                     boolean registered = false;
