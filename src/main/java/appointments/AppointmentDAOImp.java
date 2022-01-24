@@ -69,22 +69,15 @@ public class AppointmentDAOImp implements AppointmentDAO{
             ScheduleDAOImp scheduleDAOImp = new ScheduleDAOImp();
             scheduleDAOImp.updateStatusToAvailable(appointment.getScheduleId());
             Connection con= DBConnection.getConnection();
-            String sql = "delete from appointments where doctorId=? , patientId=?, scheduleId=?" +
-                    "healthproblem=?, healthinfo=? ";
+            String sql = "delete from appointments where scheduleId=?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setLong(1, appointment.getDoctorId());
-            ps.setLong(2, appointment.getPatientId());
-            ps.setLong(3,appointment.getScheduleId());
-            ps.setString(4,appointment.getHealthProblem().toString());
-            ps.setCharacterStream(5, new FileReader(appointment.getHealthInfo()));
+            ps.setLong(1,appointment.getScheduleId());
 
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Appointment deleted");
         }catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
 

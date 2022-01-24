@@ -141,14 +141,8 @@ public class MakeAppointment extends JFrame implements ActionListener {
                         JOptionPane.showMessageDialog(null, "Please upload your health info file!");
                     }
                     if (s == true){
-                        Mailer.sendMail(patient.getEmail(),
-                                "Hello " + patient.getFirstName()+"!\n\nYou have successfully booked an appointment with the following information:\n"+
-                                        "-Doctor Name: "+selectedDoctor.getLastName()+" "+selectedDoctor.getFirstName()+".\n"+
-                                        "-Address: "+selectedDoctor.getAddress()+".\n"+
-                                        "-Date and Time: "+selectedSchedule.getDate()+" at "+selectedSchedule.getStart()+
-                                        "\n\nBest regards\n\neHealth Consulting",
-                                "Appointment Reservation"
-                        );
+                        String message = Mailer.bookingMessage(patient, selectedDoctor, selectedSchedule);
+                        Mailer.sendMail(patient.getEmail(), message, "Appointment Reservation");
                         Timer timer=new Timer();
                         Reminder reminder = new Reminder(patient.getEmail(),
                                 "Hello " + patient.getFirstName()+"!\n\nDon't forget! You have an appointment with the following information:\n"+

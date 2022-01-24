@@ -45,6 +45,7 @@ public class RegisterPatient extends  JFrame{
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                boolean registered = false;
                 insuranceTypeBox.setModel(new DefaultComboBoxModel(InsuranceType.values()));
                 PatientDAOImp patientDAOImp = new PatientDAOImp();
                 Patient patient = new Patient(userNameText.getText(), emailText.getText(), passwordText.getText(),
@@ -54,14 +55,20 @@ public class RegisterPatient extends  JFrame{
                         insuranceNameText.getText());//,DateofBirthText.getText(),SpecializationText.getText());
 
                 try {
-                    patientDAOImp.save(patient);
-                    Login login = new Login();
-                    setVisible(false);
-                    login.setVisible(true);
+                    registered = patientDAOImp.save(patient);
                 } catch (PasswordException ex) {
                     ex.printStackTrace();
                 } catch (EmailException ex) {
                     ex.printStackTrace();
+                }
+                if (registered){
+                    try {
+                        Login login = new Login();
+                        setVisible(false);
+                        login.setVisible(true);
+                    } catch (PasswordException ex) {
+                        ex.printStackTrace();
+                    }
                 }
 
             }

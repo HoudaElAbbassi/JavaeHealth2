@@ -15,7 +15,7 @@ import java.util.List;
 public class AdminDAOImp implements UserDAO<Admin> {
 
     @Override
-    public void save(Admin admin) throws PasswordException, EmailException {
+    public boolean save(Admin admin) throws PasswordException, EmailException {
         try {
 
             PasswordManager.passwordVerification(admin.getPassword());
@@ -32,7 +32,8 @@ public class AdminDAOImp implements UserDAO<Admin> {
             ps.setDate(7, Date.valueOf(admin.getBirthDate()));
             
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Saved!");
+            JOptionPane.showMessageDialog(null, "You have successfully registered! Now you can login.");
+            return true;
         }
         catch (PasswordException e){
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -79,6 +80,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error");
         }
+        return false;
     }
 
     @Override

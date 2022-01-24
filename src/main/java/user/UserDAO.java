@@ -6,7 +6,7 @@ import Exceptions.PasswordException;
 import java.util.List;
 
 public interface UserDAO<User>{
-    public void save(User user) throws PasswordException, EmailException;
+    public boolean save(User user) throws PasswordException, EmailException;
     public void edit(User user) throws PasswordException, EmailException;
     public void delete(User user);
     public void deleteByID(long id);

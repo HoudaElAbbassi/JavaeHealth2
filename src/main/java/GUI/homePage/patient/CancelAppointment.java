@@ -75,12 +75,9 @@ public class CancelAppointment extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     AppointmentDAOImp appointmentDAOImp = new AppointmentDAOImp();
-                    appointmentDAOImp.cancelById(selectedAppointment.getId());
-                    Mailer.sendMail(patient.getEmail(),
-                            "Hello " + patient.getFirstName()+"!\n\nYour Appointment has been successfully canceled!\n\n" +
-                                    "Best regards\n\neHealth Consulting",
-                            "Appointment Cancellation"
-                    );
+                    appointmentDAOImp.cancel(selectedAppointment);
+                    String message = Mailer.cancellationMessage(patient);
+                    Mailer.sendMail(patient.getEmail(), message, "Appointment Cancellation");
                 } catch (MessagingException ex) {
                     ex.printStackTrace();
                 } catch (NullPointerException npe1) {

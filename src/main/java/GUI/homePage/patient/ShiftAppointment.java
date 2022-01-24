@@ -92,13 +92,9 @@ public class ShiftAppointment extends JFrame {
                 try {
                     AppointmentDAOImp appointmentDAOImp = new AppointmentDAOImp();
                     appointmentDAOImp.shiftAppointment(selectedAppointment, selectedSchedule.getScheduleId());
-                    Mailer.sendMail(patient.getEmail(),
-                            "Hello " + patient.getFirstName()+"!\n\nYou have successfully shifted an appointment!\n"+
-                                    "Your new Appointment has the following new information:\n"+
-                                    "-Date and Time: "+selectedSchedule.getDate()+" at "+selectedSchedule.getStart()+
-                                    "\n\nBest regards\n\neHealth Consulting",
-                            "Appointment Rescheduling"
-                    );
+                    System.out.println(selectedSchedule.getScheduleId());
+                    String message = Mailer.reschedulingMessage(patient, selectedSchedule);
+                    Mailer.sendMail(patient.getEmail(), message, "Appointment Rescheduling");
                 } catch (MessagingException ex) {
                     ex.printStackTrace();
                 } catch (NullPointerException npe1) {

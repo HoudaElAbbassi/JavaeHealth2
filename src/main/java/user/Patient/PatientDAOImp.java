@@ -15,7 +15,7 @@ import java.util.List;
 public class PatientDAOImp implements UserDAO<Patient> {
 
     @Override
-    public void save(Patient patient) throws PasswordException, EmailException {
+    public boolean save(Patient patient) throws PasswordException, EmailException {
         try {
 
             PasswordManager.passwordVerification(patient.getPassword());
@@ -34,7 +34,8 @@ public class PatientDAOImp implements UserDAO<Patient> {
             ps.setString(9, patient.getInsuranceName());
 
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Saved!");
+            JOptionPane.showMessageDialog(null, "You have successfully registered! Now you can login.");
+            return true;
         } catch (PasswordException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         } catch (EmailException e) {
@@ -46,6 +47,7 @@ public class PatientDAOImp implements UserDAO<Patient> {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error");
         }
+        return false;
     }
 
     @Override
