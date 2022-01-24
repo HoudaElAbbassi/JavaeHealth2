@@ -1,11 +1,41 @@
 package utilities;
 
+import appointments.schedule.Schedule;
+import user.Doctor.Doctor;
+import user.Patient.Patient;
+
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.*;
 import javax.mail.internet.*;
 public class Mailer {
+
+    public static String bookingMessage(Patient patient, Doctor doctor, Schedule schedule){
+        return "Hello " + patient.getFirstName()+"!\n\n" +
+                "You have successfully booked an appointment with the following information:\n"+
+                "-Doctor Name: "+doctor.getLastName()+" "+doctor.getFirstName()+".\n"+
+                "-Address: "+doctor.getAddress()+".\n"+
+                "-Date and Time: "+schedule.getDate()+" at "+schedule.getStart()+
+                "\n\nBest regards\n\n" +
+                "eHealth Consulting";
+    }
+
+    public static String cancellationMessage(Patient patient){
+        return "Hello " + patient.getFirstName()+"!\n\n" +
+                "Your Appointment has been successfully canceled!\n\n" +
+                "Best regards\n\n" +
+                "eHealth Consulting";
+    }
+
+    public static String reschedulingMessage(Patient patient, Schedule schedule){
+        return "Hello " + patient.getFirstName()+"!\n\n" +
+                "You have successfully shifted an appointment!\n"+
+                "Your new Appointment has the following new information:\n"+
+                "-Date and Time: "+schedule.getDate()+" at "+schedule.getStart()+
+                "\n\nBest regards\n\n" +
+                "eHealth Consulting";
+    }
 
     public static void sendMail(String recipient, String msg, String subject) throws MessagingException {
         System.out.println("Preparing...");
