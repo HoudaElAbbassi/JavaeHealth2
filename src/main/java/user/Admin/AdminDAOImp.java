@@ -52,7 +52,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
     }
 
     @Override
-    public boolean edit(Admin admin) throws PasswordException, EmailException {
+    public void edit(Admin admin) throws PasswordException, EmailException {
         try{
             PasswordManager.passwordVerification(admin.getPassword());
             EmailVerification.verifyEmail(admin.getEmail());
@@ -67,7 +67,6 @@ public class AdminDAOImp implements UserDAO<Admin> {
             ps.setString(6,admin.getAddress());
             ps.setDate(7, Date.valueOf(admin.getBirthDate()));
             ps.setLong(8,admin.getId());
-
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Updated!");
         }
@@ -81,7 +80,6 @@ public class AdminDAOImp implements UserDAO<Admin> {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error");
         }
-        return false;
     }
 
     @Override

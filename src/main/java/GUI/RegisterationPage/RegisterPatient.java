@@ -59,8 +59,7 @@ public class RegisterPatient extends  JFrame{
                             firstNameText.getText(), lastNameText.getText(), addressText.getText(),
                             LocalDate.ofInstant(dateChooser.getDate().toInstant(), ZoneId.systemDefault()),
                             insuranceTypeBox.getItemAt(insuranceTypeBox.getSelectedIndex()),
-                            insuranceNameText.getText());//,DateofBirthText.getText(),SpecializationText.getText());
-
+                            insuranceNameText.getText());
 
                         registered = patientDAOImp.save(patient);
 
