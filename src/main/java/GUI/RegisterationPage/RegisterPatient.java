@@ -45,32 +45,41 @@ public class RegisterPatient extends  JFrame{
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean registered = false;
-                insuranceTypeBox.setModel(new DefaultComboBoxModel(InsuranceType.values()));
-                PatientDAOImp patientDAOImp = new PatientDAOImp();
-                Patient patient = new Patient(userNameText.getText(), emailText.getText(), passwordText.getText(),
-                        firstNameText.getText(), lastNameText.getText(), addressText.getText(),
-                        LocalDate.ofInstant(dateChooser.getDate().toInstant(), ZoneId.systemDefault()),
-                        insuranceTypeBox.getItemAt(insuranceTypeBox.getSelectedIndex()),
-                        insuranceNameText.getText());//,DateofBirthText.getText(),SpecializationText.getText());
 
                 try {
-                    registered = patientDAOImp.save(patient);
-                } catch (PasswordException ex) {
+                    if (userNameText.getText().isEmpty() | emailText.getText().isEmpty() |
+                            passwordText.getText().isEmpty() | firstNameText.getText().isEmpty() |
+                            lastNameText.getText().isEmpty() | addressText.getText().isEmpty() | dateChooser.getDate() == null
+                    ) throw new Exception("please fill out completely! ");
+
+                    boolean registered = false;
+                    insuranceTypeBox.setModel(new DefaultComboBoxModel(InsuranceType.values()));
+                    PatientDAOImp patientDAOImp = new PatientDAOImp();
+                    Patient patient = new Patient(userNameText.getText(), emailText.getText(), passwordText.getText(),
+                            firstNameText.getText(), lastNameText.getText(), addressText.getText(),
+                            LocalDate.ofInstant(dateChooser.getDate().toInstant(), ZoneId.systemDefault()),
+                            insuranceTypeBox.getItemAt(insuranceTypeBox.getSelectedIndex()),
+                            insuranceNameText.getText());//,DateofBirthText.getText(),SpecializationText.getText());
+
+
+                        registered = patientDAOImp.save(patient);
+
+                    if (registered) {
+                            Login login = new Login();
+                            setVisible(false);
+                            login.setVisible(true);
+
+                    }
+                }catch (PasswordException ex) {
                     ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null,ex.getMessage());
                 } catch (EmailException ex) {
                     ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null,ex.getMessage());
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null,ex.getMessage());
                 }
-                if (registered){
-                    try {
-                        Login login = new Login();
-                        setVisible(false);
-                        login.setVisible(true);
-                    } catch (PasswordException ex) {
-                        ex.printStackTrace();
-                    }
-                }
-
             }
         });
 

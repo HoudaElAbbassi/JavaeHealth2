@@ -48,10 +48,11 @@ public class AdminDAOImp implements UserDAO<Admin> {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error");
         }
+        return false;
     }
 
     @Override
-    public void edit(Admin admin) throws PasswordException, EmailException {
+    public boolean edit(Admin admin) throws PasswordException, EmailException {
         try{
             PasswordManager.passwordVerification(admin.getPassword());
             EmailVerification.verifyEmail(admin.getEmail());

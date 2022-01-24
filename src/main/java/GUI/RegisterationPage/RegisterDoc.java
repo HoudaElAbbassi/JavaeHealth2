@@ -45,28 +45,35 @@ public class RegisterDoc extends JFrame{
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean registered = false;
-                DoctorDAOImp doctorDAOImp=new DoctorDAOImp();
-                Doctor doctor= new Doctor(UsernameText.getText(),EMailText.getText(),passwordField1.getText(),
-                        FirstNameText.getText(),LastnameText.getText(),addressText.getText(),
-                LocalDate.ofInstant(dateChooser.getDate().toInstant(), ZoneId.systemDefault())
-                ,comboBox1.getItemAt(comboBox1.getSelectedIndex()));
 
+                //form has to be completely filled
                 try {
+                    if (UsernameText.getText().isEmpty() | FirstNameText.getText().isEmpty() |
+                            LastnameText.getText().isEmpty() | addressText.getText().isEmpty())
+                            throw new Exception("please fill out completely! ");
+
+                    boolean registered = false;
+                    DoctorDAOImp doctorDAOImp = new DoctorDAOImp();
+                    Doctor doctor = new Doctor(UsernameText.getText(), EMailText.getText(), passwordField1.getText(),
+                            FirstNameText.getText(), LastnameText.getText(), addressText.getText(),
+                            LocalDate.ofInstant(dateChooser.getDate().toInstant(), ZoneId.systemDefault())
+                            , comboBox1.getItemAt(comboBox1.getSelectedIndex()));
+
+
                     registered = doctorDAOImp.save(doctor);
-                } catch (PasswordException ex) {
-                    ex.printStackTrace();
-                } catch (EmailException ex) {
-                    ex.printStackTrace();
-                }
-                if (registered){
-                    try {
+
+                    if (registered) {
+
                         Login login = new Login();
                         setVisible(false);
                         login.setVisible(true);
-                    } catch (PasswordException ex) {
-                        ex.printStackTrace();
+
                     }
+                }
+                catch (PasswordException ex) {ex.printStackTrace();}
+                    catch (EmailException ex) {ex.printStackTrace();} catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    ex.printStackTrace();
                 }
             }
         });
