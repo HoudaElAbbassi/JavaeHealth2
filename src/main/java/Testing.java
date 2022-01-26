@@ -8,12 +8,12 @@ import user.Patient.PatientDAOImp;
 public class Testing {
 
     public static void main(String[] args){
-        //MainPage mainPage = new MainPage();
-        //mainPage.setVisible(true);
+        MainPage mainPage = new MainPage();
+        mainPage.setVisible(true);
 
-        AppointmentDAOImp appointmentDAOImp=new AppointmentDAOImp();
-        Appointment a=appointmentDAOImp.getAppointmentByDoctorId(2);
-        System.out.println(a.getHealthInfo());
+        //AppointmentDAOImp appointmentDAOImp=new AppointmentDAOImp();
+        //Appointment a=appointmentDAOImp.getAppointmentByDoctorId(2);
+        //System.out.println(a.getHealthInfo());
     }
 
 }

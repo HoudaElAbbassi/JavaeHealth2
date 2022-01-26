@@ -53,7 +53,7 @@ public class PatientDAOImp implements UserDAO<Patient> {
     @Override
     public void edit(Patient patient) {
         try {
-            PasswordManager.passwordVerification(patient.getPassword());
+            ///PasswordManager.passwordVerification(patient.getPassword());
             EmailVerification.verifyEmail(patient.getEmail());
             Connection con = DBConnection.getConnection();
             String sql = "Update patients set  userName=?, email=?, password=?, firstName=?, lastName=?, address=?, birthDate=?, insuranceType=?, insuranceName=? where id=?";
@@ -61,6 +61,7 @@ public class PatientDAOImp implements UserDAO<Patient> {
             ps.setString(1, patient.getUserName());
             ps.setString(2, patient.getEmail());
             ps.setString(3, PasswordManager.encode(patient.getPassword()));
+            ps.setString(3, patient.getPassword());
             ps.setString(4, patient.getFirstName());
             ps.setString(5, patient.getLastName());
             ps.setString(6, patient.getAddress());
@@ -71,8 +72,36 @@ public class PatientDAOImp implements UserDAO<Patient> {
 
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Updated!");
-        } catch (PasswordException e) {
+       /* } catch (PasswordException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());*/
+        } catch (EmailException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error");
+        }
+    }
+
+    @Override
+    public void editByAdmin(Patient patient) {
+        try {
+
+            EmailVerification.verifyEmail(patient.getEmail());
+            Connection con = DBConnection.getConnection();
+            String sql = "Update patients set  userName=?, email=?, firstName=?, lastName=?, address=?, birthDate=?, insuranceType=?, insuranceName=? where id=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, patient.getUserName());
+            ps.setString(2, patient.getEmail());
+            ps.setString(3, patient.getFirstName());
+            ps.setString(4, patient.getLastName());
+            ps.setString(5, patient.getAddress());
+            ps.setDate(6, Date.valueOf(patient.getBirthDate()));
+            ps.setString(7, patient.getInsuranceType().toString());
+            ps.setString(8, patient.getInsuranceName());
+            ps.setLong(9, patient.getId());
+
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Updated!");
         } catch (EmailException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         } catch (Exception e) {
@@ -200,12 +229,15 @@ public class PatientDAOImp implements UserDAO<Patient> {
 
             while(rs.next()){
                 Patient patient = new Patient();
+                patient.setUserName(rs.getString("userName"));
                 patient.setAddress(rs.getString("address"));
                 patient.setBirthDate(rs.getDate("birthDate").toLocalDate());
                 patient.setEmail(rs.getString("email"));
                 patient.setFirstName(rs.getString("firstName"));
                 patient.setLastName(rs.getString("lastName"));
                 patient.setPassword(rs.getString("password"));
+                patient.setInsuranceName(rs.getString("insuranceName"));
+                patient.setInsuranceType(InsuranceType.valueOf(rs.getString("insuranceType")));
                 patient.setId(rs.getInt("ID"));
                 list.add(patient);
             }
@@ -291,5 +323,6 @@ public class PatientDAOImp implements UserDAO<Patient> {
         }
         return null;
     }
+
 }
 

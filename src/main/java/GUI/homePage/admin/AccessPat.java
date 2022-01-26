@@ -16,7 +16,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * this class displays to the admin a list of all patients profiles furthermore it enables him to edit or delete them
+ *
+ * @author Mohamed Amine Belrhazi
+ */
 public class AccessPat {
     private JPanel MainPanel;
     private JList ListPatient;
@@ -48,16 +52,36 @@ public class AccessPat {
         /*setContentPane(MainPanel);
         setSize(500,500);*/
         JFrame frame=new JFrame(); ////// some configuration of the MainPanel
+        /**
+         *This method changes the size of the frames according to the given size
+         * */
         frame.setSize(800,600);
+        /** This method is used to set the top-level visual element inside a Window
+         * @param MainPanel which stores our group of components
+         * */
         frame.setContentPane(MainPanel);
+        /**
+         *This method is used to display the frame to the user
+         * */
         frame.setVisible(true);
+        /**
+         * This method is used to determine one of several options for the close button.
+         * @param Frame.DISPOSE_ON_CLOSE which discards The frame object ,but the application continues to run.
+         * */
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         MainPanel.setVisible(true);
-
-
-        DeleteButton.setEnabled(false);////// Buttons shouldn't be enabled without choosing an item
-        EditButton.setEnabled(false);////// Buttons shouldn't be enabled without choosing an item
-        comboBox2.setModel(new DefaultComboBoxModel<>(InsuranceType.values()));//// bind the enum "InsuranceType" with our comboBox1 to provide limited choices.
+        /**
+         * This method doesn't enable DeleteButtons until choosing an item from patientList
+         * */
+        DeleteButton.setEnabled(false);
+        /**
+         * This method doesn't enable EditButtons until choosing an item from patientList
+         * */
+        EditButton.setEnabled(false);
+        /**
+         * setModel bind the enum "InsuranceType" with our comboBox1 to provide limited choices
+         * */
+        comboBox2.setModel(new DefaultComboBoxModel<>(InsuranceType.values()));
         patients=new ArrayList<>();///Instantiate a list of patients
         patientDAOImp=new PatientDAOImp();////// Instantiate the data access object implementation patient
         listPatientModel=new DefaultListModel();//
@@ -69,6 +93,10 @@ public class AccessPat {
         }
 
         EditButton.addActionListener(new ActionListener() {
+            /**
+             * Using this methode, admin have the access to edit patient's info
+             * @param e is generated when the admin has selected that menu item
+             * */
             @Override
             public void actionPerformed(ActionEvent e) {
                 int PatNbr=ListPatient.getSelectedIndex();
@@ -85,12 +113,16 @@ public class AccessPat {
                             comboBox2.getItemAt(comboBox2.getSelectedIndex()),
                             InsuranceName.getText());
                     patient.setId(Long.valueOf(IdText.getText()));
-                    patientDAOImp.edit(patient);////call the methode edit from the class patientDAOImp
+                    patientDAOImp.editByAdmin(patient);////call the methode edit from the class patientDAOImp
                     refreshListPatient();/// to display the new changed data
                 }
             }
         });
         DeleteButton.addActionListener(new ActionListener() {
+            /**
+             * Using this methode, admin have the access to delete patients from the database
+             * @param e is generated when the admin has selected that menu item
+             * */
             @Override
             public void actionPerformed(ActionEvent e) {
                 int PatNbr=ListPatient.getSelectedIndex();
@@ -105,7 +137,11 @@ public class AccessPat {
 
             }
         });
-        ListPatient.addListSelectionListener(new ListSelectionListener() {///it allows the admin to replace the whole data to the text field just on clicking and choosing it from the JList.
+        ListPatient.addListSelectionListener(new ListSelectionListener() {
+            /**
+             * This methode allows the admin to replace the whole data to the text field just on clicking and choosing it from the JList.
+             * @param e is generated when the user has selected that menu item
+             * */
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 int PatNbr=ListPatient.getSelectedIndex();
@@ -116,7 +152,7 @@ public class AccessPat {
                     FirstNameText.setText(p.getFirstName());
                     LastNameText.setText(p.getLastName());
                     EmailText.setText(p.getEmail());
-                    PasswordField.setText(p.getPassword());
+                    PasswordField.setText("*********");
                     AdressText.setText(p.getAddress());
                     DoBText.setText(p.getBirthDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
                     comboBox2.setSelectedItem(p.getInsuranceType());
@@ -130,22 +166,34 @@ public class AccessPat {
 
             }
         });
-        DoctorsButton.addActionListener(new ActionListener() {////Button to switch to doctor access page
+        DoctorsButton.addActionListener(new ActionListener() {
+            /**
+             * By clicking on patient button the admin switches to AccessDoctor page
+             * @param e  is generated when the user has selected that menu item
+             * */
             @Override
             public void actionPerformed(ActionEvent e) {
                 AccessDoc accessDoc=new AccessDoc();
                 frame.dispose();
             }
         });
-        logoutButton.addActionListener(new ActionListener() {//// Button to logout and return to Homepage
+        logoutButton.addActionListener(new ActionListener() {
+            /**
+             * By clicking on LogoutButton the admin would be redirected to MainPage
+             * @param e  is generated when the user has selected that menu item
+             * */
             @Override
             public void actionPerformed(ActionEvent e) {
                 MainPage mainPage=new MainPage();
                 frame.dispose();
+                mainPage.setVisible(true);
             }
         });
     }
-    public void refreshListPatient(){/// refresh the doctor selectionList after every change which the admin make.
+    public void refreshListPatient(){
+        /**
+         * This method refreshes the patient selectionList after every change which the admin makes
+         * */
         listPatientModel.removeAllElements();
         patients=patientDAOImp.getAll();/////get every patient from the database
         for(Patient p: patients){

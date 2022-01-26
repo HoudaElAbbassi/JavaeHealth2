@@ -255,4 +255,9 @@ public class AdminDAOImp implements UserDAO<Admin> {
     public String getEmailById(long id) {
         return null;
     }
+
+    @Override
+    public void editByAdmin(Admin admin) throws EmailException {
+
+    }
 }

@@ -1,5 +1,6 @@
 package GUI.homePage.admin;
 
+import Exceptions.EmailException;
 import GUI.MainPage;
 import user.Doctor.Doctor;
 import user.Doctor.DoctorDAOImp;
@@ -14,7 +15,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * this class displays to the admin a list of all doctors profiles furthermore it enables him to edit or delete them
+ *
+ * @author Mohamed Amine Belrhazi
+ */
 public class AccessDoc extends JFrame {
     private JPanel MainPanel;
     private JPanel PanelTop;
@@ -38,17 +43,47 @@ public class AccessDoc extends JFrame {
     private DoctorDAOImp doctorDAOImp;
     private DefaultListModel listDoctorModel;
 
-
-    public AccessDoc(){///// The beginning of the constructor
-        super("AdminHomePage"); ////// some configuration of the MainPanel
+    /**
+     * Constructs an instance which create a frame where the admin access to all doctors and can edit or delete their profiles.
+     * */
+    public AccessDoc(){
+        /**
+         * it's used to set a title to the frame
+         * */
+        super("AdminHomePage");
+        /** This method is used to set the top-level visual element inside a Window
+                * @param MainPanel which stores our group of components
+         * */
         this.setContentPane(this.MainPanel);
+        /**
+         * This method is used to determine one of several options for the close button.
+         * @param Frame.DISPOSE_ON_CLOSE which discards The frame object ,but the application continues to run.
+         * */
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        /**
+         *  This method sizes the frame so that all its contents are at or above their preferred sizes
+         * */
         this.pack();
+        /**
+         *This method changes the size of the frames according to the given size
+         * */
         setSize(800,600);
+        /**
+         *This method is used to display the frame to the user
+         * */
         setVisible(true);
-        DeleteButton.setEnabled(false);  ////// Buttons shouldn't be enabled without choosing an item
-        EditButton.setEnabled(false);    ////// Buttons shouldn't be enabled without choosing an item
-        comboBox1.setModel(new DefaultComboBoxModel<>(Specialization.values())); //// bind the enum "Specialization" with our comboBox1 to provide limited choices.
+        /**
+         * This method doesn't enable DeleteButtons until choosing an item from doctorList
+         * */
+        DeleteButton.setEnabled(false);
+        /**
+         * This method doesn't enable EditButtons until choosing an item from doctorList
+         * */
+        EditButton.setEnabled(false);
+        /**
+         * setModel bind the enum "Specialization" with our comboBox1 to provide limited choices
+         * */
+        comboBox1.setModel(new DefaultComboBoxModel<>(Specialization.values()));
         doctors=new ArrayList<>(); ///Instantiate a list of doctors
         doctorDAOImp=new DoctorDAOImp();////// Instantiate the data access object implementation doctor
         listDoctorModel=new DefaultListModel();
@@ -60,6 +95,10 @@ public class AccessDoc extends JFrame {
         }
         EditButton.addActionListener(new ActionListener() {
             @Override
+            /**
+             * Using this methode, admin have the access to edit doctor's info
+             * @param e is generated when the admin has selected that menu item
+             * */
             public void actionPerformed(ActionEvent e) {
              int DocNbr=ListDoctor.getSelectedIndex();
                 if(DocNbr>=0){/// if our JList is empty, it returns -1 and no data selection would appear.
@@ -74,33 +113,45 @@ public class AccessDoc extends JFrame {
                             date,
                             comboBox1.getItemAt(comboBox1.getSelectedIndex()));
                     dc.setId(Long.valueOf(IdText.getText()));
-                    doctorDAOImp.edit(dc);////call the methode edit from the class doctorDAOImp
+                    try {
+                        doctorDAOImp.editByAdmin(dc);////call the methode edit from the class doctorDAOImp
+                    } catch (EmailException ex) {
+                        ex.printStackTrace();
+                    }
                     refreshList();//// to display the new changed data
                 }
             }
         });
         DeleteButton.addActionListener(new ActionListener() {
+            /**
+             * Using this methode, admin have the access to delete doctors from the database
+             * @param e is generated when the admin has selected that menu item
+             * */
             @Override
             public void actionPerformed(ActionEvent e) {
                 int DocNbr=ListDoctor.getSelectedIndex();
                 if(DocNbr>=0){/// if our JList is empty, it returns -1 and no data selection would appear.
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); //// format the Date.
                     LocalDate date = LocalDate.parse(DoBText.getText(),formatter); ///// switch from a String to LocalDate
-                    Doctor doctor= new Doctor(UserNameText.getText(), //// instantiate an object from class doctor with a parametrized constructor.
+                    Doctor doctor= new Doctor(/*UserNameText.getText(), //// instantiate an object from class doctor with a parametrized constructor.
                             EmailText.getText(),
                             PasswordField.getText(),
                             FirstNameText.getText(),
                             LastNameText.getText(),
                             AdressText.getText(),
                             date,
-                            comboBox1.getItemAt(comboBox1.getSelectedIndex()));
+                            comboBox1.getItemAt(comboBox1.getSelectedIndex())*/);
                     doctorDAOImp.deleteByID(Long.valueOf( IdText.getText())); ////call the methode delete from the class doctorDAOImp
                     refreshList(); //// to display the new changed data
                 }
 
             }
         });
-        ListDoctor.addListSelectionListener(new ListSelectionListener() {///it allows the admin to replace the whole data to the text field just on clicking and choosing it from the JList.
+        ListDoctor.addListSelectionListener(new ListSelectionListener() {
+            /**
+             * This methode allows the admin to replace the whole data to the text field just on clicking and choosing it from the JList.
+             * @param e is generated when the user has selected that menu item
+             * */
             @Override
             public void valueChanged(ListSelectionEvent e) {
                int DocNbr=ListDoctor.getSelectedIndex(); /// if our JList is empty, it returns -1 and no data selection would appear.
@@ -111,7 +162,7 @@ public class AccessDoc extends JFrame {
                    FirstNameText.setText(d.getFirstName());
                    LastNameText.setText(d.getLastName());
                    EmailText.setText(d.getEmail());
-                   PasswordField.setText(d.getPassword());
+                   PasswordField.setText("********");
                    AdressText.setText(d.getAddress());
                    DoBText.setText(d.getBirthDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
                    comboBox1.setSelectedItem(d.getSpecialization());
@@ -123,14 +174,23 @@ public class AccessDoc extends JFrame {
                }
             }
         });
-        logoutButton.addActionListener(new ActionListener() {///// Button to logout and return to Homepage
+        logoutButton.addActionListener(new ActionListener() {
+            /**
+             * By clicking on LogoutButton the admin would be redirected to MainPage
+             * @param e  is generated when the user has selected that menu item
+             * */
             @Override
             public void actionPerformed(ActionEvent e) {
                MainPage mainPage=new MainPage();
                dispose();
+               mainPage.setVisible(true);
             }
         });
         patientsButton.addActionListener(new ActionListener() {////Button to switch to patient access page
+            /**
+             * By clicking on patient button the admin switches to AccessPatient page
+             * @param e  is generated when the user has selected that menu item
+             * */
             @Override
             public void actionPerformed(ActionEvent e) {
                 AccessPat accessPat=new AccessPat();
@@ -138,7 +198,10 @@ public class AccessDoc extends JFrame {
             }
         });
     }
-    public void refreshList(){ ///// refresh the doctor selectionList after every change which the admin make.
+    /**
+     * This method refreshes the doctor selectionList after every change which the admin makes
+     * */
+    public void refreshList(){
         listDoctorModel.removeAllElements();
         doctors=doctorDAOImp.getAll();///// get the whole doctors from the database
         for(Doctor d:doctors){

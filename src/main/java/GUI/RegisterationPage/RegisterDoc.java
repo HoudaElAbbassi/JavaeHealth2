@@ -15,6 +15,10 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
+/**
+ * this class displays to the doctor the registration Page
+ * @author
+ */
 public class RegisterDoc extends JFrame{
     private JPanel mainPanel;
     private JTextField UsernameText;
@@ -29,23 +33,50 @@ public class RegisterDoc extends JFrame{
     private JButton goBackToMainpageButton;
 
     private JDateChooser dateChooser=new JDateChooser();
-
-
+    /**
+     * Constructs an instance which create a frame where the doctor input his data to register.
+     */
     public RegisterDoc(){
+        /**
+         * This method is used to determine one of several options for the close button.
+         * @param Frame.DISPOSE_ON_CLOSE which discards The frame object ,but the application continues to run.
+         * */
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        /**
+         * This method is used to set the top-level visual element inside a Window
+         * @param mainPanel which stores our group of components
+         * */
         setContentPane(mainPanel);
+        /**
+         *This methode changes the size of the frames according to the given size
+         * */
         setSize(500,500);
-
+        /**
+         * ComboBox1 is component that combines the button and the drop-down specialization list.
+         * The doctor can select a Specialization from the drop-down list, which appears at the doctor's request.
+         * @param Specialization several types, declared as enum
+         * */
         comboBox1.setModel(new DefaultComboBoxModel<>(Specialization.values()));
-
+        /**
+         * It's the simplest container which provides space with a component
+         * @param dateChooser is a calendar where the doctor can choose his date of birth
+         * */
         BirthdatePanel.add(dateChooser);
+        /**
+         * it's used for selecting date, and facilitate type date in "DD/MM/YYYY" format.
+         * */
         dateChooser.setDateFormatString("dd/MM/yyyy");
 
 
         registerButton.addActionListener(new ActionListener() {
+            /**This method enable the doctor to register by filling his data completely
+             * @param e is generated when the user has selected that menu item
+             * @throws PasswordException ex if the password format is invalid
+             * @throws EmailException ex if the email format is invalid
+             * @throws Exception ex if the required data have been not completely filled
+            * */
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 //form has to be completely filled
                 try {
                     if (UsernameText.getText().isEmpty() | FirstNameText.getText().isEmpty() |
@@ -79,6 +110,10 @@ public class RegisterDoc extends JFrame{
         });
 
         goBackToMainpageButton.addActionListener(new ActionListener() {
+             /**
+             * By clicking on goBackToMainPage button the doctor would be redirected to MainPage
+             * @param e  is generated when the doctor has selected that menu item
+             * */
             @Override
             public void actionPerformed(ActionEvent e) {
                 MainPage mainPage = new MainPage();
