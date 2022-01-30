@@ -13,7 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminDAOImp implements UserDAO<Admin> {
-
+    
+    /** 
+    *This is a method that recieves an admin object 
+    *and saves its properties into the database
+    *after checking the validity of 
+    *the password and email.
+    *@param An admin of the type Admin
+    *@throws Passwordexpection
+    *@throws  Emailexception
+    *@authors Prabal, Daniel, Houda , Amine , Ahmed
+    */
+    
+    
     @Override
     public boolean save(Admin admin) throws PasswordException, EmailException {
         try {
@@ -50,7 +62,17 @@ public class AdminDAOImp implements UserDAO<Admin> {
         }
         return false;
     }
-
+    
+   /** 
+    *This is a method that recieves an admin object 
+    *The validity of password and email is checked first
+    *The method allows us edit the admins properties inside the database
+    *@param An admin of the type Admin
+    *@throws Passwordexpection
+    *@throws Emailexception
+    *@authors Prabal, Daniel, Houda , Amine , Ahmed
+    */
+    
     @Override
     public void edit(Admin admin) throws PasswordException, EmailException {
         try{
@@ -81,7 +103,15 @@ public class AdminDAOImp implements UserDAO<Admin> {
             JOptionPane.showMessageDialog(null, "Error");
         }
     }
-
+    
+    /** 
+    *This is a method that recieves an admin object 
+    *It searches for ID of the given Admin 
+    *and deletes the object inside the database.
+    *@param An admin of the type Admin
+    *@authors Prabal, Daniel, Houda , Amine , Ahmed
+    */
+    
     @Override
     public void delete(Admin admin) {
         try {
@@ -96,6 +126,14 @@ public class AdminDAOImp implements UserDAO<Admin> {
             JOptionPane.showMessageDialog(null, "Error");
         }
     }
+    
+   /** 
+    *This is a method that recieves the ID of an Admin
+    *It searches for the Admin with the given ID
+    *and deletes the object inside the database.
+    *@param id of the type long 
+    *@authors Prabal, Daniel, Houda , Amine , Ahmed
+    */
     public void deleteByID(long id){ try {
 
         Connection con = DBConnection.getConnection();
@@ -108,7 +146,16 @@ public class AdminDAOImp implements UserDAO<Admin> {
         e.printStackTrace();
         JOptionPane.showMessageDialog(null, "Error");
     }}
-
+    
+    
+   /** 
+    *This is a method that recieves an email adress
+    *It searches for the given email adress
+    *if the email can be found it returns true
+    *@param userEmail of type String
+    *@authors Prabal, Daniel, Houda , Amine , Ahmed
+    */
+    
     @Override
     public boolean existEmail(String userEmail) {
         try{
@@ -128,7 +175,15 @@ public class AdminDAOImp implements UserDAO<Admin> {
 
         return false;
     }
-
+    
+   /** 
+    *This is a method that recieves an email adress
+    *It searches for the admin with the given email adress
+    *@returns admin of type Admin
+    *@param userEmail of type String
+    *@authors Prabal, Daniel, Houda , Amine , Ahmed
+    */
+    
     @Override
     public Admin getByEmail(String userEmail) {
         Admin admin=new Admin();
