@@ -22,7 +22,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
     *@param An admin of the type Admin
     *@throws Passwordexpection
     *@throws  Emailexception
-    *@authors Prabal, Daniel, Houda , Amine , Ahmed
+    *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     
     
@@ -70,7 +70,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
     *@param An admin of the type Admin
     *@throws Passwordexpection
     *@throws Emailexception
-    *@authors Prabal, Daniel, Houda , Amine , Ahmed
+    *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     
     @Override
@@ -109,7 +109,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
     *It searches for ID of the given Admin 
     *and deletes the object inside the database.
     *@param An admin of the type Admin
-    *@authors Prabal, Daniel, Houda , Amine , Ahmed
+    *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     
     @Override
@@ -132,7 +132,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
     *It searches for the Admin with the given ID
     *and deletes the object inside the database.
     *@param id of the type long 
-    *@authors Prabal, Daniel, Houda , Amine , Ahmed
+    *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     public void deleteByID(long id){ try {
 
@@ -153,7 +153,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
     *It searches for the given email adress
     *if the email can be found it returns true
     *@param userEmail of type String
-    *@authors Prabal, Daniel, Houda , Amine , Ahmed
+    *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     
     @Override
@@ -181,7 +181,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
     *It searches for the admin with the given email adress
     *@returns admin of type Admin
     *@param userEmail of type String
-    *@authors Prabal, Daniel, Houda , Amine , Ahmed
+    *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     
     @Override
@@ -212,13 +212,21 @@ public class AdminDAOImp implements UserDAO<Admin> {
         return admin;
     }
 
+    
     @Override
     public Admin getByID(long id) {
         return null;
     }
 
 
-
+    /** 
+    *This is a method that returns all admins
+    *First an empty list is created
+    *then all admins are added to the list
+    *@return list of type List<Admin>
+    *@author Prabal, Daniel, Houda , Amine , Ahmed
+    */
+    
     @Override
     public List<Admin> getAll() {
         List<Admin> list = new ArrayList<Admin>();
@@ -247,6 +255,14 @@ public class AdminDAOImp implements UserDAO<Admin> {
         return list;
     }
 
+    /** 
+    *This is a method that gets the Password of a user
+    *The method recieves email adress of a user
+    *It seaches for the corrisponding password 
+    *@pram userEmail of type String
+    *@author Prabal, Daniel, Houda , Amine , Ahmed
+    */
+    
     @Override
     public String getPassword(String userEmail) {
         try{
@@ -266,7 +282,15 @@ public class AdminDAOImp implements UserDAO<Admin> {
 
         return null;
     }
-
+    
+   /** 
+    *This is a method that first Name of the user based on his ID
+    *It checks inside the databaste for the username corisponding to the given ID
+    *It seaches for the corrisponding password 
+    *@pram id of type long
+    *@author Prabal, Daniel, Houda , Amine , Ahmed
+    */
+    
     @Override
     public String getFirstNameByID(long id) {
         try{
@@ -287,6 +311,14 @@ public class AdminDAOImp implements UserDAO<Admin> {
         return null;
     }
 
+       /** 
+    *This is a method that last Name of the user based on his ID
+    *It checks inside the databaste for the username corisponding to the given ID
+    *It seaches for the corrisponding password 
+    *@pram id of type long
+    *@author Prabal, Daniel, Houda , Amine , Ahmed
+    */
+    
     @Override
     public String getLastNameByID(long id) {
         try{
