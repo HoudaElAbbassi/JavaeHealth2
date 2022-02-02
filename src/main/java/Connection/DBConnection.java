@@ -7,7 +7,7 @@ import java.sql.SQLException;
 /**
  * this class enable to connect our java application with the database using JDBC.
  *
- * @author
+ * @author Ahmed,Houda,Amine,Parabal,Daniel
  */
 public class DBConnection {
 

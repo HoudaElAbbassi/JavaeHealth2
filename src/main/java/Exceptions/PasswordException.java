@@ -3,7 +3,7 @@ package Exceptions;
  * this class extends from Exception,
  * and it would be thrown when a checked error occurs in Password forms.
  *
- * @author
+ * @author @author Ahmed,Houda,Amine,Parabal,Daniel
  */
 public class PasswordException extends Exception {
     /**

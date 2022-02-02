@@ -3,7 +3,7 @@ package Exceptions;
  * this class extends from Exception,
  * and it would be thrown when an already exists schedule would be taken.
  *
- * @author
+ * @author @author Ahmed,Houda,Amine,Parabal,Daniel
  */
 public class ScheduleException extends Exception {
     /**

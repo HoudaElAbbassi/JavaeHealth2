@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 
 /**
  * this class displays to the user "Patient/Doctor/Admin" the Login page to access to the app
- * @author
+ * @author Ahmed,Houda,Amine,Parabal,Daniel
  */
 public class Login extends JFrame {
     private JTextField emailText;
@@ -27,42 +27,32 @@ public class Login extends JFrame {
     private JButton goBackToMainpageButton;
     private JButton resetPasswordButton;
     /**
-     * Constructs an instance which create a frame where the user select the type of his profile and log in with his own email and password.
+     * an instance which create a frame where the user select the type of his profile and log in with his own email and password.
      * */
     public Login() throws PasswordException {
-        /**
-         * This method is used to determine one of several options for the close button.
-         * @param Frame.DISPOSE_ON_CLOSE which discards The frame object ,but the application continues to run.
-         * */
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        /**
-         *This methode changes the size of the frames according to the given size
+        //This method is used to determine one of several options for the close button.
+        //Frame.DISPOSE_ON_CLOSE which discards The frame object ,but the application continues to run.
+        setSize(400, 600);//This methode changes the size of the frames according to the given size
+        setContentPane(mainPanel);//This method is used to set the top-level visual element inside a Window
+        /**This method enable the user to select his type of profile and input his registered email and password to login
+         * @param e is generated when the user has selected that menu item
          * */
-        setSize(400, 600);
-        /**
-         * This method is used to set the top-level visual element inside a Window
-         * @param mainPanel which stores our group of components
-         * */
-        setContentPane(mainPanel);
-
         logInButton.addActionListener(new ActionListener() {
-            /**This method enable the user to select his type of profile and input his registered email and password to login
-             * @param e is generated when the user has selected that menu item
-            * */
             @Override
             public void actionPerformed(ActionEvent e) {
-                String encodedPassword = PasswordManager.encode(passwordField.getText());
+                String encodedPassword = PasswordManager.encode(passwordField.getText());/// encode the given password given
                 System.out.println(encodedPassword);
                 //login patient
-                if (comboBox.getSelectedItem().toString().equals("Patient")){
-                    PatientDAOImp patientDAOImp = new PatientDAOImp();
-                    if(patientDAOImp.existEmail(emailText.getText())){
-                        if(patientDAOImp.getPassword(emailText.getText()).equals(encodedPassword)){
+                if (comboBox.getSelectedItem().toString().equals("Patient")){///// if the user selects to log in as a patient
+                    PatientDAOImp patientDAOImp = new PatientDAOImp();/// instantiate the class of data access object patient
+                    if(patientDAOImp.existEmail(emailText.getText())){/////check if the email exist in patient database
+                        if(patientDAOImp.getPassword(emailText.getText()).equals(encodedPassword)){////check if the encoded given password matches the password's email
                             dispose();
-                            PatientHomePage patientHomePage = new PatientHomePage(patientDAOImp.getByEmail(emailText.getText()));
+                            PatientHomePage patientHomePage = new PatientHomePage(patientDAOImp.getByEmail(emailText.getText()));/// Instantiate the class patientHomePage
                             System.out.println(patientDAOImp.getByEmail(emailText.getText()).getId());
-                            setVisible(false);
-                            patientHomePage.setVisible(true);
+                            setVisible(false);/// Close the login frame
+                            patientHomePage.setVisible(true);/// Display the PatientHomePage
                         }
                         else   JOptionPane.showMessageDialog(null,"Incorrect password!");
 
@@ -70,14 +60,14 @@ public class Login extends JFrame {
                     else   JOptionPane.showMessageDialog(null,"Incorrect email/password");
 
                 }
-               else if (comboBox.getSelectedItem().toString().equals("Doctor")){
-                    DoctorDAOImp doctorDAOImp = new DoctorDAOImp();
-                    if(doctorDAOImp.existEmail(emailText.getText())){
-                        if(doctorDAOImp.getPassword(emailText.getText()).equals(encodedPassword)){
+               else if (comboBox.getSelectedItem().toString().equals("Doctor")){///// if the user selects to log in as a doctor
+                    DoctorDAOImp doctorDAOImp = new DoctorDAOImp();/// instantiate the class of data access object doctor
+                    if(doctorDAOImp.existEmail(emailText.getText())){/////check if the email exist in doctor database
+                        if(doctorDAOImp.getPassword(emailText.getText()).equals(encodedPassword)){////check if the encoded given password matches the password's email
                             dispose();
-                            GUI.homePage.doctor.DoctorHomePage doctorHomePage = new GUI.homePage.doctor.DoctorHomePage(doctorDAOImp.getByEmail(emailText.getText()));
+                            GUI.homePage.doctor.DoctorHomePage doctorHomePage = new GUI.homePage.doctor.DoctorHomePage(doctorDAOImp.getByEmail(emailText.getText()));/// Instantiate the class doctorHomePage
                             System.out.println(doctorDAOImp.getByEmail(emailText.getText()).getId());
-                            doctorHomePage.setVisible(true);
+                            doctorHomePage.setVisible(true);///display the DoctorHomePage
                         }
                         else   JOptionPane.showMessageDialog(null,"Incorrect password!");
 
@@ -86,7 +76,7 @@ public class Login extends JFrame {
 
                 }
 
-               else {
+               else {/////// the same operation occurs with the admin
                     AdminDAOImp adminDAOImp = new AdminDAOImp();
                     if(adminDAOImp.existEmail(emailText.getText())){
                         if(adminDAOImp.getPassword(emailText.getText()).equals(passwordField.getText())){
@@ -102,12 +92,11 @@ public class Login extends JFrame {
                 }
             }
         });
-
+        /**
+         * By clicking on goBackToMainPage button the user would be redirected to MainPage
+         * @param e  is generated when the user has selected that menu item
+         * */
         goBackToMainpageButton.addActionListener(new ActionListener() {
-            /**
-             * By clicking on goBackToMainPage button the user would be redirected to MainPage
-             * @param e  is generated when the user has selected that menu item
-             * */
             @Override
             public void actionPerformed(ActionEvent e) {
                 MainPage mainPage = new MainPage();
@@ -115,11 +104,11 @@ public class Login extends JFrame {
                 mainPage.setVisible(true);
             }
         });
+        /**
+         * this methode enable the user to reset his previous password
+         * @param e  is generated when the user has selected that menu item
+         * */
         resetPasswordButton.addActionListener(new ActionListener() {
-            /**
-             * this methode enable the user to reset his previous password
-             * @param e  is generated when the user has selected that menu item
-             * */
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
