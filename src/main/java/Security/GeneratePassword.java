@@ -1,10 +1,12 @@
 package Security;
 
 import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+
+/***
+ * This class generates a random password from given requirements. The length of the generated
+ * password is fifteen characters long and the symbols,letters and numbers that has to be used are pre
+ * determent at the beginning
+ */
 
 public class GeneratePassword {
 
@@ -23,13 +25,12 @@ public class GeneratePassword {
 
         private static SecureRandom random = new SecureRandom();
 
-        public static void main(String[] args) {
-            for (int i = 0; i < 5; i++) {
-                generateStrongPassword();
-            }
-        }
-
-        public static String generateStrongPassword() {
+    /**
+     * This methode generates a String password by creating random Strings of each category of symbols and brings
+     * them together to create a password.
+     * @return String=password
+     */
+    public static String generateStrongPassword() {
 
             StringBuilder result = new StringBuilder(PASSWORD_LENGTH);
 
@@ -59,6 +60,14 @@ public class GeneratePassword {
         }
 
         // generate a random char[], based on `input`
+
+    /**
+     * This methode generates a random password
+     * @param input String that has to be randomized
+     * @param size size of the String that has to be randomized
+     * @return returns a randomized String
+     * @exception IllegalArgumentException has be thrown when the size or string is 0 or less
+     */
         private static String generateRandomString(String input, int size) {
 
             if (input == null || input.length() <= 0)
@@ -72,13 +81,5 @@ public class GeneratePassword {
                 result.append(input.charAt(index));
             }
             return result.toString();
-        }
-
-        // for final password, make it more random
-        public static String shuffleString(String input) {
-            List<String> result = Arrays.asList(input.split(""));
-            Collections.shuffle(result);
-            // java 8
-            return result.stream().collect(Collectors.joining());
         }
 }
