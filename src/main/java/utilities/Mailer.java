@@ -12,7 +12,7 @@ import javax.mail.internet.*;
 
 /**
  * a utility class to send an email using the SMTP server
- * @author Ahmed Agdmoun
+ * @author Ahmed, Amine
  */
 public class Mailer {
 
