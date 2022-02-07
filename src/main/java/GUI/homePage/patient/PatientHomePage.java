@@ -7,7 +7,15 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class represents the homepage of the patient in the GUI, in other words
+ * the page where a patient lands after being successfully logged in
+ * @author Ahmed Agdmoun
+ */
 public class PatientHomePage extends JFrame{
+    /**
+     *  represents the patient logged in in the actual session
+     */
     Patient patient;
     private JPanel mainPanel;
     private JButton makeAppointmentButton;
@@ -16,7 +24,10 @@ public class PatientHomePage extends JFrame{
     private JButton logOutButton;
     private JButton exportMyHealthInfoButton;
 
-
+    /**
+     * This is the main constructor of the class which constructs the GUI page
+     * @param patient represents the logged in patient
+     */
     public PatientHomePage(Patient patient) {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.patient = patient;
@@ -25,12 +36,14 @@ public class PatientHomePage extends JFrame{
         makeAppointmentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MakeAppointment makeAppointment = new MakeAppointment(patient);
+                MakeAppointment makeAppointment = new MakeAppointment(patient); // creates a new makeAppointment page
                 setVisible(false);
                 makeAppointment.setVisible(true);
             }
         });
-
+        /**
+         * actions taking place in case of clicking the shiftAppointmentButton
+         */
         shiftAppointmentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -40,6 +53,9 @@ public class PatientHomePage extends JFrame{
             }
         });
 
+        /**
+         * actions taking place in case of clicking the cancelAppointmentButton
+         */
         cancelAppointmentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -49,21 +65,27 @@ public class PatientHomePage extends JFrame{
             }
         });
 
-        logOutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MainPage mainPage = new MainPage();
-                setVisible(false);
-                mainPage.setVisible(true);
-            }
-        });
-
+        /**
+         * actions taking place in case of clicking the exportMyHealthInfoButton
+         */
         exportMyHealthInfoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ExportHealthInfo exportInfo = new ExportHealthInfo(patient);
                 setVisible(false);
                 exportInfo.setVisible(true);
+            }
+        });
+
+        /**
+         * actions taking place in case of clicking the logOutButton
+         */
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainPage mainPage = new MainPage();
+                setVisible(false);
+                mainPage.setVisible(true);
             }
         });
     }

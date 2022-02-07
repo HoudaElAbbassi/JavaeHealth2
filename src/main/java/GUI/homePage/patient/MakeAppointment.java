@@ -3,7 +3,6 @@ package GUI.homePage.patient;
 import appointments.Appointment;
 import appointments.AppointmentDAOImp;
 import appointments.schedule.Schedule;
-import appointments.schedule.ScheduleDAO;
 import appointments.schedule.ScheduleDAOImp;
 import org.apache.commons.lang3.time.DateUtils;
 import user.Doctor.Doctor;
@@ -31,25 +30,48 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 
+/**
+ * This class represents the page where a patient can make an appointment in the GUI
+ * @author Ahmed Agdmoun
+ */
+
 public class MakeAppointment extends JFrame implements ActionListener {
+    /**
+     * represents the actual patient logged in
+     */
     Patient patient;
+    /**
+     * to save the health info file that will be uploaded by the patient
+     */
+    File file = null;
+    /**
+     * represents a list of all the doctors with a specialization corresponding to the selected health problem
+     */
+    private JList<Doctor> doctorsList;
+    /**
+     * represents a filtered list of all available appointments according to the patient filters
+     */
+    private JList<Schedule> availableAppointments;
+    /**
+     * represents the selected doctor from the list that will be displayed
+     */
+    Doctor selectedDoctor = null;
+    /**
+     * represents the selected schedule from the list of available appointments
+     */
+    Schedule selectedSchedule = null;
     private JButton healthInfoButton;
     private JComboBox healthProblemBox;
     private JTextField distanceOfSearch;
     private JButton showDoctorsButton;
-    private JList<Doctor> doctorsList;
     DefaultListModel<Doctor> model = new DefaultListModel<>();
     private JPanel mainPanel;
     private JButton makeAppointmentButton;
     DefaultListModel<Schedule> model2 = new DefaultListModel<>();
     private JButton showAvailableAppointmentsButton;
-    private JList<Schedule> availableAppointments;
     private JComboBox reminderBox;
     private JButton goBackToHomepageButton;
     private JFileChooser fileChooser = new JFileChooser();
-    File file = null;
-    Doctor selectedDoctor = null;
-    Schedule selectedSchedule = null;
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -59,6 +81,10 @@ public class MakeAppointment extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * This is the main constructor responsible for creating a new MakeAppointment page
+     * @param patient represents the actual logged in patient
+     */
     public MakeAppointment(Patient patient){
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.patient = patient;
@@ -66,16 +92,27 @@ public class MakeAppointment extends JFrame implements ActionListener {
         setSize(500,500);
         healthInfoButton.addActionListener(this);
         healthProblemBox.setModel(new DefaultComboBoxModel<>(HealthProblem.values()));
-        //reminderBox.setModel(new DefaultComboBoxModel<>(Reminder.values()));
+
+        /**
+         * actions taking place in case of clicking the showDoctorsButton
+         */
         showDoctorsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.clear();
-                doctorsList.setModel(model);
+                model.clear(); // to actualize the list every time the user clicks the button
+                doctorsList.setModel(model); // sets a model for the doctors list
+                // gets the coordinates of the patient using his address
                 Map<String, Double> patientCoords =  MapUtils.getInstance().getCoordinates(patient.getAddress());
                 DoctorDAOImp doctorDAOImp = new DoctorDAOImp();
                 EnumMap<HealthProblem, Specialization> map = EnumMapping.mapEnums();
+                // list contains all doctors with the specialization corresponding to the health problem selected by the patient
                 List<Doctor> list = doctorDAOImp.getAllBySpecialization(map.get(healthProblemBox.getSelectedItem()));
+                /*
+                    the foreach loop runs through the whole list and gets the coordinates of every doctor using their address
+                    then calculates the distance between the patient coordinates above and the coordinates of each doctor
+                    only the doctors with a distance less than the entered distance of search will be added to the model of
+                    the doctors list to be shown
+                */
                 for (Doctor d: list) {
                     Map<String, Double> doctorCoords =  MapUtils.getInstance().
                             getCoordinates(d.getAddress());
@@ -99,6 +136,9 @@ public class MakeAppointment extends JFrame implements ActionListener {
             }
         });
 
+        /**
+         * actions taking place in case of clicking the showAvailableAppointmentsButton
+         */
         showAvailableAppointmentsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -107,6 +147,7 @@ public class MakeAppointment extends JFrame implements ActionListener {
                     availableAppointments.setModel(model2);
                     ScheduleDAOImp scheduleDAOImp = new ScheduleDAOImp();
                     List<Schedule> schedules = scheduleDAOImp.getAllAvailable(selectedDoctor.getId());
+                    // only available schedules will be added to the model
                     for (Schedule schedule : schedules) {
                         model2.addElement(schedule);
                     }
@@ -123,10 +164,13 @@ public class MakeAppointment extends JFrame implements ActionListener {
             }
         });
 
+        /**
+         * actions taking place in case of clicking the makeAppointmentButton
+         */
         makeAppointmentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean s = false;
+                boolean appointmentSaved = false;
                 try{
                     Appointment appointment = new Appointment(selectedDoctor.getId(),
                         patient.getId(),
@@ -135,12 +179,11 @@ public class MakeAppointment extends JFrame implements ActionListener {
                         file);
                     try{
                         AppointmentDAOImp appointmentDAOImp = new AppointmentDAOImp();
-                        System.out.println(patient.getId());
-                        s = appointmentDAOImp.addAppointment(appointment);
+                        appointmentSaved = appointmentDAOImp.addAppointment(appointment);
                     } catch (NullPointerException pe){
                         JOptionPane.showMessageDialog(null, "Please upload your health info file!");
                     }
-                    if (s == true){
+                    if (appointmentSaved == true){ // only if appointment was saved successfully
                         String message = Mailer.bookingMessage(patient, selectedDoctor, selectedSchedule);
                         Mailer.sendMail(patient.getEmail(), message, "Appointment Reservation");
                         Timer timer=new Timer();
@@ -153,16 +196,16 @@ public class MakeAppointment extends JFrame implements ActionListener {
                         ScheduleDAOImp scheduleDAOImp = new ScheduleDAOImp();
                         Date date = Reminder.convert(scheduleDAOImp.getDateTimeByScheduleId(selectedSchedule.getScheduleId()));
                         if(reminderBox.getSelectedIndex() == 0){
-                            date = DateUtils.addWeeks(date, 1);
+                            date = DateUtils.addWeeks(date, 1); // add 1 week to the actual date
                         }
                         else if(reminderBox.getSelectedIndex() == 1){
-                            date = DateUtils.addDays(date, 3);
+                            date = DateUtils.addDays(date, 3); // add 3 days to the actual date
                         }
                         else if(reminderBox.getSelectedIndex() == 2){
-                            date = DateUtils.addHours(date, 1);
+                            date = DateUtils.addHours(date, 1); // add 1 hour to the actual date
                         }
                         else if(reminderBox.getSelectedIndex() == 3){
-                            date = DateUtils.addMinutes(date, 10);
+                            date = DateUtils.addMinutes(date, 10); // add 10 minutes to the actual date
                         }
                         System.out.println("Reminder will be sent on: "+ date);
                         timer.schedule(reminder, date);
@@ -178,6 +221,9 @@ public class MakeAppointment extends JFrame implements ActionListener {
             }
         });
 
+        /**
+         * actions taking place in case of clicking the goBackToHomepageButton
+         */
         goBackToHomepageButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

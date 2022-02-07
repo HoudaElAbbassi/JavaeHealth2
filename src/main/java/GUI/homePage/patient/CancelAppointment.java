@@ -13,7 +13,8 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 
-/** Represents the layout allowing a patient to cancel an appointment in the GUI
+/**
+ * This class represents the page where a patient can cancel an appointment in the GUI
  * @author Ahmed Agdmoun
  */
 public class CancelAppointment extends JFrame {
@@ -21,23 +22,25 @@ public class CancelAppointment extends JFrame {
      * represents the logged in patient
      */
     private Patient patient;
+
     /**
      * represents the selected appointment to be canceled
      */
     private Appointment selectedAppointment = null;
-    private JButton showMyAppointmentsButton; // this button must be clicked to display the appointments already booked by the logged in patient
-    DefaultListModel<Appointment> model = new DefaultListModel<>();
+
     /**
-     * the List contains all the booked appointments by the logged in patient
+     * represents a list of all the booked appointments by the logged in patient
      */
-    private JList<Appointment> myAppointments; // this list will contain the appointments booked from the patient and will be displayed in the GUI after clicking the showMyAppointments button
+    private JList<Appointment> myAppointments;
+    DefaultListModel<Appointment> model = new DefaultListModel<>();
     private JButton cancelButton;
+    private JButton showMyAppointmentsButton;
     private JButton goBackToHomepageButton;
     private JPanel mainPanel;
 
     /**
-     * Creates the cancellation
-     * @param patient corresponds to the actual patient logged in.
+     * this is the main constructor responsible for creating the CancelAppointment page
+     * @param patient represents to the actual patient logged in.
      */
     public CancelAppointment(Patient patient){
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -46,7 +49,7 @@ public class CancelAppointment extends JFrame {
         setSize(500,500);
 
         /**
-         * Action after clicking the showMyAppointmentButton
+         * Actions taking place after clicking the showMyAppointmentButton
          */
         showMyAppointmentsButton.addActionListener(new ActionListener() {
             @Override
@@ -70,6 +73,9 @@ public class CancelAppointment extends JFrame {
             }
         });
 
+        /**
+         * Actions taking place after clicking the cancelButton
+         */
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,6 +92,9 @@ public class CancelAppointment extends JFrame {
             }
         });
 
+        /**
+         * Actions taking place after clicking the goBackToHomeButton
+         */
         goBackToHomepageButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

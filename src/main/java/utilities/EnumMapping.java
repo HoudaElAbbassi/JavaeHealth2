@@ -5,6 +5,10 @@ import user.Patient.HealthProblem;
 
 import java.util.EnumMap;
 
+/**
+ * Utility class to map the health problems to their correspondent doctor specialization
+ * @author Ahmed Agdmoun
+ */
 public class EnumMapping {
 
     public static EnumMap<HealthProblem, Specialization> mapEnums(){

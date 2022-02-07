@@ -4,19 +4,13 @@ import javax.mail.MessagingException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Date;
-import java.util.Timer;
 import java.util.TimerTask;
 
 public class Reminder extends TimerTask implements Runnable {
 
     private boolean exit = false;
-
-    private String senderEmailAddress;
-    private String senderPassword;
     private String receiverEmailAddress;
     private String subject;
     private String message;

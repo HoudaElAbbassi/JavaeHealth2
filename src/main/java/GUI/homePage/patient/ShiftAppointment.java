@@ -15,21 +15,48 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * This class represents the page where a patient can shift an appointment in the GUI
+ * @author Ahmed Agdmoun
+ */
 public class ShiftAppointment extends JFrame {
 
+    /**
+     * represents the actual logged in patient
+     */
     Patient patient;
+
+    /**
+     * a list of all the already booked appointments by the patient
+     */
+    private JList<Appointment> myAppointments;
+
+    /**
+     * a list of available alternative appointments by the same doctor by whom the original appointment was booked
+     */
+    private JList<Schedule> availableAppointments;
+
+    /**
+     * represents the appointment selected from the appointments list by the patient to be shifted
+     */
     Appointment selectedAppointment = null;
+
+    /**
+     * represents the new schedule selected by the patient from the list of available appointments
+     */
     Schedule selectedSchedule = null;
     private JPanel mainPanel;
     private JButton showMyAppointmentsButton;
     DefaultListModel<Appointment> model = new DefaultListModel<>();
-    private JList<Appointment> myAppointments;
     private JButton shiftButton;
     DefaultListModel<Schedule> model2 = new DefaultListModel<>();
     private JButton showAvailableAppointmentsButton;
-    private JList<Schedule> availableAppointments;
     private JButton goBackToHomepageButton;
 
+    /**
+     * this is the main constructor responsible for creating a ShiftAppointment page
+     * @param patient
+     */
     public ShiftAppointment(Patient patient){
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.patient = patient;
@@ -57,6 +84,9 @@ public class ShiftAppointment extends JFrame {
             }
         });
 
+        /**
+         * actions taking place in case of clicking the showAvailableAppointmentsButton
+         */
         showAvailableAppointmentsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,6 +116,9 @@ public class ShiftAppointment extends JFrame {
             }
         });
 
+        /**
+         * actions taking place in case of clicking the shiftButton
+         */
         shiftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -103,6 +136,9 @@ public class ShiftAppointment extends JFrame {
             }
         });
 
+        /**
+         * actions taking place in case of clicking the goBackToHomepageButton
+         */
         goBackToHomepageButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

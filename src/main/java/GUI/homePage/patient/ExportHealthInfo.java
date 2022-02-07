@@ -5,20 +5,29 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.commons.io.FilenameUtils;
 import user.Patient.Patient;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
+/**
+ * this class represents the page in the GUI where a patient can export their health info
+ * @author Ahmed Agdmoun
+ */
 public class ExportHealthInfo extends JFrame {
 
+    /**
+     * represents the logged in patient in the actual session
+     */
     Patient patient;
+
+    /**
+     * to save the imported health info from the database as a text file
+     */
+    File textFile = null;
     private JPanel mainPanel;
     private JButton exportAsAPDFButton;
     private JButton goBackToHomepageButton;
-
-    File textFile = null;
     private JButton exportAsATEXTButton;
 
     public ExportHealthInfo(Patient patient) {
@@ -27,7 +36,9 @@ public class ExportHealthInfo extends JFrame {
         setContentPane(mainPanel);
         setSize(500,500);
 
-
+        /**
+         * actions taking place after clicking the exportAsTEXTButton
+         */
         exportAsATEXTButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,6 +64,9 @@ public class ExportHealthInfo extends JFrame {
             }
         });
 
+        /**
+         * actions taking place after clicking the exportAsPDFButton
+         */
         exportAsAPDFButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,6 +106,9 @@ public class ExportHealthInfo extends JFrame {
             }
         });
 
+        /**
+         * actions taking place after clicking the goBackToHomepageButton
+         */
         goBackToHomepageButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
