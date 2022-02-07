@@ -18,4 +18,5 @@ public interface UserDAO<User>{
     public String getFirstNameByID(long id);
     public  String getLastNameByID(long id);
     public String getEmailById(long id);
+    public void editByAdmin(User user) throws EmailException;
 }

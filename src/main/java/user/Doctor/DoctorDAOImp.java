@@ -69,6 +69,7 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
             ps.setString(1, doctor.getUserName());
             ps.setString(2, doctor.getEmail());
             ps.setString(3, PasswordManager.encode(doctor.getPassword()));
+            ps.setString(3, doctor.getPassword());
             ps.setString(4,doctor.getFirstName());
             ps.setString(5,doctor.getLastName());
             ps.setString(6,doctor.getAddress());
@@ -83,6 +84,28 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
         }
     }
 
+    @Override
+    public void editByAdmin(Doctor doctor) throws EmailException {
+        try{
+            EmailVerification.verifyEmail(doctor.getEmail());
+            Connection con= DBConnection.getConnection();
+            String sql = "Update doctors set  userName=?, email=?, firstName=?, lastName=?, address=?, birthDate=?,specialization=? where id=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, doctor.getUserName());
+            ps.setString(2, doctor.getEmail());
+            ps.setString(3,doctor.getFirstName());
+            ps.setString(4,doctor.getLastName());
+            ps.setString(5,doctor.getAddress());
+            ps.setDate(6, Date.valueOf(doctor.getBirthDate()));
+            ps.setString(7,doctor.getSpecialization().toString());
+            ps.setLong(8,doctor.getId());
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Updated!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error");
+        }
+    }
 
     @Override
     public void delete(Doctor doctor) {
@@ -202,13 +225,15 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
 
             while(rs.next()){
                 Doctor doc = new Doctor();
+                doc.setUserName(rs.getString("userName"));
                 doc.setAddress(rs.getString("address"));
                 doc.setBirthDate(rs.getDate("birthDate").toLocalDate());
                 doc.setEmail(rs.getString("email"));
                 doc.setFirstName(rs.getString("firstName"));
                 doc.setLastName(rs.getString("lastName"));
                 doc.setPassword(rs.getString("password"));
-                doc.setId(rs.getInt("ID"));
+                doc.setSpecialization(Specialization.valueOf(rs.getString("specialization")));
+                doc.setId(rs.getInt("id"));
 
                 list.add(doc);
             }
@@ -281,6 +306,7 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
     public String getEmailById(long id) {
         return null;
     }
+
 
     public List<Doctor> getAllBySpecialization(Specialization specialization) {
         List<Doctor> list = new ArrayList<Doctor>();

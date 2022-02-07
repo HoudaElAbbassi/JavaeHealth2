@@ -29,6 +29,7 @@ import java.io.File;
  * This class is the Homepage of the doctor. The doctor has the possibility
  * to add or delete slots to the Schedule and can add multiple dates.
  * The doctor also has an overview of his booked appointments and can cancel if necessary.
+ * @author Houda El Abbassi
  */
 public class DoctorHomePage extends JFrame{
 
@@ -192,7 +193,7 @@ public class DoctorHomePage extends JFrame{
             /**
              * This Methode gets the Schedule from the Database and displays it in a Table. Each row represents the
              * relevant datasets from the table schedule.
-             * @param e
+             * @exception SQLException is thrown when the fetching from the databse is failed
              */
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -326,11 +327,6 @@ public class DoctorHomePage extends JFrame{
 
                 if (input == 0) {
 
-                    appointmentDAOImp.cancelById(i);
-
-
-                    //send Mail to doctor and to patient
-
                     try {
                         Mailer.sendMail(doctor.getEmail(),
                                 "Hello " + doctor.getFirstName() + "!\n\nYour Appointment has been successfully canceled!\n\n" +
@@ -340,8 +336,6 @@ public class DoctorHomePage extends JFrame{
                     } catch (MessagingException ex) {
                         ex.printStackTrace();
                     }
-
-
                     try {
                         Mailer.sendMail(patientDAOImp.getEmailById(appointmentDAOImp.getPatientIdById(i)),
                                 "Hello " + patientDAOImp.getLastNameByID(appointmentDAOImp.getPatientIdById(i)) + "!\n\nYour Appointment has been successfully canceled! The Patient has been informed\n\n" +
@@ -351,16 +345,19 @@ public class DoctorHomePage extends JFrame{
                     } catch (MessagingException ex) {
                         ex.printStackTrace();
                     }
-                }
+
+                    appointmentDAOImp.cancelById(i);
 
 
+                    //send Mail to doctor and to patient
 
+
+                    }
 
 
                 //refreshing the table
                 viewAppointmentsButton.doClick();
-
-            }
+                }
         });
 
         /**
