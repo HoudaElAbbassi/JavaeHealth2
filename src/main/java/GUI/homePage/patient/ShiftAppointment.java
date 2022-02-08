@@ -21,29 +21,19 @@ import java.util.List;
  */
 public class ShiftAppointment extends JFrame {
 
-    /**
-     * represents the actual logged in patient
-     */
+    /** represents the actual logged in patient */
     Patient patient;
 
-    /**
-     * a list of all the already booked appointments by the patient
-     */
+    /** a list of all the already booked appointments by the patient */
     private JList<Appointment> myAppointments;
 
-    /**
-     * a list of available alternative appointments by the same doctor by whom the original appointment was booked
-     */
+    /** a list of available alternative appointments by the same doctor by whom the original appointment was booked */
     private JList<Schedule> availableAppointments;
 
-    /**
-     * represents the appointment selected from the appointments list by the patient to be shifted
-     */
+    /** represents the appointment selected from the appointments list by the patient to be shifted */
     Appointment selectedAppointment = null;
 
-    /**
-     * represents the new schedule selected by the patient from the list of available appointments
-     */
+    /** represents the new schedule selected by the patient from the list of available appointments */
     Schedule selectedSchedule = null;
     private JPanel mainPanel;
     private JButton showMyAppointmentsButton;

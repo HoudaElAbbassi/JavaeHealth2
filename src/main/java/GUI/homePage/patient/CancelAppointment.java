@@ -18,19 +18,13 @@ import java.util.List;
  * @author Ahmed Agdmoun
  */
 public class CancelAppointment extends JFrame {
-    /**
-     * represents the logged in patient
-     */
+    /** represents the logged in patient */
     private Patient patient;
 
-    /**
-     * represents the selected appointment to be canceled
-     */
+    /** represents the selected appointment to be canceled */
     private Appointment selectedAppointment = null;
 
-    /**
-     * represents a list of all the booked appointments by the logged in patient
-     */
+    /** represents a list of all the booked appointments by the logged in patient */
     private JList<Appointment> myAppointments;
     DefaultListModel<Appointment> model = new DefaultListModel<>();
     private JButton cancelButton;

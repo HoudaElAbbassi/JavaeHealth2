@@ -24,9 +24,7 @@ public class MapUtils {
     private static MapUtils instance = null; // creates a new instance of the class and initialise it with null
     private JSONParser jsonParser; // creates a new Json parser
 
-    /**
-     * creates the object of the class with a json parser object
-     */
+    /** creates the object of the class with a json parser object */
     public MapUtils() {
         jsonParser = new JSONParser();
     }

@@ -16,14 +16,10 @@ import java.io.*;
  */
 public class ExportHealthInfo extends JFrame {
 
-    /**
-     * represents the logged in patient in the actual session
-     */
+    /** represents the logged in patient in the actual session */
     Patient patient;
 
-    /**
-     * to save the imported health info from the database as a text file
-     */
+    /** to save the imported health info from the database as a text file */
     File textFile = null;
     private JPanel mainPanel;
     private JButton exportAsAPDFButton;

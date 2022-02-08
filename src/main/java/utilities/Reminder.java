@@ -8,21 +8,35 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.TimerTask;
 
+/**
+ * Thi class represents the reminder functionality. It is responsible for sending a reminder via Email to a patient according to their chosen time.
+ * @author Ahmed, Amine, Houda
+ */
 public class Reminder extends TimerTask implements Runnable {
 
     private boolean exit = false;
+    /** represents the email address of the patient */
     private String receiverEmailAddress;
+    /** represents the subject of reminder email */
     private String subject;
+    /** represents the body of reminder email */
     private String message;
 
+    /** A thread is used here to run the process of sending the reminder parallel to other process running by the app.
+     * it serves that other process run from the app do not stop from running while waiting for the reminder to be sent
+     */
     Thread t;
 
+    /**
+     * this is the main constructor that is responsible for creating a reminder. it has as parameters:
+     * @param receiverEmailAddress email address of the patient
+     * @param subject subject of the reminder email
+     * @param message body of the reminder email
+     */
     public Reminder(String receiverEmailAddress, String subject, String message) {
-
         this.receiverEmailAddress = receiverEmailAddress;
         this.subject = subject;
         this.message = message;
-
         t = new Thread(this);
         t.start();
     }
@@ -38,10 +52,20 @@ public class Reminder extends TimerTask implements Runnable {
         System.out.println("Mail sent");
     }
 
+    /**
+     * used to stop the thread created from the constructor
+     */
     public void stop() {
         exit = true;
     }
 
+    /**
+     * this is a helper method to convert the time from the format of LocalDateTime to a Date format.
+     * it's mainly used while making an appointment and setting a reminder to convert the time gotten from the schedule table in the database.
+     * @param localDateTime the time and date in LocalDateFormat
+     * @return the same time and date given as a parameter in the Date Format
+     * @throws ParseException in case the date parsing fails
+     */
     public static Date convert(LocalDateTime localDateTime) throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         String year = String.valueOf(localDateTime.getYear());

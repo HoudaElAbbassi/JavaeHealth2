@@ -36,29 +36,17 @@ import java.util.Timer;
  */
 
 public class MakeAppointment extends JFrame implements ActionListener {
-    /**
-     * represents the actual patient logged in
-     */
+    /** represents the actual patient logged in */
     Patient patient;
-    /**
-     * to save the health info file that will be uploaded by the patient
-     */
+    /** to save the health info file that will be uploaded by the patient */
     File file = null;
-    /**
-     * represents a list of all the doctors with a specialization corresponding to the selected health problem
-     */
+    /** represents a list of all the doctors with a specialization corresponding to the selected health problem */
     private JList<Doctor> doctorsList;
-    /**
-     * represents a filtered list of all available appointments according to the patient filters
-     */
+    /** represents a filtered list of all available appointments according to the patient filters */
     private JList<Schedule> availableAppointments;
-    /**
-     * represents the selected doctor from the list that will be displayed
-     */
+    /** represents the selected doctor from the list that will be displayed */
     Doctor selectedDoctor = null;
-    /**
-     * represents the selected schedule from the list of available appointments
-     */
+    /** represents the selected schedule from the list of available appointments */
     Schedule selectedSchedule = null;
     private JButton healthInfoButton;
     private JComboBox healthProblemBox;

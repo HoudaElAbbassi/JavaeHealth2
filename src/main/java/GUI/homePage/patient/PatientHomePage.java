@@ -13,9 +13,7 @@ import java.awt.event.ActionListener;
  * @author Ahmed Agdmoun
  */
 public class PatientHomePage extends JFrame{
-    /**
-     *  represents the patient logged in in the actual session
-     */
+    /** represents the patient logged in the actual session */
     Patient patient;
     private JPanel mainPanel;
     private JButton makeAppointmentButton;
