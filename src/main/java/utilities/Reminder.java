@@ -22,8 +22,8 @@ public class Reminder extends TimerTask implements Runnable {
     /** represents the body of reminder email */
     private String message;
 
-    /** A thread is used here to run the process of sending the reminder parallel to other process running by the app.
-     * it serves that other process run from the app do not stop from running while waiting for the reminder to be sent
+    /** A thread is used here to run the process of sending the reminder parallel to other processes running by the app.
+     * it ensures that other processes run from the app do not stop from running while waiting for the reminder to be sent
      */
     Thread t;
 
@@ -37,8 +37,8 @@ public class Reminder extends TimerTask implements Runnable {
         this.receiverEmailAddress = receiverEmailAddress;
         this.subject = subject;
         this.message = message;
-        t = new Thread(this);
-        t.start();
+        t = new Thread(this); // instatiates the thread
+        t.start(); // starts the thread
     }
 
     @SuppressWarnings("deprecation")
@@ -53,17 +53,17 @@ public class Reminder extends TimerTask implements Runnable {
     }
 
     /**
-     * used to stop the thread created from the constructor
+     * used to stop the thread started from the constructor
      */
     public void stop() {
         exit = true;
     }
 
     /**
-     * this is a helper method to convert the time from the format of LocalDateTime to a Date format.
-     * it's mainly used while making an appointment and setting a reminder to convert the time gotten from the schedule table in the database.
-     * @param localDateTime the time and date in LocalDateFormat
-     * @return the same time and date given as a parameter in the Date Format
+     * this is a helper method to convert the time from the LocalDateTime format to a Date format.
+     * it's mainly used while making an appointment and setting a reminder to convert the time gotten from the schedule table in the database
+     * @param localDateTime the time and date in LocalDateTime format
+     * @return the same time and date given as a parameter converted in the Date Format
      * @throws ParseException in case the date parsing fails
      */
     public static Date convert(LocalDateTime localDateTime) throws ParseException {
