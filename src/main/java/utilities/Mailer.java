@@ -11,7 +11,7 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 /**
- * a utility class to send an email using the SMTP server
+ * a utility class to send an email using the SMTP protocol and the Google Gmail services
  * @author Ahmed, Amine
  */
 public class Mailer {
