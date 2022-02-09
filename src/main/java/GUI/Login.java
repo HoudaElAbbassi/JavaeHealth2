@@ -1,7 +1,8 @@
 package GUI;
 
-import Exceptions.EmailException;
 import Exceptions.PasswordException;
+import GUI.RegisterationPage.RegisterDoc;
+import GUI.RegisterationPage.RegisterPatient;
 import GUI.homePage.admin.AdminHomePage;
 import GUI.homePage.patient.PatientHomePage;
 import Security.PasswordManager;
@@ -26,6 +27,10 @@ public class Login extends JFrame {
     private JButton logInButton;
     private JButton goBackToMainpageButton;
     private JButton resetPasswordButton;
+    private JButton signUpAsAButton1;
+    private JButton signUpAsAButton;
+    private JLabel labelpicture;
+
     /**
      * an instance which create a frame where the user select the type of his profile and log in with his own email and password.
      * */
@@ -33,11 +38,18 @@ public class Login extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //This method is used to determine one of several options for the close button.
         //Frame.DISPOSE_ON_CLOSE which discards The frame object ,but the application continues to run.
-        setSize(400, 600);//This methode changes the size of the frames according to the given size
+        setSize(800, 500);
         setContentPane(mainPanel);//This method is used to set the top-level visual element inside a Window
+
+        ImageIcon imageIcon= new ImageIcon("C:\\Users\\houda\\Desktop\\JAVAProject\\docPic.jpeg");
+        labelpicture.setIcon(imageIcon);
+
+
         /**This method enable the user to select his type of profile and input his registered email and password to login
          * @param e is generated when the user has selected that menu item
          * */
+
+
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -114,6 +126,22 @@ public class Login extends JFrame {
                 dispose();
                 ResetPasswordPage resetPasswordPage=new ResetPasswordPage();
                 resetPasswordPage.setVisible(true);
+            }
+        });
+        signUpAsAButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RegisterDoc registerDoc= new RegisterDoc();
+                setVisible(false);
+                registerDoc.setVisible(true);
+            }
+        });
+        signUpAsAButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RegisterPatient registerPatient =  new RegisterPatient();
+                setVisible(false);
+                registerPatient.setVisible(true);
             }
         });
     }
