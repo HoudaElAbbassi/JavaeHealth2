@@ -176,7 +176,10 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
                 doctor.setFirstName(rs.getString("firstName"));
                 doctor.setLastName(rs.getString("lastName"));
                 doctor.setPassword(rs.getString("password"));
+                System.out.println(rs.getString("specialization"));
+                System.out.println((rs.getString("specialization")));
                 doctor.setSpecialization(Specialization.valueOf(rs.getString("specialization")));
+
 
             }
         } catch (Exception e) {
