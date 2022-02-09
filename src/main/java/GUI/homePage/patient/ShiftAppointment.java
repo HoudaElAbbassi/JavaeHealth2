@@ -42,6 +42,7 @@ public class ShiftAppointment extends JFrame {
     DefaultListModel<Schedule> model2 = new DefaultListModel<>();
     private JButton showAvailableAppointmentsButton;
     private JButton goBackToHomepageButton;
+    private JLabel arrowicon;
 
     /**
      * this is the main constructor responsible for creating a ShiftAppointment page
@@ -51,7 +52,10 @@ public class ShiftAppointment extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.patient = patient;
         setContentPane(mainPanel);
-        setSize(500,500);
+        setSize(800,500);
+
+        ImageIcon imageIcon= new ImageIcon("C:\\Users\\houda\\Desktop\\JAVAProject\\arrowIconKlein.png");
+        arrowicon.setIcon(imageIcon);
         showMyAppointmentsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

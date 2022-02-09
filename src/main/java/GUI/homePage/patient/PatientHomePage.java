@@ -1,11 +1,15 @@
 package GUI.homePage.patient;
 
+import Exceptions.PasswordException;
+import GUI.Login;
 import GUI.MainPage;
+import user.Patient.InsuranceType;
 import user.Patient.Patient;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 /**
  * This class represents the homepage of the patient in the GUI, in other words
@@ -21,6 +25,9 @@ public class PatientHomePage extends JFrame{
     private JButton shiftAppointmentButton;
     private JButton logOutButton;
     private JButton exportMyHealthInfoButton;
+    private JLabel patienticon;
+    private JLabel patientName;
+    private JLabel patientlastname;
 
     /**
      * This is the main constructor of the class which constructs the GUI page
@@ -30,7 +37,15 @@ public class PatientHomePage extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.patient = patient;
         setContentPane(mainPanel);
-        setSize(500,500);
+        setSize(800,500);
+
+        ImageIcon imageIcon= new ImageIcon("C:\\Users\\houda\\Desktop\\JAVAProject\\patienticonKlein.png");
+        patienticon.setIcon(imageIcon);
+        patienticon.setSize(10,10);
+
+        patientName.setText(patient.getFirstName());
+        patientlastname.setText(patient.getLastName());
+
         makeAppointmentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,10 +96,26 @@ public class PatientHomePage extends JFrame{
         logOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainPage mainPage = new MainPage();
+                Login mainPage = null;
+                try {
+                    mainPage = new Login();
+                } catch (PasswordException ex) {
+                    ex.printStackTrace();
+                }
                 setVisible(false);
                 mainPage.setVisible(true);
             }
         });
+    }
+
+    public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        Patient patient=new Patient("Username","email","password","firstname","lastname","address", LocalDate.now(), InsuranceType.Private,"AOK");
+        PatientHomePage patientHomePage=new PatientHomePage(patient);
+        patientHomePage.setVisible(true);
     }
 }

@@ -77,7 +77,7 @@ public class MakeAppointment extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.patient = patient;
         setContentPane(mainPanel);
-        setSize(500,500);
+        setSize(800,500);
         healthInfoButton.addActionListener(this);
         healthProblemBox.setModel(new DefaultComboBoxModel<>(HealthProblem.values()));
 
