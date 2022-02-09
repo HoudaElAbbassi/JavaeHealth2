@@ -24,6 +24,7 @@ public class ResetPasswordPage extends JFrame{
     private JTextField firstname;
     private JTextField lastname;
     private JPanel mainPanel;
+    private JButton backToTheMainpageButton;
 
     /**
      * The Reset Password Page gives the user the chance to reset the password.
@@ -113,6 +114,19 @@ public class ResetPasswordPage extends JFrame{
                     }
 
                 }
+            }
+        });
+        backToTheMainpageButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Login login= null;
+                try {
+                    login = new Login();
+                } catch (PasswordException ex) {
+                    ex.printStackTrace();
+                }
+                setVisible(false);
+                login.setVisible(true);
             }
         });
     }
