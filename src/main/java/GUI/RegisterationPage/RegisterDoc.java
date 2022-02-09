@@ -103,7 +103,12 @@ public class RegisterDoc extends JFrame{
         goBackToMainpageButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainPage mainPage = new MainPage();
+                Login mainPage = null;
+                try {
+                    mainPage = new Login();
+                } catch (PasswordException ex) {
+                    ex.printStackTrace();
+                }
                 setVisible(false);
                 mainPage.setVisible(true);
             }

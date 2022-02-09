@@ -110,11 +110,18 @@ public class RegisterPatient extends  JFrame{
         goBackToMainpageButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainPage mainPage = new MainPage();
+                Login login = null;
+                try {
+                    login = new Login();
+                } catch (PasswordException ex) {
+                    ex.printStackTrace();
+                }
                 setVisible(false);
-                mainPage.setVisible(true);
+                login.setVisible(true);
             }
         });
     }
+
+
 
 }
