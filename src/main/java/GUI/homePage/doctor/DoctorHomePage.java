@@ -1,7 +1,9 @@
 package GUI.homePage.doctor;
 
 
+import Exceptions.PasswordException;
 import Exceptions.ScheduleException;
+import GUI.Login;
 import GUI.MainPage;
 import appointments.AppointmentDAOImp;
 import appointments.schedule.Schedule;
@@ -81,8 +83,8 @@ public class DoctorHomePage extends JFrame{
     public DoctorHomePage(Doctor doctor) {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setContentPane(mainPanel);
-        setSize(500, 500);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(800, 500);
+
 
 
         UsernameTextField.setText(doctor.getFirstName()+" "+doctor.getLastName());
@@ -367,7 +369,12 @@ public class DoctorHomePage extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                MainPage mainPage=new MainPage();
+                Login mainPage= null;
+                try {
+                    mainPage = new Login();
+                } catch (PasswordException ex) {
+                    ex.printStackTrace();
+                }
                 mainPage.setVisible(true);
 
 
@@ -435,6 +442,17 @@ public class DoctorHomePage extends JFrame{
 
             }
         });
+    }
+
+    public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        Doctor doctor=new Doctor();
+        DoctorHomePage doctorHomePage=new DoctorHomePage(doctor);
+        doctorHomePage.setVisible(true);
     }
 }
 
