@@ -12,8 +12,24 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+    /** 
+    *This class implements the methods of the Patient class
+    *@author Prabal, Daniel, Houda , Amine , Ahmed
+    */
+    
+    
 public class PatientDAOImp implements UserDAO<Patient> {
-
+    /** 
+    *This is a method that recieves an Patient object 
+    *and it saves the properties  of the patient into the database
+    *after checking the validity of 
+    *the password and email.
+    *@param admin of the type Admin
+    *@throws PasswordException
+    *@throws  EmailException
+    *@author Prabal, Daniel, Houda , Amine , Ahmed
+    */
+    
     @Override
     public boolean save(Patient patient) throws PasswordException, EmailException {
         try {
