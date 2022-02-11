@@ -58,7 +58,6 @@ public class AdminDAOImp implements UserDAO<Admin> {
 
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
         return false;
     }
@@ -100,7 +99,6 @@ public class AdminDAOImp implements UserDAO<Admin> {
         }
         catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
     }
     
@@ -123,7 +121,6 @@ public class AdminDAOImp implements UserDAO<Admin> {
             JOptionPane.showMessageDialog(null, "Deleted!");
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
     }
     
@@ -144,7 +141,6 @@ public class AdminDAOImp implements UserDAO<Admin> {
         JOptionPane.showMessageDialog(null, "Deleted!");
     } catch (Exception e) {
         e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error");
     }}
     
     
@@ -170,7 +166,6 @@ public class AdminDAOImp implements UserDAO<Admin> {
         }
         catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
 
         return false;
@@ -207,7 +202,6 @@ public class AdminDAOImp implements UserDAO<Admin> {
             JOptionPane.showMessageDialog(null, "Deleted!");
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
         return admin;
     }
@@ -250,7 +244,6 @@ public class AdminDAOImp implements UserDAO<Admin> {
 
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
         return list;
     }
@@ -277,7 +270,6 @@ public class AdminDAOImp implements UserDAO<Admin> {
         }
         catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
 
         return null;
@@ -305,7 +297,6 @@ public class AdminDAOImp implements UserDAO<Admin> {
         }
         catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
 
         return null;
@@ -333,7 +324,6 @@ public class AdminDAOImp implements UserDAO<Admin> {
         }
         catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
         return null;
     }

@@ -33,8 +33,4 @@ public class Admin extends User {
     public Admin() {
 
     }
-
-    //public void editUserProfil()
-    //public deleteUser()
-    //public accessUserProfile()
 }

@@ -3,9 +3,7 @@ package GUI.RegisterationPage;
 import Exceptions.EmailException;
 import Exceptions.PasswordException;
 import GUI.Login;
-import GUI.MainPage;
 import com.toedter.calendar.JDateChooser;
-import user.Patient.HealthProblem;
 import user.Patient.InsuranceType;
 import user.Patient.Patient;
 import user.Patient.PatientDAOImp;
@@ -42,7 +40,7 @@ public class RegisterPatient extends  JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//This method is used to determine one of several options for the close button.
         //Frame.DISPOSE_ON_CLOSE discards The frame object ,but the application continues to run.
         setContentPane(mainPanel);//This method is used to set the top-level visual element inside a Window
-        setSize(500,500);//This methode changes the size of the frames according to the given size
+        setSize(800,600);;//This methode changes the size of the frames according to the given size
         /**
          * ComboBox1 is component that combines the button and the drop-down InsuranceType list.
          * The patient can select a InsuranceType from the drop-down list, which appears at the patient's request.
