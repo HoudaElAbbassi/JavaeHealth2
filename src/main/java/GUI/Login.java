@@ -3,7 +3,7 @@ package GUI;
 import Exceptions.PasswordException;
 import GUI.RegisterationPage.RegisterDoc;
 import GUI.RegisterationPage.RegisterPatient;
-import GUI.homePage.admin.AdminHomePage;
+import GUI.homePage.admin.AdminPage;
 import GUI.homePage.patient.PatientHomePage;
 import Security.PasswordManager;
 import user.Admin.AdminDAOImp;
@@ -94,9 +94,9 @@ public class Login extends JFrame {
                     if(adminDAOImp.existEmail(emailText.getText())){
                         if(adminDAOImp.getPassword(emailText.getText()).equals(passwordField.getText())){
                             dispose();
-                            AdminHomePage adminHomePage = new AdminHomePage();
+                            AdminPage adminPage = new AdminPage();
                             setVisible(false);
-                            //adminHomePage.setVisible(true);
+                            adminPage.setVisible(true);
                         }
                         else   JOptionPane.showMessageDialog(null,"Incorrect password!");
 

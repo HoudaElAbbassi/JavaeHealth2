@@ -54,8 +54,6 @@ public class ShiftAppointment extends JFrame {
         setContentPane(mainPanel);
         setSize(800,500);
 
-        ImageIcon imageIcon= new ImageIcon("C:\\Users\\houda\\Desktop\\JAVAProject\\arrowIconKlein.png");
-        arrowicon.setIcon(imageIcon);
         showMyAppointmentsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -63,7 +61,6 @@ public class ShiftAppointment extends JFrame {
                 myAppointments.setModel(model);
                 AppointmentDAOImp appointmentDAOImp = new AppointmentDAOImp();
                 List<Appointment> appointmentList = appointmentDAOImp.getAllByPatientId(patient.getId());
-                System.out.println(patient.getId());
                 for (Appointment app: appointmentList) {
                     model.addElement(app);
                 }
@@ -90,9 +87,7 @@ public class ShiftAppointment extends JFrame {
                     ScheduleDAOImp scheduleDAOImp = new ScheduleDAOImp();
                     AppointmentDAOImp appointmentDAOImp = new AppointmentDAOImp();
                     long scheduleId = appointmentDAOImp.getScheduleId(selectedAppointment.getId());
-                    System.out.println(scheduleId);
                     long doctorId = scheduleDAOImp.getDoctorId(scheduleId);
-                    System.out.println(doctorId);
                     List<Schedule> schedules = scheduleDAOImp.getAllAvailable(doctorId);
                     for (Schedule schedule: schedules) {
                         model2.addElement(schedule);
@@ -123,7 +118,6 @@ public class ShiftAppointment extends JFrame {
 
                         AppointmentDAOImp appointmentDAOImp = new AppointmentDAOImp();
                         appointmentDAOImp.shiftAppointment(selectedAppointment, selectedSchedule.getScheduleId());
-                        System.out.println(selectedSchedule.getScheduleId());
                         String message = Mailer.reschedulingMessage(patient, selectedSchedule);
                         Mailer.sendMail(patient.getEmail(), message, "Appointment Rescheduling");
                     }

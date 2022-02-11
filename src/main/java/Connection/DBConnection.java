@@ -22,16 +22,12 @@ public class DBConnection {
         //  Database credentials
         String url = "jdbc:mysql://localhost:3306/ehealth";
         String user = "root";
-        String pass = "azerty@222";
+        String pass = "";
 
         // JDBC driver name and database URL
         Connection con = null;
         try {
             con = DriverManager.getConnection(url, user, pass);
-            //System.out.println("Verbindung erfolgreich hergestellt");
-
-            //Statement stm = con.createStatement();
-            //ResultSet rs = stm.executeQuery("SELECT * FROM patient;");
             return con;
 
         } catch (SQLException e) {
@@ -45,10 +41,6 @@ public class DBConnection {
         return con;
     }
 
-    public static void main(String[] args) throws SQLException {
-        DBConnection db=new DBConnection();
-        db.getConnection();
-    }
 }
 
 
