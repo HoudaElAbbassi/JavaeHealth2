@@ -8,6 +8,9 @@ import user.Patient.HealthProblem;
 
 import java.io.File;
 
+/**
+ * This class is used to set up appointments between patients and doctors using their IDs and other information
+ */
 public class Appointment {
 
     private long id;
@@ -82,6 +85,10 @@ public class Appointment {
         this.healthInfo = healthInfo;
     }
 
+    /**
+     * This method turns the appointment information into a String
+     * @return String, with all information
+     */
     @Override
     public String toString() {
         DoctorDAOImp doctorDAOImp = new DoctorDAOImp();

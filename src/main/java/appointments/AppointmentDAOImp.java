@@ -21,8 +21,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This class is used to connect to the database and access and edit appointments
+ */
 public class AppointmentDAOImp implements AppointmentDAO{
 
+    /**
+     * This method adds appointments and the corresponding information into the database
+     * @param appointment
+     * @return true, if booking was successful, else false
+     */
     @Override
     public boolean addAppointment(Appointment appointment) {
             try{
@@ -50,6 +58,11 @@ public class AppointmentDAOImp implements AppointmentDAO{
 
     }
 
+    /**
+     * This method shifts an appointment to another time and changes the schedlueId
+     * @param appointment
+     * @param newScheduleId
+     */
     @Override
     public void shiftAppointment(Appointment appointment, long newScheduleId) {
         try{ScheduleDAOImp scheduleDAOImp = new ScheduleDAOImp();
@@ -63,6 +76,10 @@ public class AppointmentDAOImp implements AppointmentDAO{
         }
     }
 
+    /**
+     * This method is used to cancel an appointment and change the status of the now free timeslot
+     * @param appointment
+     */
     @Override
     public void cancel(Appointment appointment) {
         try{
@@ -81,7 +98,10 @@ public class AppointmentDAOImp implements AppointmentDAO{
         }
     }
 
-
+    /**
+     * This method is used to cancel an appointment
+     * @param id
+     */
     @Override
     public void cancelById(long id) {
         try {
@@ -96,8 +116,12 @@ public class AppointmentDAOImp implements AppointmentDAO{
         }
     }
 
-
-        @Override
+    /**
+     * This method gets the appointments whole information through the patients ID
+     * @param patientId
+     * @return Appointment
+     */
+    @Override
     public Appointment getAppointmentByPatientId(long patientId) {
             Appointment appointment = new Appointment();
             try {
@@ -122,6 +146,11 @@ public class AppointmentDAOImp implements AppointmentDAO{
             return appointment;
     }
 
+    /**
+     * This method gets the appointments whole information through the doctors ID
+     * @param doctorId
+     * @return Appointment
+     */
     @Override
     public Appointment getAppointmentByDoctorId(long doctorId) {
         Appointment appointment = new Appointment();
@@ -148,6 +177,11 @@ public class AppointmentDAOImp implements AppointmentDAO{
         return appointment;
     }
 
+    /**
+     * This method gets the appointments whole information through the appointments ID
+     * @param id
+     * @return
+     */
     @Override
     public Appointment getById(int id) {
         Appointment appointment = new Appointment();
@@ -170,6 +204,10 @@ public class AppointmentDAOImp implements AppointmentDAO{
         return appointment;
     }
 
+    /**
+     * This method gets the information from all appointments
+     * @return List<Appointment>
+     */
     @Override
     public List<Appointment> getAll() {
         List<Appointment> list = new ArrayList<>();
@@ -196,6 +234,11 @@ public class AppointmentDAOImp implements AppointmentDAO{
         return list;
     }
 
+    /**
+     * This method gets all the appointments of one doctor using the doctors ID
+     * @param doctorId
+     * @return List<Appointment>
+     */
     @Override
     public List<Appointment> getAllByDoctorId(long doctorId) {
         List<Appointment> list = new ArrayList<>();
@@ -222,6 +265,11 @@ public class AppointmentDAOImp implements AppointmentDAO{
         return list;
     }
 
+    /**
+     * This method gets all the appointments of one patient using the patients ID
+     * @param patientId
+     * @return List<Appointment>
+     */
     @Override
     public List<Appointment> getAllByPatientId(long patientId) {
         List<Appointment> list = new ArrayList<>();
@@ -248,6 +296,11 @@ public class AppointmentDAOImp implements AppointmentDAO{
         return list;
     }
 
+    /**
+     * This method gets the schedules ID through the appointments ID
+     * @param appointmentId
+     * @return scheduleId
+     */
     @Override
     public long getScheduleId(long appointmentId) {
         long scheduleId = 0;
@@ -268,6 +321,11 @@ public class AppointmentDAOImp implements AppointmentDAO{
         return scheduleId;
     }
 
+    /**
+     * This method gets the healthproblem of a patient through the appointments id
+     * @param Id
+     * @return HealthProblem
+     */
     @Override
     public HealthProblem getHealthProblemById(long Id) {
         try {
@@ -286,6 +344,11 @@ public class AppointmentDAOImp implements AppointmentDAO{
         return null;
     }
 
+    /**
+     * This method updates the healthinfo of a patient with handed in healthproblem file through the appointments ID
+     * @param id
+     * @param healthproblemfile
+     */
     @Override
     public void updateHealthinfoById(long id,File healthproblemfile) {
         try {
@@ -301,6 +364,11 @@ public class AppointmentDAOImp implements AppointmentDAO{
         }
     }
 
+    /**
+     * This method gets the healthinfo of a patient through the patients ID
+     * @param patientId
+     * @return byte[]
+     */
     @Override
     public byte[] getHealthInfo(long patientId) {
         try {
@@ -317,6 +385,11 @@ public class AppointmentDAOImp implements AppointmentDAO{
         return null;
     }
 
+    /**
+     * This method gets the healthinfo of a patient through the appointments ID
+     * @param appointmentid
+     * @return byte[]
+     */
     @Override
     public byte[] getHealthInfoById(long appointmentid) {
         try {
@@ -333,6 +406,11 @@ public class AppointmentDAOImp implements AppointmentDAO{
         return null;
     }
 
+    /**
+     * This method gets the patients ID through the appointments ID
+     * @param appointmentId
+     * @return patientId
+     */
     @Override
     public long getPatientIdById(long appointmentId) {
         long patientId = 0;

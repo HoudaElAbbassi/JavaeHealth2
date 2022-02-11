@@ -3,6 +3,10 @@ package appointments.schedule;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * This class sets up the schedule for doctors using IDs for doctors and schedules, imported attributes for
+ * date and time and a status for booked appointments.
+ */
 public class Schedule {
 
     private long scheduleId;
@@ -71,6 +75,10 @@ public class Schedule {
         this.status = status;
     }
 
+    /**
+     * This method turns the Schedule information into a String with date and time
+     * @return String
+     */
     @Override
     public String toString() {
         return "Day: "+date.getDayOfWeek()+" "+date.getDayOfMonth()+". "+date.getYear()+",   "+
