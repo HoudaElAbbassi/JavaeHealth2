@@ -1,5 +1,10 @@
 package user.Patient;
 
+/**  
+    This is a list of health problems that are shown in the selection.
+    *@author Prabal, Daniel, Houda , Amine , Ahmed
+*/
+   
 public enum HealthProblem {
     Asthma,
     Eczema,
