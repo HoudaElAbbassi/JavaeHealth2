@@ -6,7 +6,13 @@ import user.User;
 import java.time.LocalDate;
 
 public class Admin extends User {
-
+    /** 
+    
+    *This class is the Admin class ,it extends the user class , 
+    *the admin can addionally edit , access and delete profiles of other users.
+    *@author Prabal, Daniel, Houda , Amine , Ahmed
+    */
+    
     public Admin(
             String userName,
             String email,
