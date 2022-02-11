@@ -19,9 +19,9 @@ public class AdminDAOImp implements UserDAO<Admin> {
     *and saves its properties into the database
     *after checking the validity of 
     *the password and email.
-    *@param An admin of the type Admin
-    *@throws Passwordexpection
-    *@throws  Emailexception
+    *@param admin of the type Admin
+    *@throws PasswordException
+    *@throws  EmailException
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     
@@ -67,9 +67,9 @@ public class AdminDAOImp implements UserDAO<Admin> {
     *This is a method that recieves an admin object 
     *The validity of password and email is checked first
     *The method allows us edit the admins properties inside the database
-    *@param An admin of the type Admin
-    *@throws Passwordexpection
-    *@throws Emailexception
+    *@param admin of the type Admin
+    *@throws PasswordException
+    *@throws EmailException
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     
@@ -108,7 +108,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
     *This is a method that recieves an admin object 
     *It searches for ID of the given Admin 
     *and deletes the object inside the database.
-    *@param An admin of the type Admin
+    *@param admin of the type Admin
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     
@@ -179,7 +179,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
    /** 
     *This is a method that recieves an email adress
     *It searches for the admin with the given email adress
-    *@returns admin of type Admin
+    *@return admin of type Admin
     *@param userEmail of type String
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
@@ -223,7 +223,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
     *This is a method that returns all admins
     *First an empty list is created
     *then all admins are added to the list
-    *@return list of type List<Admin>
+    *@return list of type Admin
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     
@@ -259,7 +259,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
     *This is a method that gets the Password of a user
     *The method recieves email adress of a user
     *It seaches for the corrisponding password 
-    *@pram userEmail of type String
+    *@param userEmail of type String
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     
@@ -287,7 +287,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
     *This is a method that first Name of the user based on his ID
     *It checks inside the databaste for the username corisponding to the given ID
     *It seaches for the corrisponding password 
-    *@pram id of type long
+    *@param id of type long
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     
@@ -315,7 +315,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
     *This is a method that last Name of the user based on his ID
     *It checks inside the databaste for the username corisponding to the given ID
     *It seaches for the corrisponding password 
-    *@pram id of type long
+    *@param id of type long
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     

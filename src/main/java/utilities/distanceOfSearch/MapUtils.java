@@ -17,7 +17,7 @@ import org.json.simple.parser.JSONParser;
 
 /**
  * A utility class to get the coordinates of an address using the open website OpenStreetMap
- * @Author Ahmed Agdmoun
+ * @author Ahmed Agdmoun
  */
 public class MapUtils {
     public final static Logger log = Logger.getLogger("MapUtils"); // creates an instance of the class Logger to retrieve a logger of the class or create a  new one if iz doesn't exist

@@ -2,7 +2,7 @@ package utilities.distanceOfSearch;
 
 /**
  * this class is a utility class and contains the static method calculating the distance of search
- * @Author Ahmed Agdmoun
+ * @author Ahmed Agdmoun
  */
 public class DistanceOfSearch {
 
