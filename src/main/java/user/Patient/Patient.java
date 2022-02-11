@@ -5,6 +5,12 @@ import user.User;
 import java.io.File;
 import java.time.LocalDate;
 
+/** 
+    *This class is the Patient class ,it extends the user class , 
+    *The Patient is the main user of the application and recieves alot of functionality.
+    *@author Prabal ,Daniel, Houda ,Amine ,Ahmed
+*/
+
 public class Patient extends User {
 
     private HealthProblem healthProblem;
