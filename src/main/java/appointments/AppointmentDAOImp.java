@@ -41,7 +41,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
                 return true;
             }catch (SQLException e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error");
             }
             catch(FileNotFoundException e) {
                 e.printStackTrace();
@@ -59,7 +58,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
             JOptionPane.showMessageDialog(null, "Appointment shifted!");
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
     }
 
@@ -77,7 +75,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
             JOptionPane.showMessageDialog(null, "Appointment deleted");
         }catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
     }
 
@@ -92,7 +89,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
             JOptionPane.showMessageDialog(null, "Appointment deleted");
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
     }
 
@@ -117,7 +113,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error");
             }
             return appointment;
     }
@@ -136,14 +131,12 @@ public class AppointmentDAOImp implements AppointmentDAO{
                 appointment.setPatientId(rs.getLong("patientId"));
                 appointment.setScheduleId(rs.getLong("scheduleId"));
                 appointment.setHealthInfo(new File(String.valueOf(rs.getCharacterStream("healthinfo"))));
-                //appointment.setHealthProblem(HealthProblem.valueOf(rs.getString("HealthProblem")));
                 File file=new File("C:\\Users\\houda\\Desktop\\JAVAProject\\output.txt");
                 Files.write(CharStreams.toString(rs.getCharacterStream("healthinfo")).getBytes(StandardCharsets.UTF_8),file);
                 appointment.setHealthInfo(file);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
         return appointment;
     }
@@ -165,7 +158,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
             }
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
         return appointment;
     }
@@ -191,7 +183,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
 
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
         return list;
     }
@@ -217,7 +208,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
 
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
         return list;
     }
@@ -243,7 +233,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
 
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
         return list;
     }
@@ -263,7 +252,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
 
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
         return scheduleId;
     }
@@ -281,7 +269,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
 
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
         return null;
     }
@@ -297,7 +284,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
             JOptionPane.showMessageDialog(null, "Updated!");
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
     }
 
@@ -347,7 +333,6 @@ public class AppointmentDAOImp implements AppointmentDAO{
 
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
         return patientId;
     }

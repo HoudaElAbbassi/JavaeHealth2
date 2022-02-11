@@ -35,7 +35,6 @@ public class ScheduleDAOImp implements ScheduleDAO {
 
         } catch (ScheduleException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, e);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -136,12 +135,10 @@ public class ScheduleDAOImp implements ScheduleDAO {
             String sql = "Update schedule set  status='available' where scheduleId=" + scheduleId;
             PreparedStatement ps = con.prepareStatement(sql);
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Updated!");
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
     }
 
@@ -152,10 +149,8 @@ public class ScheduleDAOImp implements ScheduleDAO {
             String sql = "Update schedule set  status='booked' where scheduleId=" + scheduleId;
             PreparedStatement ps = con.prepareStatement(sql);
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Updated!");
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
     }
 
@@ -183,9 +178,6 @@ public class ScheduleDAOImp implements ScheduleDAO {
             Connection con = DBConnection.getConnection();
             String sql2 = "Select  `doctorId`, `date`, `start` from schedule where  `doctorId`=" + schedule.getDoctorId() + " and `date`='" + Date.valueOf(schedule.getDate()) + "'and `start`='" + Time.valueOf(schedule.getStart()) + "'";
             PreparedStatement ps = con.prepareStatement(sql2);
-            //ps.setLong(1, schedule.getDoctorId());
-            //ps.setDate(2, Date.valueOf(schedule.getDate()));
-            //ps.setTime(3, Time.valueOf(schedule.getStart()));
             ResultSet rs = ps.executeQuery(sql2);
             if (rs.next()) return true;
             else return false;
@@ -204,10 +196,9 @@ public class ScheduleDAOImp implements ScheduleDAO {
             String sql = "delete from schedule where scheduleId=" + scheduleId;
             PreparedStatement ps = con.prepareStatement(sql);
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Schedulr deleted");
+            JOptionPane.showMessageDialog(null, "Solt successfully deleted from schedule");
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
     }
 
@@ -296,7 +287,6 @@ public class ScheduleDAOImp implements ScheduleDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error");
         }
         return null;
     }
