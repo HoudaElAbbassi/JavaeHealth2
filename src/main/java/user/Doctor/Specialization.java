@@ -4,49 +4,37 @@ import java.util.HashMap;
 
 public enum Specialization {
 
-    Allergist("Allergist"),
+    Allergist,
 
-    Cardiologist("Cardiologist"),
+    Cardiologist,
 
-    Surgeon("Surgeon"),
+    Surgeon,
 
-    Dermatologist("Dermatologist"),
+    Dermatologist,
 
-    Endocrinologist("Endocrinologist"),
+    Endocrinologist,
 
-    Family_Physician("Family Physician"),
+    Family_Physician,
 
-    Gastroenterologist("Gastroenterologist"),
+    Gastroenterologist,
 
-    Hematologist("Hematologist"),
+    Hematologist,
 
-    Infectious_Disease_Specialist("Infectious Disease Specialist"),
+    Infectious_Disease_Specialist,
 
-    Nephrologist("Nephrologist"),
+    Nephrologist,
 
-    Neurologist("Neurologist"),
+    Neurologist,
 
-    Ophthalmologist("Ophthalmologist"),
+    Ophthalmologist,
 
-    Otolaryngologist("Otolaryngologist"),
+    Otolaryngologist,
 
-    Psychiatrist("Psychiatrist"),
+    Psychiatrist,
 
-    Pulmonologist("Pulmonologist"),
+    Pulmonologist,
 
-    Rheumatologist("Rheumatologist"),
+    Rheumatologist,
 
-    General_practitioner("General Practitioner");
-
-    private String value;
-    private Specialization(String value)
-    {
-        this.value = value;
-    }
-
-    public String toString()
-    {
-        return this.value;
-    }
-
+    General_practitioner
 }

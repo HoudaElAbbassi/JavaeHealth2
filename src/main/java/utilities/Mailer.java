@@ -30,7 +30,7 @@ public class Mailer {
                 "-Address: "+doctor.getAddress()+".\n"+
                 "-Date and Time: "+schedule.getDate()+" at "+schedule.getStart()+
                 "\n\nBest regards\n\n" +
-                "eHealth Consulting";
+                "Your eHealth Consulting Team";
     }
 
     /**

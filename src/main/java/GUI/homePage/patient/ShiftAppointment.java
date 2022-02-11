@@ -117,11 +117,16 @@ public class ShiftAppointment extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    AppointmentDAOImp appointmentDAOImp = new AppointmentDAOImp();
-                    appointmentDAOImp.shiftAppointment(selectedAppointment, selectedSchedule.getScheduleId());
-                    System.out.println(selectedSchedule.getScheduleId());
-                    String message = Mailer.reschedulingMessage(patient, selectedSchedule);
-                    Mailer.sendMail(patient.getEmail(), message, "Appointment Rescheduling");
+                    int input = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel your appointment?", "choose", JOptionPane.YES_NO_OPTION);
+
+                    if (input == 0) {
+
+                        AppointmentDAOImp appointmentDAOImp = new AppointmentDAOImp();
+                        appointmentDAOImp.shiftAppointment(selectedAppointment, selectedSchedule.getScheduleId());
+                        System.out.println(selectedSchedule.getScheduleId());
+                        String message = Mailer.reschedulingMessage(patient, selectedSchedule);
+                        Mailer.sendMail(patient.getEmail(), message, "Appointment Rescheduling");
+                    }
                 } catch (MessagingException ex) {
                     ex.printStackTrace();
                 } catch (NullPointerException npe1) {

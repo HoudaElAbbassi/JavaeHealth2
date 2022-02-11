@@ -216,7 +216,8 @@ public class MakeAppointment extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 PatientHomePage patientHomePage = new PatientHomePage(patient);
-                setVisible(false);
+                dispose();
+                //setVisible(false);
                 patientHomePage.setVisible(true);
             }
         });

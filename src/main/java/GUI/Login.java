@@ -41,7 +41,8 @@ public class Login extends JFrame {
         setSize(800, 500);
         setContentPane(mainPanel);//This method is used to set the top-level visual element inside a Window
 
-        ImageIcon imageIcon= new ImageIcon("C:\\Users\\houda\\Desktop\\JAVAProject\\docPic.jpeg");
+        //ImageIcon imageIcon= new ImageIcon("C:\\Users\\houda\\Desktop\\JAVAProject\\docPic.jpeg");
+        ImageIcon imageIcon= new ImageIcon("docPic.jpeg");
         labelpicture.setIcon(imageIcon);
 
 
@@ -104,10 +105,12 @@ public class Login extends JFrame {
                 }
             }
         });
+
         /**
          * By clicking on goBackToMainPage button the user would be redirected to MainPage
          * @param e  is generated when the user has selected that menu item
          * */
+        /*
         goBackToMainpageButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -116,6 +119,7 @@ public class Login extends JFrame {
                 mainPage.setVisible(true);
             }
         });
+        */
         /**
          * this methode enable the user to reset his previous password
          * @param e  is generated when the user has selected that menu item

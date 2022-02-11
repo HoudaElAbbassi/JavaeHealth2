@@ -30,7 +30,7 @@ public class ExportHealthInfo extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.patient = patient;
         setContentPane(mainPanel);
-        setSize(500,500);
+        setSize(800,500);
 
         /**
          * actions taking place after clicking the exportAsTEXTButton

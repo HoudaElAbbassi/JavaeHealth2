@@ -14,6 +14,7 @@ public class AdminHomePage extends JFrame{
     private JPanel AdminPanel;
     private JButton PatientButton;
     private JButton DoctorButton;
+    private JButton logoutButton;
     private JPanel Admin;
     /**
      * Constructs an instance which create a frame where the admin select to access to patient or doctor profiles.

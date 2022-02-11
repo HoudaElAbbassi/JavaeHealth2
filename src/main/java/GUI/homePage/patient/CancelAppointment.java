@@ -1,7 +1,9 @@
 package GUI.homePage.patient;
 
+import Exceptions.ScheduleException;
 import appointments.Appointment;
 import appointments.AppointmentDAOImp;
+import appointments.schedule.Status;
 import user.Patient.Patient;
 import utilities.Mailer;
 import javax.mail.MessagingException;
@@ -40,7 +42,7 @@ public class CancelAppointment extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.patient = patient;
         setContentPane(mainPanel);
-        setSize(500,500);
+        setSize(800,500);
 
         /**
          * Actions taking place after clicking the showMyAppointmentButton
@@ -74,10 +76,18 @@ public class CancelAppointment extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    AppointmentDAOImp appointmentDAOImp = new AppointmentDAOImp();
-                    appointmentDAOImp.cancel(selectedAppointment);
-                    String message = Mailer.cancellationMessage(patient);
-                    Mailer.sendMail(patient.getEmail(), message, "Appointment Cancellation");
+                    int input = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel your appointment?", "choose", JOptionPane.YES_NO_OPTION);
+
+                    if (input == 0) {
+
+                        AppointmentDAOImp appointmentDAOImp = new AppointmentDAOImp();
+                        appointmentDAOImp.cancel(selectedAppointment);
+                        String message = Mailer.cancellationMessage(patient);
+                        Mailer.sendMail(patient.getEmail(), message, "Appointment Cancellation");
+                        showMyAppointmentsButton.doClick();
+                    }
+
+
                 } catch (MessagingException ex) {
                     ex.printStackTrace();
                 } catch (NullPointerException npe1) {

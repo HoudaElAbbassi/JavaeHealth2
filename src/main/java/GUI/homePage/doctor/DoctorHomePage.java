@@ -320,6 +320,7 @@ public class DoctorHomePage extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 AppointmentDAOImp appointmentDAOImp=new AppointmentDAOImp();
                 PatientDAOImp patientDAOImp=new PatientDAOImp();
+                ScheduleDAOImp scheduleDAOImp=new ScheduleDAOImp();
 
                 //get selected row and confirm to delete
                 int i = Integer.parseInt((String) AppointmentTable.getValueAt(AppointmentTable.getSelectedRow(), 0).toString());
@@ -340,7 +341,10 @@ public class DoctorHomePage extends JFrame{
                     }
                     try {
                         Mailer.sendMail(patientDAOImp.getEmailById(appointmentDAOImp.getPatientIdById(i)),
-                                "Hello " + patientDAOImp.getLastNameByID(appointmentDAOImp.getPatientIdById(i)) + "!\n\nYour Appointment has been successfully canceled! The Patient has been informed\n\n" +
+                                "Hello " + patientDAOImp.getLastNameByID(appointmentDAOImp.getPatientIdById(i)) + "!\n\n We are sorry to inform you that your following  Appointment has been canceled.\n" +
+                                "-Doctor Name: "+doctor.getLastName()+" "+doctor.getFirstName()+".\n"+
+                                        "-Address: "+doctor.getAddress()+".\n"+
+                                        "-Date and Time: "+ scheduleDAOImp.getDateTimeByScheduleId(appointmentDAOImp.getScheduleId(i))+
                                         "Best regards\n\neHealth Consulting",
                                 "Appointment Cancellation"
                         );

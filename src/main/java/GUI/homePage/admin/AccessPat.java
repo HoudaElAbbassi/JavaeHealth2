@@ -189,6 +189,12 @@ public class AccessPat {
                 mainPage.setVisible(true);
             }
         });
+        DeleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
     public void refreshListPatient(){
         /**
