@@ -3,6 +3,13 @@ package user;
 
 
 import java.time.LocalDate;
+    /** 
+    
+    *This class is an abstract user class ,its properties are inherited into the child classes, 
+    *The user is either a patient , admin or doctor 
+    *@author Prabal, Daniel, Houda , Amine , Ahmed
+    */
+
 
 public abstract class User {
 
