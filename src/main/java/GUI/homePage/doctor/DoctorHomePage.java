@@ -4,7 +4,6 @@ package GUI.homePage.doctor;
 import Exceptions.PasswordException;
 import Exceptions.ScheduleException;
 import GUI.Login;
-import GUI.MainPage;
 import appointments.AppointmentDAOImp;
 import appointments.schedule.Schedule;
 import appointments.schedule.ScheduleDAOImp;
@@ -242,6 +241,7 @@ public class DoctorHomePage extends JFrame{
          * The deletion has to get confirmed before the slot is deleted from the table schedule in the database.
          */
         deleteFromScheduleButton.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -446,17 +446,6 @@ public class DoctorHomePage extends JFrame{
 
             }
         });
-    }
-
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        Doctor doctor=new Doctor();
-        DoctorHomePage doctorHomePage=new DoctorHomePage(doctor);
-        doctorHomePage.setVisible(true);
     }
 }
 

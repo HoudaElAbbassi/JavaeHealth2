@@ -26,7 +26,7 @@ public class setNewPassword extends JFrame {
     public setNewPassword(){
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(400, 600);
+        setSize(800,600);
         setContentPane(mainPanel);
 
         setNewPasswordButton.addActionListener(new ActionListener() {
@@ -53,7 +53,7 @@ public class setNewPassword extends JFrame {
 
                         JOptionPane.showMessageDialog(null, "reset Password successful");
                         dispose();
-                        MainPage mainPage = new MainPage();
+                        Login mainPage = new Login();
                         mainPage.setVisible(true);
 
                     } else if (userBox.getSelectedItem().toString().equals("Doctor")) {
@@ -71,7 +71,7 @@ public class setNewPassword extends JFrame {
 
                         JOptionPane.showMessageDialog(null, "reset Password successful");
                         dispose();
-                        MainPage mainPage = new MainPage();
+                        Login mainPage = new Login();
                         mainPage.setVisible(true);
 
 
@@ -93,8 +93,8 @@ public class setNewPassword extends JFrame {
 
                         JOptionPane.showMessageDialog(null, "reset Password successful");
                         dispose();
-                        MainPage mainPage = new MainPage();
-                        mainPage.setVisible(true);
+                        Login login= new Login();
+                        login.setVisible(true);
                     }
                 }
                 catch(PasswordException exception){

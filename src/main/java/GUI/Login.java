@@ -3,7 +3,7 @@ package GUI;
 import Exceptions.PasswordException;
 import GUI.RegisterationPage.RegisterDoc;
 import GUI.RegisterationPage.RegisterPatient;
-import GUI.homePage.admin.AdminHomePage;
+import GUI.homePage.admin.AdminPage;
 import GUI.homePage.patient.PatientHomePage;
 import Security.PasswordManager;
 import user.Admin.AdminDAOImp;
@@ -55,7 +55,6 @@ public class Login extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String encodedPassword = PasswordManager.encode(passwordField.getText());/// encode the given password given
-                System.out.println(encodedPassword);
                 //login patient
                 if (comboBox.getSelectedItem().toString().equals("Patient")){///// if the user selects to log in as a patient
                     PatientDAOImp patientDAOImp = new PatientDAOImp();/// instantiate the class of data access object patient
@@ -63,7 +62,6 @@ public class Login extends JFrame {
                         if(patientDAOImp.getPassword(emailText.getText()).equals(encodedPassword)){////check if the encoded given password matches the password's email
                             dispose();
                             PatientHomePage patientHomePage = new PatientHomePage(patientDAOImp.getByEmail(emailText.getText()));/// Instantiate the class patientHomePage
-                            System.out.println(patientDAOImp.getByEmail(emailText.getText()).getId());
                             setVisible(false);/// Close the login frame
                             patientHomePage.setVisible(true);/// Display the PatientHomePage
                         }
@@ -79,7 +77,6 @@ public class Login extends JFrame {
                         if(doctorDAOImp.getPassword(emailText.getText()).equals(encodedPassword)){////check if the encoded given password matches the password's email
                             dispose();
                             GUI.homePage.doctor.DoctorHomePage doctorHomePage = new GUI.homePage.doctor.DoctorHomePage(doctorDAOImp.getByEmail(emailText.getText()));/// Instantiate the class doctorHomePage
-                            System.out.println(doctorDAOImp.getByEmail(emailText.getText()).getId());
                             doctorHomePage.setVisible(true);///display the DoctorHomePage
                         }
                         else   JOptionPane.showMessageDialog(null,"Incorrect password!");
@@ -94,9 +91,9 @@ public class Login extends JFrame {
                     if(adminDAOImp.existEmail(emailText.getText())){
                         if(adminDAOImp.getPassword(emailText.getText()).equals(passwordField.getText())){
                             dispose();
-                            AdminHomePage adminHomePage = new AdminHomePage();
+                            AdminPage adminPage = new AdminPage();
                             setVisible(false);
-                            //adminHomePage.setVisible(true);
+                            adminPage.setVisible(true);
                         }
                         else   JOptionPane.showMessageDialog(null,"Incorrect password!");
 
@@ -110,16 +107,7 @@ public class Login extends JFrame {
          * By clicking on goBackToMainPage button the user would be redirected to MainPage
          * @param e  is generated when the user has selected that menu item
          * */
-        /*
-        goBackToMainpageButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MainPage mainPage = new MainPage();
-                setVisible(false);
-                mainPage.setVisible(true);
-            }
-        });
-        */
+
         /**
          * this methode enable the user to reset his previous password
          * @param e  is generated when the user has selected that menu item
@@ -132,7 +120,13 @@ public class Login extends JFrame {
                 resetPasswordPage.setVisible(true);
             }
         });
+
+
         signUpAsAButton1.addActionListener(new ActionListener() {
+            /**
+             * By clicking on the Sign up button the User would be redirected to RegisterDoc page
+              * @param e is generated when the user has selected that menu item
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 RegisterDoc registerDoc= new RegisterDoc();
@@ -141,6 +135,10 @@ public class Login extends JFrame {
             }
         });
         signUpAsAButton.addActionListener(new ActionListener() {
+            /**
+             * By clicking on the Sign up button the User would be redirected to RegisterPatient page
+             * @param e is generated when the user has selected that menu item
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 RegisterPatient registerPatient =  new RegisterPatient();

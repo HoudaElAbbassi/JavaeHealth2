@@ -2,7 +2,6 @@ package GUI.homePage.patient;
 
 import Exceptions.PasswordException;
 import GUI.Login;
-import GUI.MainPage;
 import user.Patient.InsuranceType;
 import user.Patient.Patient;
 

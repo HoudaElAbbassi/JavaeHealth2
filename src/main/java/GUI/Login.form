@@ -9,7 +9,7 @@
       <background color="-3089171"/>
       <font name="Droid Sans" size="28" style="1"/>
     </properties>
-    <border type="none" title="Welcome Back" title-justification="2">
+    <border type="none" title="Welcome to eHealth Consulting" title-justification="2">
       <font name="Droid Sans" size="26" style="1"/>
     </border>
     <children>

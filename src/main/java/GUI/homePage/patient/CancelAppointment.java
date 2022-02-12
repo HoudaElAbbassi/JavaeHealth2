@@ -1,9 +1,7 @@
 package GUI.homePage.patient;
 
-import Exceptions.ScheduleException;
 import appointments.Appointment;
 import appointments.AppointmentDAOImp;
-import appointments.schedule.Status;
 import user.Patient.Patient;
 import utilities.Mailer;
 import javax.mail.MessagingException;
@@ -54,7 +52,6 @@ public class CancelAppointment extends JFrame {
                 myAppointments.setModel(model);
                 AppointmentDAOImp appointmentDAOImp = new AppointmentDAOImp();
                 List<Appointment> appointmentList = appointmentDAOImp.getAllByPatientId(patient.getId());
-                System.out.println(patient.getId());
                 for (Appointment app: appointmentList) {
                     model.addElement(app);
                 }

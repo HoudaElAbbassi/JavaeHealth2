@@ -19,7 +19,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * this class displays to the admin a list of all doctors and patients profiles furthermore it enables him to edit or delete them
+ *
+ * @author Mohamed Amine Belrhazi
+ */
 public class AdminPage extends JFrame{
     private JTabbedPane tabbedPane1;
     private JButton logoutButton;
@@ -66,7 +70,7 @@ public class AdminPage extends JFrame{
         /**
          * it's used to set a title to the frame
          * */
-        super("AdminHomePage");
+        super("Admin Home Page");
         /** This method is used to set the top-level visual element inside a Window
          * @param MainPanel which stores our group of components
          * */
