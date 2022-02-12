@@ -33,6 +33,7 @@ public class Login extends JFrame {
 
     /**
      * an instance which create a frame where the user select the type of his profile and log in with his own email and password.
+     * @throws PasswordException password error
      * */
     public Login() throws PasswordException {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

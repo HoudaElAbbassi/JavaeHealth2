@@ -12,8 +12,9 @@ public interface UserDAO<User>{
     *after checking the validity of 
     *the password and email.
     *@param user of the type User
-    *@throws PasswordException
-    *@throws  EmailException
+     * @return success of saving
+    *@throws PasswordException password error
+    *@throws  EmailException email error
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     public boolean save(User user) throws PasswordException, EmailException;
@@ -22,8 +23,8 @@ public interface UserDAO<User>{
     *The validity of password and email is checked first
     *The method allows us edit the user properties
     *@param user of the type user
-    *@throws PasswordException
-    *@throws EmailException
+    *@throws PasswordException password error
+    *@throws EmailException email error
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     public void edit(User user) throws PasswordException, EmailException;
@@ -49,6 +50,7 @@ public interface UserDAO<User>{
     *It searches for the given email adress
     *if the email can be found it returns true
     *@param userEmail of type String
+     * @return existenz of email
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     public boolean existEmail(String userEmail);
@@ -64,7 +66,7 @@ public interface UserDAO<User>{
     *This is a method that recieves an ID
     *It searches for the user with the given ID
     *@return user of type User
-    *@param ID of type long
+    *@param id of type long
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     public User getByID(long id);
@@ -82,6 +84,7 @@ public interface UserDAO<User>{
     *The method recieves email adress of a user
     *It seaches for the corrisponding password 
     *@param userEmail of type String
+     * @return encrypted password
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     
@@ -91,6 +94,7 @@ public interface UserDAO<User>{
     *It checks inside the database for the username corresponding to the given ID
     *It seaches for the corresponding password 
     *@param id of type long
+    * @return first name
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     public String getFirstNameByID(long id);
@@ -100,6 +104,7 @@ public interface UserDAO<User>{
     *It checks inside the databaste for the username corresponding to the given ID
     *It seaches for the corresponding password 
     *@param id of type long
+    * @return email address
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     public  String getLastNameByID(long id);
@@ -108,12 +113,14 @@ public interface UserDAO<User>{
     *It checks inside the databaste for the username corresponding to the given email
     *It seaches for the corresponding password 
     *@param id of type long
+     * @return email address
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     public String getEmailById(long id);
     /** 
     *This is a method that recieves an user and allows the admin to edit the user
     *@param user of type User
+     * @throws EmailException email error
     *@author Prabal, Daniel, Houda , Amine ,Ahmed
     */
     public void editByAdmin(User user) throws EmailException;

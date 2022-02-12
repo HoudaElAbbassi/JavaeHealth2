@@ -1,13 +1,14 @@
-package appointments;
+package appointments.appointment;
 
 import user.Patient.HealthProblem;
 
 import java.io.File;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
+/**
+ * This class has all the Methods that can be used to access the Database table of Appointment
+ * They are implemented in the class AppointmentDAOImp
+ */
 public interface AppointmentDAO {
     boolean addAppointment(Appointment appointment);
     void shiftAppointment(Appointment appointment, long newScheduleId);

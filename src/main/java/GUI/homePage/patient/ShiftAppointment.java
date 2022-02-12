@@ -1,7 +1,7 @@
 package GUI.homePage.patient;
 
-import appointments.Appointment;
-import appointments.AppointmentDAOImp;
+import appointments.appointment.Appointment;
+import appointments.appointment.AppointmentDAOImp;
 import appointments.schedule.Schedule;
 import appointments.schedule.ScheduleDAOImp;
 import user.Patient.Patient;
@@ -46,7 +46,7 @@ public class ShiftAppointment extends JFrame {
 
     /**
      * this is the main constructor responsible for creating a ShiftAppointment page
-     * @param patient
+     * @param patient the patient that is currently logged in
      */
     public ShiftAppointment(Patient patient){
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

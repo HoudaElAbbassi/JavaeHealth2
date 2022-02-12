@@ -1,4 +1,4 @@
-package appointments;
+package appointments.appointment;
 
 import appointments.schedule.Schedule;
 import appointments.schedule.ScheduleDAOImp;
@@ -20,9 +20,20 @@ public class Appointment {
     private HealthProblem healthProblem;
     private File healthInfo;
 
+    /**
+     * default constructor
+     */
     public Appointment() {
     }
 
+    /**
+     * created an Appointment
+     * @param doctorId doctor ID
+     * @param patientId patient ID
+     * @param scheduleId schedule ID
+     * @param healthProblem Healthproblem
+     * @param healthInfo Healthinformation
+     */
     public Appointment(
                        long doctorId,
                        long patientId,

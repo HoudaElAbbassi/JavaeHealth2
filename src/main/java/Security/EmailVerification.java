@@ -4,7 +4,7 @@ import Exceptions.EmailException;
 /**
  * this class verify if the given email fulfill the required conditions.
  *
- * @author
+ * @author Ahmed,Amine,Daniel,Houda,Prabal
  */
 
 public class EmailVerification {

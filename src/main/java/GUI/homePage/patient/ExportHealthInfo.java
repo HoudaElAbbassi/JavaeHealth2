@@ -1,6 +1,6 @@
 package GUI.homePage.patient;
 
-import appointments.AppointmentDAOImp;
+import appointments.appointment.AppointmentDAOImp;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.commons.io.FilenameUtils;
@@ -26,6 +26,10 @@ public class ExportHealthInfo extends JFrame {
     private JButton goBackToHomepageButton;
     private JButton exportAsATEXTButton;
 
+    /**
+     * an instance which create a frame where the user gets the Option of Exporting as PDF or TXTs File
+     * @param patient patient that wants to export the healthinfo
+     */
     public ExportHealthInfo(Patient patient) {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.patient = patient;

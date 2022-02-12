@@ -1,7 +1,7 @@
 package GUI.homePage.patient;
 
-import appointments.Appointment;
-import appointments.AppointmentDAOImp;
+import appointments.appointment.Appointment;
+import appointments.appointment.AppointmentDAOImp;
 import appointments.schedule.Schedule;
 import appointments.schedule.ScheduleDAOImp;
 import org.apache.commons.lang3.time.DateUtils;

@@ -1,7 +1,9 @@
 package user.Doctor;
 
-import java.util.HashMap;
 
+/**
+ * This enum contains every Specialization a doctor can have
+ */
 public enum Specialization {
 
     Allergist,

@@ -24,7 +24,7 @@ public class PatientDAOImp implements UserDAO<Patient> {
     *and it saves the properties  of the patient into the database
     *after checking the validity of 
     *the password and email.
-    *@param admin of the type Admin
+    *@param patient of the type Patient
     *@throws PasswordException
     *@throws  EmailException
     *@author Prabal, Daniel, Houda , Amine , Ahmed
@@ -183,7 +183,6 @@ public class PatientDAOImp implements UserDAO<Patient> {
 
             Connection con = DBConnection.getConnection();
             String sql = "SELECT id, userName, email, password, firstName, lastName, address, birthDate, insuranceType, insuranceName from patients where email='"+userEmail+"'";
-            System.out.println(sql);
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs=ps.executeQuery();
             if(rs.next()){
@@ -270,11 +269,9 @@ public class PatientDAOImp implements UserDAO<Patient> {
         try {
             Connection con = DBConnection.getConnection();
             String sql = "select password from patients WHERE email='" + userEmail + "'";
-            System.out.println(sql);
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             rs.next();
-            System.out.println(rs.getString("password"));
             return rs.getString("password");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "User doesn't exist");

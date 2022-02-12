@@ -1,7 +1,7 @@
 package GUI.homePage.patient;
 
-import appointments.Appointment;
-import appointments.AppointmentDAOImp;
+import appointments.appointment.Appointment;
+import appointments.appointment.AppointmentDAOImp;
 import user.Patient.Patient;
 import utilities.Mailer;
 import javax.mail.MessagingException;

@@ -8,7 +8,7 @@ import java.util.Base64;
 /**
  * this class is used to manage passwords in the app, through verifying,encryption and decryption
  *
- * @author
+ * @author Ahmed,Amine,Daniel,Houda,Prabal
  */
 public class PasswordManager {
 /**

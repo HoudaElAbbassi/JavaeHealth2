@@ -16,6 +16,7 @@ public class DBConnection {
      * our Database credentials
      *
      * @return con which used to establish connection with the database.
+     *  @throws SQLException if no connection could established
      */
     public static Connection getConnection() throws SQLException {
 

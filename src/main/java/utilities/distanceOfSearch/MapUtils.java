@@ -20,6 +20,9 @@ import org.json.simple.parser.JSONParser;
  * @author Ahmed Agdmoun
  */
 public class MapUtils {
+    /**
+     * creates an instance of the class Logger to retrieve a logger of the class or create a  new one if iz doesn't exist
+     */
     public final static Logger log = Logger.getLogger("MapUtils"); // creates an instance of the class Logger to retrieve a logger of the class or create a  new one if iz doesn't exist
     private static MapUtils instance = null; // creates a new instance of the class and initialise it with null
     private JSONParser jsonParser; // creates a new Json parser

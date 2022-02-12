@@ -106,14 +106,4 @@ public class PatientHomePage extends JFrame{
         });
     }
 
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        Patient patient=new Patient("Username","email","password","firstname","lastname","address", LocalDate.now(), InsuranceType.Private,"AOK");
-        PatientHomePage patientHomePage=new PatientHomePage(patient);
-        patientHomePage.setVisible(true);
-    }
 }

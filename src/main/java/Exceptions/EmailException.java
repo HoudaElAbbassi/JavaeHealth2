@@ -3,7 +3,7 @@ package Exceptions;
  * this class extends from Exception,
  * and it would be thrown when a checked error occurs in commons-email-format.
  *
- * @author @author Ahmed,Houda,Amine,Parabal,Daniel
+ * @author Ahmed,Houda,Amine,Parabal,Daniel
  */
 public class EmailException extends Exception {
     /**
@@ -15,7 +15,7 @@ public class EmailException extends Exception {
      * Constructs an instance of EmailException with the
      * specified detail message.
      *
-     * @param errorMessage
+     * @param errorMessage email error
      */
     public EmailException(String errorMessage){
         super(errorMessage);

@@ -3,7 +3,7 @@ package Exceptions;
  * this class extends from Exception,
  * and it would be thrown when a checked error occurs in Password forms.
  *
- * @author @author Ahmed,Houda,Amine,Parabal,Daniel
+ * @author Ahmed,Houda,Amine,Parabal,Daniel
  */
 public class PasswordException extends Exception {
     /**
@@ -14,7 +14,7 @@ public class PasswordException extends Exception {
     /**
      * Constructs an instance of PasswordException with
      * specified detail message.
-     * @param errorMessage
+     * @param errorMessage password error
      */
     public PasswordException(String errorMessage){
         super(errorMessage);

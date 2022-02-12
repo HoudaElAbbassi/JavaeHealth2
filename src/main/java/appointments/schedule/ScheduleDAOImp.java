@@ -56,8 +56,9 @@ public class ScheduleDAOImp implements ScheduleDAO {
     /**
      * This method gets all the available time slots and dates of a doctor from the database
      * @param doctorId
-     * @return List<Schedule>
+     * @return List of schedule
      */
+
     @Override
     public List<Schedule> getAllAvailable(long doctorId) {
         List<Schedule> list = new ArrayList<>();
@@ -88,7 +89,7 @@ public class ScheduleDAOImp implements ScheduleDAO {
     /**
      * This method gets all the booked timesolts of a doctor from the database
      * @param doctorId
-     * @return List<Schedule>
+     * @return List of schedule
      */
     @Override
     public List<Schedule> getAllBooked(long doctorId) {
@@ -120,7 +121,7 @@ public class ScheduleDAOImp implements ScheduleDAO {
     /**
      * This method gets all the timeslots of a doctor, booked and available
      * @param doctorId
-     * @return ArrayList<Schedule>
+     * @return ArrayList of Schedule
      * @throws SQLException when access error or other error occurs
      */
     @Override

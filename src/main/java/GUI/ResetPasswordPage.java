@@ -17,6 +17,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class created the Page that the User sees when resetting his password
+ */
 public class ResetPasswordPage extends JFrame{
     private JComboBox userBox;
     private JTextField email;

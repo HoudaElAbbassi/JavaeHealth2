@@ -14,6 +14,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class creates the Page that the User sees after requesting a new Password.
+ * In this Page the User must set a new Password and enter the temporary password.
+ * After confirming the User gets redirceted to the Login Page
+ */
 public class setNewPassword extends JFrame {
     private JButton setNewPasswordButton;
     private JComboBox userBox;
@@ -23,6 +28,9 @@ public class setNewPassword extends JFrame {
     private JPasswordField newPassword2;
     private JPasswordField tempPassword;
 
+    /**
+     * an instance which create a frame that gives the User the chance of entering and confirming the new password.
+     */
     public setNewPassword(){
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

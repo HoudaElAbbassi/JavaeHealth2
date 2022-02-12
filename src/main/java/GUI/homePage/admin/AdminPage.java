@@ -65,6 +65,9 @@ public class AdminPage extends JFrame{
     private PatientDAOImp patientDAOImp;
     private DefaultListModel listPatientModel;
 
+    /**
+     * This is the main constructor of the class which constructs the GUI page
+     */
     public AdminPage() {
 
         /**
@@ -307,6 +310,10 @@ public class AdminPage extends JFrame{
             }
         });
     }
+
+    /**
+     * This method refreshes the doctor selectionList after every change which the admin makes
+     */
     public void refreshListDoctor(){
         listDoctorModel.removeAllElements();
         doctors=doctorDAOImp.getAll();///// get the whole doctors from the database
@@ -314,10 +321,12 @@ public class AdminPage extends JFrame{
             listDoctorModel.addElement("Id: "+d.getId()+" Date of birth "+d.getBirthDate().toString());///display the Id and the Birthdate of every doctor in the data base.
         }
     }
+
+    /**
+     * This method refreshes the patient selectionList after every change which the admin makes
+     * */
     public void refreshListPatient(){
-        /**
-         * This method refreshes the patient selectionList after every change which the admin makes
-         * */
+
         listPatientModel.removeAllElements();
         patients=patientDAOImp.getAll();/////get every patient from the database
         for(Patient p: patients){
@@ -325,15 +334,6 @@ public class AdminPage extends JFrame{
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        AdminPage adminPage=new AdminPage();
-        adminPage.setVisible(true);
-    }
 
 }
 

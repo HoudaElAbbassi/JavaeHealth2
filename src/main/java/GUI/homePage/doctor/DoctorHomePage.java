@@ -4,7 +4,7 @@ package GUI.homePage.doctor;
 import Exceptions.PasswordException;
 import Exceptions.ScheduleException;
 import GUI.Login;
-import appointments.AppointmentDAOImp;
+import appointments.appointment.AppointmentDAOImp;
 import appointments.schedule.Schedule;
 import appointments.schedule.ScheduleDAOImp;
 import appointments.schedule.Status;

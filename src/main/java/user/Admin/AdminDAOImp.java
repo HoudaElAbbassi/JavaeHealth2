@@ -12,16 +12,19 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class Implements the Methods of the Interface UserDAO for the Admin
+ */
 public class AdminDAOImp implements UserDAO<Admin> {
-    
-    /** 
-    *This is a method that recieves an admin object 
+
+    /**
+    *This is a method that recieves an admin object
     *and saves its properties into the database
-    *after checking the validity of 
+    *after checking the validity of
     *the password and email.
     *@param admin of the type Admin
-    *@throws PasswordException
-    *@throws  EmailException
+    *@throws PasswordException password error
+    *@throws  EmailException email error
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     
@@ -67,8 +70,8 @@ public class AdminDAOImp implements UserDAO<Admin> {
     *The validity of password and email is checked first
     *The method allows us edit the admins properties inside the database
     *@param admin of the type Admin
-    *@throws PasswordException
-    *@throws EmailException
+    *@throws PasswordException password error
+    *@throws EmailException email error
     *@author Prabal, Daniel, Houda , Amine , Ahmed
     */
     
@@ -197,7 +200,6 @@ public class AdminDAOImp implements UserDAO<Admin> {
                 admin.setFirstName(rs.getString("firstName"));
                 admin.setLastName(rs.getString("lastName"));
                 admin.setPassword(rs.getString("password"));
-                //admin.setEmail(email);
             }
             JOptionPane.showMessageDialog(null, "Deleted!");
         } catch (Exception e) {
