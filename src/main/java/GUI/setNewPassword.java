@@ -34,7 +34,7 @@ public class setNewPassword extends JFrame {
     public setNewPassword(){
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(800,600);
+        setSize(800, 500);
         setContentPane(mainPanel);
 
         setNewPasswordButton.addActionListener(new ActionListener() {
