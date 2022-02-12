@@ -11,6 +11,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class Implements the Methods of the Interface UserDAO for the Doctor
+ */
 public class DoctorDAOImp implements UserDAO<Doctor> {
 
     @Override

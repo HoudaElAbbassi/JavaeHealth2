@@ -7,6 +7,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class has all the Methods that can be used to access the Database table of Schedule
+ * They are implemented in the class ScheduleDAOImp
+ */
 public interface ScheduleDAO {
 
     public void addSchedule(Schedule schedule) throws SQLException, Exception;

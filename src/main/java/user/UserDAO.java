@@ -5,9 +5,13 @@ import Exceptions.PasswordException;
 
 import java.util.List;
 
+/**
+ * This interface specifies the abstract methods that the DAO Implementations of the Subclasses of User must implement
+ * @param <User> a generic Type of User
+ */
 public interface UserDAO<User>{
     /**
-     *This is a method that recieves an User object 
+     *This is a method that receives an User object
     *and saves its properties into the database
     *after checking the validity of 
     *the password and email.
@@ -19,7 +23,7 @@ public interface UserDAO<User>{
     */
     public boolean save(User user) throws PasswordException, EmailException;
     /** 
-    *This is a method that recieves an admin object 
+    *This is a method that receives an admin object
     *The validity of password and email is checked first
     *The method allows us edit the user properties
     *@param user of the type user
@@ -29,7 +33,7 @@ public interface UserDAO<User>{
     */
     public void edit(User user) throws PasswordException, EmailException;
     /** 
-    *This is a method that recieves an user object 
+    *This is a method that receives an user object
     *It searches for ID of the given user
     *and deletes the object inside the database.
     *@param user of the type User.
@@ -37,7 +41,7 @@ public interface UserDAO<User>{
     */
     public void delete(User user);
     /** 
-    *This is a method that recieves the ID of an Admin
+    *This is a method that receives the ID of an Admin
     *It searches for the Admin with the given ID
     *and deletes the object inside the database.
     *@param id of the type long 
@@ -46,7 +50,7 @@ public interface UserDAO<User>{
     public void deleteByID(long id);
     
     /** 
-    *This is a method that recieves an email adress
+    *This is a method that receives an email address
     *It searches for the given email adress
     *if the email can be found it returns true
     *@param userEmail of type String
