@@ -38,7 +38,7 @@ public class ResetPasswordPage extends JFrame{
     public ResetPasswordPage() {
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(400, 600);
+        setSize(800, 500);
         setContentPane(mainPanel);
 
         PatientDAOImp patientDAOImp=new PatientDAOImp();

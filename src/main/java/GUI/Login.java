@@ -42,8 +42,8 @@ public class Login extends JFrame {
         setSize(800, 500);
         setContentPane(mainPanel);//This method is used to set the top-level visual element inside a Window
 
-        //ImageIcon imageIcon= new ImageIcon("C:\\Users\\houda\\Desktop\\JAVAProject\\docPic.jpeg");
-        ImageIcon imageIcon= new ImageIcon("docPic.jpeg");
+
+        ImageIcon imageIcon= new ImageIcon("src/main/java/GUI/docPic.jpeg");
         labelpicture.setIcon(imageIcon);
 
 

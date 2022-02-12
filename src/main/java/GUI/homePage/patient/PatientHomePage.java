@@ -38,7 +38,7 @@ public class PatientHomePage extends JFrame{
         setContentPane(mainPanel);
         setSize(800,500);
 
-        ImageIcon imageIcon= new ImageIcon("medical_chiken2.png");
+        ImageIcon imageIcon= new ImageIcon("src/main/java/GUI/homePage/patient/patient.png");
        patienticon.setIcon(imageIcon);
 
         patientName.setText(patient.getFirstName());
