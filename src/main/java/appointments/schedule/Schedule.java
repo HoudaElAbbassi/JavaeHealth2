@@ -74,7 +74,7 @@ public class Schedule {
     public void setStatus(Status status) {
         this.status = status;
     }
-    
+
     /**
      * This method turns the Schedule information into a String with date and time
      * @return String
