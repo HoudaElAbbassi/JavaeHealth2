@@ -51,7 +51,7 @@ public class setNewPassword extends JFrame {
                         Patient patient = patientDAOImp.getByEmail(emailtxt.getText());
 
 
-                        if (!patient.getPassword().equals(PasswordManager.encode(tempPassword.getText()))) {
+                        if (!patient.getPassword().equals(tempPassword.getText())) {
                             throw new PasswordException("The passwords do not match");
                         }
 
@@ -69,7 +69,7 @@ public class setNewPassword extends JFrame {
                         Doctor doctor = doctorDAOImp.getByEmail(emailtxt.getText());
 
 
-                        if (!doctor.getPassword().equals(PasswordManager.encode(tempPassword.getText()))) {
+                        if (!doctor.getPassword().equals(tempPassword.getText())) {
                             throw new PasswordException("The passwords do not match");
                         }
 
@@ -87,7 +87,7 @@ public class setNewPassword extends JFrame {
                         AdminDAOImp adminDAOImp = new AdminDAOImp();
                         Admin admin = adminDAOImp.getByEmail(emailtxt.getText());
 
-                        if (admin.getPassword().equals(PasswordManager.encode(tempPassword.getText())))
+                        if (admin.getPassword().equals(tempPassword.getText()))
                            throw new PasswordException( "Please check the password we sent you!");
 
                         admin.setPassword(newPassword.getText());
@@ -107,7 +107,7 @@ public class setNewPassword extends JFrame {
                 }
                 catch(PasswordException exception){
                     exception.printStackTrace();
-                    JOptionPane.showConfirmDialog(null,exception.getMessage());
+                    JOptionPane.showMessageDialog(null,exception.getMessage());
                     }
 
 

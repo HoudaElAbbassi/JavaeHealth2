@@ -58,7 +58,9 @@ public class ResetPasswordPage extends JFrame{
 
 
                         try {
-                            Mailer.sendMail(patient.getEmail(),"new Password: "+p,"Your new Password");
+                            Mailer.sendMail(patient.getEmail(),"Hello"+patient.getFirstName()+" "+patient.getLastName()+
+                                    ",\n"+"Your Reset-Password: "+p+" \n\n"+"Best regards \n \n"+"eHealth Consultig",
+                                    "Your new Password");
                         } catch (MessagingException ex) {
                             ex.printStackTrace();
                         }

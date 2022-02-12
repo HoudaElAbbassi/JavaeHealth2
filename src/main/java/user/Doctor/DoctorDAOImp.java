@@ -80,7 +80,6 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
             ps.setString(8,doctor.getSpecialization().toString());
             ps.setLong(9,doctor.getId());
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Updated!");
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error");
@@ -103,7 +102,6 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
             ps.setString(7,doctor.getSpecialization().toString());
             ps.setLong(8,doctor.getId());
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Updated!");
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error");
@@ -173,14 +171,13 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
             if(rs.next()) {
 
                 doctor.setId(rs.getLong("id"));
+                doctor.setUserName(rs.getString("userName"));
                 doctor.setAddress(rs.getString("address"));
                 doctor.setBirthDate(rs.getDate("birthDate").toLocalDate());
                 doctor.setEmail(rs.getString("email"));
                 doctor.setFirstName(rs.getString("firstName"));
                 doctor.setLastName(rs.getString("lastName"));
                 doctor.setPassword(rs.getString("password"));
-                System.out.println(rs.getString("specialization"));
-                System.out.println((rs.getString("specialization")));
                 doctor.setSpecialization(Specialization.valueOf(rs.getString("specialization")));
 
 

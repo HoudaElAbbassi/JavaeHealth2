@@ -84,6 +84,8 @@ public class DoctorHomePage extends JFrame{
         setContentPane(mainPanel);
         setSize(800, 500);
 
+       viewAppointment(doctor);
+       viewSchedule(doctor);
 
 
         UsernameTextField.setText(doctor.getFirstName()+" "+doctor.getLastName());
@@ -101,62 +103,28 @@ public class DoctorHomePage extends JFrame{
 
         //setting for the time slots
         TimePickerSettings.TimeIncrement time_slot= TimePickerSettings.TimeIncrement.FifteenMinutes;
-        timePickerSettings.generatePotentialMenuTimes(time_slot, LocalTime.of(10, 00), LocalTime.of(12, 00));
+        timePickerSettings.generatePotentialMenuTimes(time_slot, LocalTime.of(8, 00), LocalTime.of(18, 00));
         new TimePicker(timePickerSettings);
 
         //settings for cancel/delete from the table=> one of a time
             ScheduleTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             AppointmentTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-
+            //fill all tables at the beginning
+        viewScheduleButton.setVisible(false);
+        viewAppointmentsButton.setVisible(false);
         //Button Action
 
-        /**
-         * The viewAppointments Button is activated with a click on it.
-         * a table is created that fetches all the needed data from the database
-         */
+
+
         viewAppointmentsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AppointmentDAOImp appointmentDAOImp=new AppointmentDAOImp();
-                PatientDAOImp patientDAOImp=new PatientDAOImp();
-                ScheduleDAOImp scheduleDAOImp=new ScheduleDAOImp();
-                DefaultTableModel tbModel = (DefaultTableModel) AppointmentTable.getModel();
-
-                //resets the table
-                tbModel.setRowCount(0);
-
-                Object[] columnsName=new Object[7];
-
-                columnsName[0]="ID";
-                columnsName[1]="First name";
-                columnsName[2]="surname";
-                columnsName[3]="Date";
-                columnsName[4]="Time";
-                columnsName[5]="Healthproblem";
-                columnsName[6]="Healthinfo";
-
-
-                tbModel.setColumnIdentifiers(columnsName);
-
-                Object[] rowData=new Object[7];
-
-                for(int i=0; i<appointmentDAOImp.getAllByDoctorId(doctor.getId()).size();i++){
-                    rowData[0]=appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getId();
-                    rowData[1]=patientDAOImp.getFirstNameByID(appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getPatientId());
-                    rowData[2]=patientDAOImp.getLastNameByID(appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getPatientId());
-                    rowData[3]=scheduleDAOImp.getDateByDoctorId(appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getDoctorId());
-                    rowData[4]=scheduleDAOImp.getTimeByDoctorId(appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getDoctorId());
-                    rowData[5]=appointmentDAOImp.getHealthProblemById(appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getId()).toString();
-                    rowData[6]=appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getHealthInfo();
-
-                    tbModel.addRow(rowData);
-
-                }
-                AppointmentTable.setModel(tbModel);
+               viewAppointment(doctor);
 
             }
         });
+
 
         /**
          *  When the "add to schedule"-button is pressed, the Methode initializes a schedule-Object.This Object is being
@@ -180,6 +148,7 @@ public class DoctorHomePage extends JFrame{
                     scheduleDAOImp.addSchedule(schedule);
                 } catch (Exception ex) {
                     ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
 
 
@@ -198,41 +167,7 @@ public class DoctorHomePage extends JFrame{
              */
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                    try {
-                        ScheduleDAOImp scheduleDAOImp = new ScheduleDAOImp();
-                        DefaultTableModel tbModel = (DefaultTableModel) ScheduleTable.getModel();
-
-                        //resets the table
-                        tbModel.setRowCount(0);
-
-                        //set column names
-                        Object[] columnsName = new Object[4];
-                        columnsName[0] = "ID";
-                        columnsName[1] = "Date";
-                        columnsName[2] = "Start";
-                        columnsName[3] = "End";
-                        tbModel.setColumnIdentifiers(columnsName);
-
-                        //fills in the rows
-                        Object[] rowData = new Object[4];
-
-                        for (int i = 0; i < scheduleDAOImp.getAll(doctor.getId()).size(); i++) {
-
-                            rowData[0] = scheduleDAOImp.getAll(doctor.getId()).get(i).getScheduleId();
-                            rowData[1] = scheduleDAOImp.getAll(doctor.getId()).get(i).getDate();
-                            rowData[2] = scheduleDAOImp.getAll(doctor.getId()).get(i).getStart();
-                            rowData[3] = scheduleDAOImp.getAll(doctor.getId()).get(i).getEnd();
-
-                            tbModel.addRow(rowData);
-
-                        }
-                        ScheduleTable.setModel(tbModel);
-                    }catch (SQLException exception){
-                        exception.printStackTrace();
-                    }
-
-
+                viewSchedule(doctor);
             }
         });
         /**
@@ -446,6 +381,97 @@ public class DoctorHomePage extends JFrame{
 
             }
         });
+    }
+
+    /**
+     *a table is created that fetches all the needed data from the database
+     *
+     * @param doctor Doctor that is logged in
+     */
+    private void viewAppointment(Doctor doctor){
+        AppointmentDAOImp appointmentDAOImp=new AppointmentDAOImp();
+        PatientDAOImp patientDAOImp=new PatientDAOImp();
+        ScheduleDAOImp scheduleDAOImp=new ScheduleDAOImp();
+        DefaultTableModel tbModel = (DefaultTableModel) AppointmentTable.getModel();
+
+        //resets the table
+        tbModel.setRowCount(0);
+
+        Object[] columnsName=new Object[7];
+
+        columnsName[0]="ID";
+        columnsName[1]="First name";
+        columnsName[2]="surname";
+        columnsName[3]="Date";
+        columnsName[4]="Time";
+        columnsName[5]="Healthproblem";
+        columnsName[6]="Healthinfo";
+
+
+        tbModel.setColumnIdentifiers(columnsName);
+
+        Object[] rowData=new Object[7];
+
+
+
+        for(int i=0; i<appointmentDAOImp.getAllByDoctorId(doctor.getId()).size();i++){
+            rowData[0]=appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getId();
+            rowData[1]=patientDAOImp.getFirstNameByID(appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getPatientId());
+            rowData[2]=patientDAOImp.getLastNameByID(appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getPatientId());
+            rowData[3]=scheduleDAOImp.getDateByDoctorId(appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getDoctorId());
+            rowData[4]=scheduleDAOImp.getTimeByDoctorId(appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getDoctorId());
+            rowData[5]=appointmentDAOImp.getHealthProblemById(appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getId()).toString();
+            rowData[6]=appointmentDAOImp.getAllByDoctorId(doctor.getId()).get(i).getHealthInfo();
+
+            tbModel.addRow(rowData);
+
+        }
+
+        if(appointmentDAOImp.getAllByDoctorId(doctor.getId()).size()==0) rowData[0]="No Appointments booked";
+        AppointmentTable.setModel(tbModel);
+
+
+    }
+
+    /**
+     * This Methode gets the Schedule from the Database and displays it in a Table. Each row represents the
+     * relevant datasets from the table schedule.
+     * @param doctor Doctor that is logged in
+     */
+    private void viewSchedule(Doctor doctor){
+        try {
+            ScheduleDAOImp scheduleDAOImp = new ScheduleDAOImp();
+            DefaultTableModel tbModel = (DefaultTableModel) ScheduleTable.getModel();
+
+            //resets the table
+            tbModel.setRowCount(0);
+
+            //set column names
+            Object[] columnsName = new Object[4];
+            columnsName[0] = "ID";
+            columnsName[1] = "Date";
+            columnsName[2] = "Start";
+            columnsName[3] = "End";
+            tbModel.setColumnIdentifiers(columnsName);
+
+            //fills in the rows
+            Object[] rowData = new Object[4];
+
+            for (int i = 0; i < scheduleDAOImp.getAll(doctor.getId()).size(); i++) {
+
+                rowData[0] = scheduleDAOImp.getAll(doctor.getId()).get(i).getScheduleId();
+                rowData[1] = scheduleDAOImp.getAll(doctor.getId()).get(i).getDate();
+                rowData[2] = scheduleDAOImp.getAll(doctor.getId()).get(i).getStart();
+                rowData[3] = scheduleDAOImp.getAll(doctor.getId()).get(i).getEnd();
+
+                tbModel.addRow(rowData);
+
+            }
+            ScheduleTable.setModel(tbModel);
+        }catch (SQLException exception){
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+            exception.printStackTrace();
+        }
     }
 }
 
