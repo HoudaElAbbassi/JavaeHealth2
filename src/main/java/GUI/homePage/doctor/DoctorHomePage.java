@@ -459,10 +459,10 @@ public class DoctorHomePage extends JFrame{
 
             for (int i = 0; i < scheduleDAOImp.getAll(doctor.getId()).size(); i++) {
 
-                rowData[0] = scheduleDAOImp.getAll(doctor.getId()).get(i).getScheduleId();
-                rowData[1] = scheduleDAOImp.getAll(doctor.getId()).get(i).getDate();
-                rowData[2] = scheduleDAOImp.getAll(doctor.getId()).get(i).getStart();
-                rowData[3] = scheduleDAOImp.getAll(doctor.getId()).get(i).getEnd();
+                rowData[0] = scheduleDAOImp.getAllAvailable(doctor.getId()).get(i).getScheduleId();
+                rowData[1] = scheduleDAOImp.getAllAvailable(doctor.getId()).get(i).getDate();
+                rowData[2] = scheduleDAOImp.getAllAvailable(doctor.getId()).get(i).getStart();
+                rowData[3] = scheduleDAOImp.getAllAvailable(doctor.getId()).get(i).getEnd();
 
                 tbModel.addRow(rowData);
 
