@@ -68,12 +68,13 @@ public class setNewPassword extends JFrame {
                         DoctorDAOImp doctorDAOImp = new DoctorDAOImp();
                         Doctor doctor = doctorDAOImp.getByEmail(emailtxt.getText());
 
-
+                        System.out.println(doctor.getPassword());
+                        System.out.println(tempPassword.getText());
                         if (!doctor.getPassword().equals(tempPassword.getText())) {
                             throw new PasswordException("The passwords do not match");
                         }
 
-                        doctor.setPassword(newPassword.getText());
+                        doctor.setPassword(PasswordManager.encode(newPassword.getText()));
                         doctorDAOImp.edit(doctor);
 
                         JOptionPane.showMessageDialog(null, "reset Password successful");

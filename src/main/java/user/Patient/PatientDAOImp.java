@@ -41,7 +41,7 @@ public class PatientDAOImp implements UserDAO<Patient> {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, patient.getUserName());
             ps.setString(2, patient.getEmail());
-            ps.setString(3, PasswordManager.encode(patient.getPassword()));
+            ps.setString(3, patient.getPassword());
             ps.setString(4, patient.getFirstName());
             ps.setString(5, patient.getLastName());
             ps.setString(6, patient.getAddress());

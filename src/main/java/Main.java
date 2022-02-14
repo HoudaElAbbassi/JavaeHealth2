@@ -8,7 +8,6 @@ import javax.swing.*;
  */
 public class Main {
 
-
     /**
      * This method starts the Application by instantiating the Login Page
      * @param args

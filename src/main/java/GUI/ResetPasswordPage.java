@@ -59,7 +59,7 @@ public class ResetPasswordPage extends JFrame{
 
                         try {
                             Mailer.sendMail(patient.getEmail(),"Hello"+patient.getFirstName()+" "+patient.getLastName()+
-                                    ",\n"+"Your Reset-Password: "+PasswordManager.encode(p)+" \n\n"+"Best regards \n \n"+"eHealth Consulting",
+                                    ",\n"+"Your Reset-Password: "+p+" \n\n"+"Best regards \n \n"+"eHealth Consulting",
                                     "Your new Password");
                         } catch (MessagingException ex) {
                             ex.printStackTrace();
@@ -79,7 +79,7 @@ public class ResetPasswordPage extends JFrame{
                         doctor.setPassword(p);
                         doctorDAOImp.edit(doctor);
                         try {
-                            Mailer.sendMail(doctor.getEmail(),"new Password:"+PasswordManager.encode(p)+" \n\n"+"Best regards \n \n"+"eHealth Consulting","Your new Password");
+                            Mailer.sendMail(doctor.getEmail(),"new Password:"+p+" \n\n"+"Best regards \n \n"+"eHealth Consulting","Your new Password");
                         } catch (MessagingException ex) {
                             ex.printStackTrace();
                         }
