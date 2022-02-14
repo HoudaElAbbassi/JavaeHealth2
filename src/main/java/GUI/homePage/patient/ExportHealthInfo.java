@@ -1,5 +1,7 @@
 package GUI.homePage.patient;
 
+import Exceptions.PasswordException;
+import GUI.Login;
 import appointments.appointment.AppointmentDAOImp;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -25,6 +27,7 @@ public class ExportHealthInfo extends JFrame {
     private JButton exportAsAPDFButton;
     private JButton goBackToHomepageButton;
     private JButton exportAsATEXTButton;
+    private JButton logOutButton;
 
     /**
      * an instance which create a frame where the user gets the Option of Exporting as PDF or TXTs File
@@ -115,6 +118,23 @@ public class ExportHealthInfo extends JFrame {
                 PatientHomePage patientHomePage = new PatientHomePage(patient);
                 setVisible(false);
                 patientHomePage.setVisible(true);
+            }
+        });
+
+        /**
+         * actions taking place in case of clicking the logOutButton
+         */
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Login mainPage = null;
+                try {
+                    mainPage = new Login();
+                } catch (PasswordException ex) {
+                    ex.printStackTrace();
+                }
+                setVisible(false);
+                mainPage.setVisible(true);
             }
         });
     }
