@@ -79,6 +79,7 @@ public class CancelAppointment extends JFrame {
 
                         AppointmentDAOImp appointmentDAOImp = new AppointmentDAOImp();
                         appointmentDAOImp.cancel(selectedAppointment);
+                        System.out.println(selectedAppointment.getScheduleId());
                         String message = Mailer.cancellationMessage(patient);
                         Mailer.sendMail(patient.getEmail(), message, "Appointment Cancellation");
                         showMyAppointmentsButton.doClick();

@@ -2,13 +2,11 @@ package GUI.homePage.patient;
 
 import Exceptions.PasswordException;
 import GUI.Login;
-import user.Patient.InsuranceType;
 import user.Patient.Patient;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 
 /**
  * This class represents the homepage of the patient in the GUI, in other words
