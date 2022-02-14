@@ -45,6 +45,7 @@ public class ScheduleDAOImp implements ScheduleDAO {
 
         } catch (ScheduleException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null,e);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {

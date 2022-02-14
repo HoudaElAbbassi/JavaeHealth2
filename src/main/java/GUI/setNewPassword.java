@@ -73,7 +73,6 @@ public class setNewPassword extends JFrame {
                             throw new PasswordException("The passwords do not match");
                         }
 
-
                         doctor.setPassword(newPassword.getText());
                         doctorDAOImp.edit(doctor);
 

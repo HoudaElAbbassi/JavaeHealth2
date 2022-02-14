@@ -85,7 +85,7 @@ public class AdminDAOImp implements UserDAO<Admin> {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, admin.getUserName());
             ps.setString(2, admin.getEmail());
-            ps.setString(3, admin.getPassword());
+            ps.setString(3, PasswordManager.encode(admin.getPassword()));
             ps.setString(4,admin.getFirstName());
             ps.setString(5,admin.getLastName());
             ps.setString(6,admin.getAddress());

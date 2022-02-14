@@ -120,8 +120,8 @@ public class DoctorHomePage extends JFrame{
         viewAppointmentsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               viewAppointment(doctor);
-
+                viewAppointment(doctor);
+                viewSchedule(doctor);
             }
         });
 
@@ -143,13 +143,15 @@ public class DoctorHomePage extends JFrame{
                         start.plusMinutes(TimePickerSettings.TimeIncrement.FifteenMinutes.minutes), Status.available);
 
                 ScheduleDAOImp scheduleDAOImp = new ScheduleDAOImp();
-
                 try {
                     scheduleDAOImp.addSchedule(schedule);
+                    viewAppointmentsButton.doClick();
+                    viewScheduleButton.doClick();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
+
 
 
             }
@@ -167,6 +169,7 @@ public class DoctorHomePage extends JFrame{
              */
             @Override
             public void actionPerformed(ActionEvent e) {
+                viewAppointment(doctor);
                 viewSchedule(doctor);
             }
         });
@@ -199,6 +202,8 @@ public class DoctorHomePage extends JFrame{
 
                     //refreshing the table
                     viewScheduleButton.doClick();
+                    viewAppointment(doctor);
+                    viewSchedule(doctor);
                 }catch (ScheduleException exception){
                     exception.printStackTrace();
                     JOptionPane.showMessageDialog(null, exception.getMessage());
@@ -234,6 +239,8 @@ public class DoctorHomePage extends JFrame{
 
                     }
                 }
+                    viewAppointment(doctor);
+                    viewSchedule(doctor);
 
                 } catch (ScheduleException ex) {
                     ex.printStackTrace();
@@ -298,6 +305,8 @@ public class DoctorHomePage extends JFrame{
 
                 //refreshing the table
                 viewAppointmentsButton.doClick();
+                viewAppointment(doctor);
+                viewSchedule(doctor);
                 }
         });
 
@@ -335,7 +344,8 @@ public class DoctorHomePage extends JFrame{
                 AppointmentDAOImp appointmentDAOImp=new AppointmentDAOImp();
                 int i = Integer.parseInt( AppointmentTable.getValueAt(AppointmentTable.getSelectedRow(), 0).toString());
                 appointmentDAOImp.updateHealthinfoById(i,file);
-
+                viewAppointment(doctor);
+                viewSchedule(doctor);
             }
         });
 
@@ -378,7 +388,8 @@ public class DoctorHomePage extends JFrame{
                 } catch (DocumentException | IOException ex) {
                     ex.printStackTrace();
                 }
-
+                viewAppointment(doctor);
+                viewSchedule(doctor);
             }
         });
     }
@@ -429,7 +440,6 @@ public class DoctorHomePage extends JFrame{
 
         if(appointmentDAOImp.getAllByDoctorId(doctor.getId()).size()==0) rowData[0]="No Appointments booked";
         AppointmentTable.setModel(tbModel);
-
 
     }
 
