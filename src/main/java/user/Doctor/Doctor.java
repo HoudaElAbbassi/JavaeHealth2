@@ -33,7 +33,7 @@ public class Doctor extends User {
     /**
      * the constructor creates a Doctor with all relevant information
      * @param userName Doctor Username
-     * @param email Doctor Email Addresse
+     * @param email Doctor Email Address
      * @param password Doctor Password
      * @param firstName Doctor Firstname
      * @param lastName Doctor Lastname
@@ -74,7 +74,7 @@ public class Doctor extends User {
     @Override
     public String toString() {
         return "Doctor:   "+firstName+" "+lastName+",   "+
-                "Address:   "+address;
+                "Address:   "+address +", Specialization: "+specialization.toString();
     }
     }
 
