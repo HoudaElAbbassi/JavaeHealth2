@@ -328,6 +328,7 @@ public class DoctorDAOImp implements UserDAO<Doctor> {
                 doc.setFirstName(rs.getString("firstName"));
                 doc.setLastName(rs.getString("lastName"));
                 doc.setPassword(rs.getString("password"));
+                doc.setSpecialization(Specialization.valueOf(rs.getString("specialization")));
                 doc.setId(rs.getInt("ID"));
 
                 list.add(doc);
