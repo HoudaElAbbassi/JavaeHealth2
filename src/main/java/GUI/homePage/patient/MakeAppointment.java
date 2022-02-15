@@ -185,7 +185,7 @@ public class MakeAppointment extends JFrame implements ActionListener {
                         // gets the chosen schedule from the database and convert it to Date format
                         Date date = Reminder.convert(scheduleDAOImp.getDateTimeByScheduleId(selectedSchedule.getScheduleId()));
                         if(reminderBox.getSelectedIndex() == 0){
-                            date = DateUtils.addWeeks(date, 1); // subtract 1 week from the chosen schedule time
+                            date = DateUtils.addWeeks(date, -1); // subtract 1 week from the chosen schedule time
                         }
                         else if(reminderBox.getSelectedIndex() == 1){
                             date = DateUtils.addDays(date, -3); // subtract 3 days from the chosen schedule time
@@ -196,6 +196,9 @@ public class MakeAppointment extends JFrame implements ActionListener {
                         else if(reminderBox.getSelectedIndex() == 3){
                             date = DateUtils.addMinutes(date, -10); // subtract 10 minutes from the chosen schedule time
                         }
+                        System.out.println("Reminder will be sent on: "+ date);
+                        timer.schedule(reminder, date);
+                    }
                 } catch (NullPointerException npe2){
                     JOptionPane.showMessageDialog(null, "Please select an appointment!");
                 }
