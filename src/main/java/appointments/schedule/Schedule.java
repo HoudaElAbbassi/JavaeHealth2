@@ -81,7 +81,7 @@ public class Schedule {
      */
     @Override
     public String toString() {
-        return "Day: "+date.getDayOfWeek()+" "+date.getDayOfMonth()+". "+date.getYear()+",   "+
+        return "Day: "+date.getDayOfMonth()+" "+date.getMonth()+". "+date.getYear()+",   "+
                 "Time: "+start+ " - "+end;
     }
 }
